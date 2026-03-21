@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { Suspense } from "react";
 
 const ERROR_MESSAGES: Record<string, string> = {
   Configuration: "Ada masalah konfigurasi server. Coba lagi nanti.",
@@ -11,7 +12,7 @@ const ERROR_MESSAGES: Record<string, string> = {
   Default: "Terjadi kesalahan saat login. Coba lagi.",
 };
 
-export default function AuthErrorPage() {
+function AuthErrorContent() {
   const searchParams = useSearchParams();
   const error = searchParams.get("error") || "Default";
   const message = ERROR_MESSAGES[error] || ERROR_MESSAGES.Default;
@@ -40,5 +41,17 @@ export default function AuthErrorPage() {
         </div>
       </motion.div>
     </main>
+  );
+}
+
+export default function AuthErrorPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen bg-brand-dark flex items-center justify-center">
+        <div className="text-white/50">Loading...</div>
+      </main>
+    }>
+      <AuthErrorContent />
+    </Suspense>
   );
 }

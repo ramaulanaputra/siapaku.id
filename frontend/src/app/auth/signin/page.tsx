@@ -2,11 +2,11 @@
 
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-export default function SignInPage() {
+function SignInContent() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -115,5 +115,17 @@ export default function SignInPage() {
         </div>
       </motion.div>
     </main>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen bg-brand-dark flex items-center justify-center">
+        <div className="text-white/50">Loading...</div>
+      </main>
+    }>
+      <SignInContent />
+    </Suspense>
   );
 }
