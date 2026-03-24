@@ -2,7 +2,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -42,7 +42,6 @@ export const authOptions: NextAuthOptions = {
         token.google_id = account.providerAccountId;
         token.accessToken = account.access_token;
       }
-      // Refresh premium status from backend on token update
       if (trigger === "update" || account) {
         try {
           const res = await axios.get(
