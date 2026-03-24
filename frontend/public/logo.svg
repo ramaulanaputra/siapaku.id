@@ -1,37 +1,93 @@
-<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 140" fill="none">
   <defs>
-    <linearGradient id="main" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#A855F7"/>
-      <stop offset="50%" stop-color="#C084FC"/>
-      <stop offset="100%" stop-color="#EC4899"/>
+    <radialGradient id="ballGrad" cx="0.45" cy="0.4" r="0.55">
+      <stop offset="0%" stop-color="#c4b5fd"/>
+      <stop offset="30%" stop-color="#a78bfa"/>
+      <stop offset="60%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#4c1d95"/>
+    </radialGradient>
+    <radialGradient id="innerGlow" cx="0.35" cy="0.35" r="0.5">
+      <stop offset="0%" stop-color="#e9d5ff" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#a78bfa" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#4c1d95" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="swirlGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c084fc" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#818cf8" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0.3"/>
     </linearGradient>
-    <linearGradient id="inner" x1="100" y1="100" x2="412" y2="412" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#C084FC"/>
-      <stop offset="100%" stop-color="#F472B6"/>
+    <linearGradient id="baseGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="40%" stop-color="#b45309"/>
+      <stop offset="100%" stop-color="#78350f"/>
     </linearGradient>
-    <linearGradient id="glow" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#A855F7" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="#EC4899" stop-opacity="0.1"/>
+    <linearGradient id="baseHighlight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0"/>
     </linearGradient>
-    <filter id="softglow">
-      <feGaussianBlur stdDeviation="8" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <radialGradient id="rimGlow" cx="0.5" cy="0" r="0.6">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#92400e" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="ballClip">
+      <circle cx="60" cy="58" r="42"/>
+    </clipPath>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.5"/>
     </filter>
   </defs>
-  <rect width="512" height="512" rx="120" fill="#0C0814"/>
-  <rect x="4" y="4" width="504" height="504" rx="116" fill="none" stroke="url(#main)" stroke-width="3" opacity="0.4"/>
-  <rect x="40" y="40" width="432" height="432" rx="96" fill="url(#glow)"/>
-  <path d="M256 160 L152 256 L256 320 Z" fill="url(#main)" opacity="0.25"/>
-  <path d="M256 160 L152 256 L256 320 Z" fill="none" stroke="url(#main)" stroke-width="5" stroke-linejoin="round" filter="url(#softglow)"/>
-  <path d="M256 160 L360 256 L256 320 Z" fill="url(#inner)" opacity="0.25"/>
-  <path d="M256 160 L360 256 L256 320 Z" fill="none" stroke="url(#inner)" stroke-width="5" stroke-linejoin="round" filter="url(#softglow)"/>
-  <path d="M256 320 L216 360 L256 400 L296 360 Z" fill="url(#main)" opacity="0.15"/>
-  <path d="M256 320 L216 360 L256 400 L296 360 Z" fill="none" stroke="url(#main)" stroke-width="3" stroke-linejoin="round" opacity="0.6"/>
-  <line x1="256" y1="130" x2="256" y2="410" stroke="url(#main)" stroke-width="2" opacity="0.2" stroke-dasharray="12 8"/>
-  <circle cx="256" cy="256" r="16" fill="url(#main)" filter="url(#softglow)"/>
-  <circle cx="256" cy="256" r="8" fill="white" opacity="0.9"/>
-  <circle cx="256" cy="130" r="6" fill="url(#inner)" opacity="0.7"/>
+
+  <!-- Ball shadow -->
+  <ellipse cx="60" cy="110" rx="36" ry="6" fill="#1e1b4b" opacity="0.4" filter="url(#softGlow)"/>
+
+  <!-- Wooden base -->
+  <ellipse cx="60" cy="105" rx="28" ry="10" fill="url(#baseGrad)"/>
+  <ellipse cx="60" cy="103" rx="26" ry="8" fill="url(#baseHighlight)"/>
+  <path d="M34 105 C34 100, 40 94, 60 94 C80 94, 86 100, 86 105 C86 112, 80 116, 60 116 C40 116, 34 112, 34 105Z" fill="url(#baseGrad)"/>
+  <ellipse cx="60" cy="105" rx="26" ry="8" fill="url(#rimGlow)"/>
+  <!-- Base wood grain lines -->
+  <path d="M38 108 Q50 106, 60 107 Q70 108, 82 106" stroke="#92400e" stroke-width="0.5" fill="none" opacity="0.4"/>
+  <path d="M40 111 Q52 109, 60 110 Q68 111, 80 109" stroke="#92400e" stroke-width="0.4" fill="none" opacity="0.3"/>
+
+  <!-- Crystal ball -->
+  <circle cx="60" cy="58" r="42" fill="url(#ballGrad)"/>
+  <circle cx="60" cy="58" r="42" fill="url(#innerGlow)"/>
+
+  <!-- Swirl effects inside ball -->
+  <g clip-path="url(#ballClip)">
+    <!-- Purple/pink swirl -->
+    <path d="M30 80 Q35 60, 45 50 Q55 40, 50 30 Q45 20, 55 18" stroke="url(#swirlGrad)" stroke-width="14" fill="none" opacity="0.5" stroke-linecap="round"/>
+    <path d="M35 85 Q42 65, 50 55 Q58 45, 52 32" stroke="#c084fc" stroke-width="8" fill="none" opacity="0.3" stroke-linecap="round"/>
+    <!-- Blue swirl -->
+    <path d="M55 90 Q60 70, 70 55 Q80 40, 75 25" stroke="#818cf8" stroke-width="10" fill="none" opacity="0.35" stroke-linecap="round"/>
+    <path d="M60 92 Q65 75, 72 60 Q79 45, 78 30" stroke="#6366f1" stroke-width="6" fill="none" opacity="0.25" stroke-linecap="round"/>
+  </g>
+
+  <!-- Sparkle stars -->
+  <!-- Star 1 (larger) -->
+  <g transform="translate(72, 45)">
+    <path d="M0,-8 L1.5,-1.5 L8,0 L1.5,1.5 L0,8 L-1.5,1.5 L-8,0 L-1.5,-1.5 Z" fill="white" opacity="0.95">
+      <animate attributeName="opacity" values="0.95;0.6;0.95" dur="3s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  <!-- Star 2 (smaller) -->
+  <g transform="translate(78, 62)">
+    <path d="M0,-5 L1,-1 L5,0 L1,1 L0,5 L-1,1 L-5,0 L-1,-1 Z" fill="white" opacity="0.85">
+      <animate attributeName="opacity" values="0.85;0.5;0.85" dur="2.5s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  <!-- Star 3 (tiny) -->
+  <g transform="translate(65, 35)">
+    <path d="M0,-3 L0.6,-0.6 L3,0 L0.6,0.6 L0,3 L-0.6,0.6 L-3,0 L-0.6,-0.6 Z" fill="white" opacity="0.7">
+      <animate attributeName="opacity" values="0.7;0.35;0.7" dur="2s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- Glass reflection (highlight arc) -->
+  <path d="M38 38 Q45 26, 58 24 Q68 22, 75 28" stroke="white" stroke-width="3.5" fill="none" opacity="0.35" stroke-linecap="round"/>
+  <path d="M42 42 Q48 34, 55 32" stroke="white" stroke-width="2" fill="none" opacity="0.2" stroke-linecap="round"/>
+
+  <!-- Subtle rim light -->
+  <circle cx="60" cy="58" r="41" stroke="white" stroke-width="0.5" fill="none" opacity="0.1"/>
+  <circle cx="60" cy="58" r="42" stroke="#7c3aed" stroke-width="0.8" fill="none" opacity="0.15"/>
 </svg>

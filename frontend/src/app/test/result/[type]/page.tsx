@@ -2,6 +2,7 @@
 
 import { useParams, useSearchParams } from "next/navigation";
 import { useState, useEffect, Suspense } from "react";
+import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
@@ -10,6 +11,7 @@ import {
   DIMENSION_INFO,
 } from "@/lib/scoring";
 import { MBTI_PROFILES, MBTIType, getSquadColor, getSquadEmoji } from "@/lib/mbtiData";
+import { StoryGenerator } from "@/components/StoryGenerator";
 import type { MBTIDimension } from "@/lib/questions";
 
 /* ═══════════════════════════════════════════
@@ -251,6 +253,7 @@ function DimensionCard({
    Main Result Page (inner, wrapped with Suspense)
    ═══════════════════════════════════════════ */
 function ResultContent() {
+  const { data: session } = useSession();
   const params = useParams();
   const searchParams = useSearchParams();
 
@@ -755,11 +758,19 @@ function ResultContent() {
                 Setiap kepribadian itu unik dan berharga. Kenali dirimu, terima dirimu, dan tumbuh jadi versi terbaik kamu.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <button onClick={handleShare} className="btn-primary flex items-center gap-2 justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                   {shareText}
                 </button>
+                {hasDimensions && (
+                  <StoryGenerator
+                    mbtiType={mbtiType}
+                    identity={identity}
+                    userName={session?.user?.name || undefined}
+                    dimensions={dimensions}
+                  />
+                )}
                 <Link href="/test" className="btn-secondary">
                   🔄 Ulangi Tes
                 </Link>

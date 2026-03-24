@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "@/styles/premium-animations.css";
 import { Providers } from "@/components/layout/Providers";
 import { Toaster } from "react-hot-toast";
-import ScrollReveal from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "SIAPA AKU — Kenal Diri, Baru Bisa Sayang Diri",
@@ -38,7 +36,6 @@ export default function RootLayout({
     <html lang="id" suppressHydrationWarning>
       <body>
         <Providers>
-          <ScrollReveal />
           {children}
           <Toaster
             position="top-center"
