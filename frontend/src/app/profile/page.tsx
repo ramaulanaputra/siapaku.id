@@ -118,47 +118,49 @@ function EditableField({
         <span>{icon}</span> {label}
       </label>
       {editing ? (
-        <div className="flex gap-2">
-          {multiline ? (
-            <textarea
-              value={draft}
-              onChange={(e) => setDraft(e.target.value)}
-              placeholder={placeholder}
-              maxLength={maxLength}
-              className="flex-1 bg-white/[0.06] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 resize-none transition-all"
-              rows={3}
-              autoFocus
-            />
-          ) : (
-            <input
-              type={type}
-              value={draft}
-              onChange={(e) => setDraft(e.target.value)}
-              placeholder={placeholder}
-              maxLength={maxLength}
-              className="flex-1 bg-white/[0.06] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 transition-all"
-              autoFocus
-            />
-          )}
-          <div className="flex flex-col gap-1.5">
-            <button
-              onClick={handleSave}
-              disabled={saving}
-              className="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 rounded-lg text-white text-xs font-medium transition-colors disabled:opacity-50"
-            >
-              {saving ? "..." : "✓"}
-            </button>
-            <button
-              onClick={() => { setEditing(false); setDraft(value); setValidationError(null); }}
-              className="px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-white/50 text-xs transition-colors"
-            >
-              ✕
-            </button>
+        <>
+          <div className="flex gap-2">
+            {multiline ? (
+              <textarea
+                value={draft}
+                onChange={(e) => setDraft(e.target.value)}
+                placeholder={placeholder}
+                maxLength={maxLength}
+                className="flex-1 bg-white/[0.06] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 resize-none transition-all"
+                rows={3}
+                autoFocus
+              />
+            ) : (
+              <input
+                type={type}
+                value={draft}
+                onChange={(e) => setDraft(e.target.value)}
+                placeholder={placeholder}
+                maxLength={maxLength}
+                className="flex-1 bg-white/[0.06] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 transition-all"
+                autoFocus
+              />
+            )}
+            <div className="flex flex-col gap-1.5">
+              <button
+                onClick={handleSave}
+                disabled={saving}
+                className="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 rounded-lg text-white text-xs font-medium transition-colors disabled:opacity-50"
+              >
+                {saving ? "..." : "✓"}
+              </button>
+              <button
+                onClick={() => { setEditing(false); setDraft(value); setValidationError(null); }}
+                className="px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-white/50 text-xs transition-colors"
+              >
+                ✕
+              </button>
+            </div>
           </div>
-        </div>
-        {validationError && (
-          <p className="text-red-400 text-xs mt-1.5">{validationError}</p>
-        )}
+          {validationError && (
+            <p className="text-red-400 text-xs mt-1.5">{validationError}</p>
+          )}
+        </>
       ) : (
         <button
           onClick={() => setEditing(true)}
