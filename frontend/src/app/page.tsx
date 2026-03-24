@@ -313,13 +313,13 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <div className="text-xs text-amber-400 font-bold tracking-[5px] mb-4" data-scroll="fade">
-              HARGA & PAKET
+              PAKET MEMBER
             </div>
             <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4" data-scroll="up">
-              Mulai dari <span className="gradient-text-gold">Rp 99.000</span>
+              Tes Gratis, Member mulai <span className="gradient-text-gold">Rp 99.000</span>
             </h2>
             <p className="text-white/40 text-lg" data-scroll="up" data-delay="100">
-              Tes gratis, tapi unlock fitur lengkap? Harganya terjangkau banget.
+              Tes MBTI & report digital gratis. Upgrade ke Member untuk sertifikat resmi, report personal, dan konsultasi psikolog.
             </p>
           </div>
 
@@ -343,7 +343,7 @@ export default function HomePage() {
                   </div>
                 )}
                 <div className="text-3xl mb-3">{pkg.emoji}</div>
-                <h3 className="font-display font-bold text-white text-lg">Paket {pkg.name}</h3>
+                <h3 className="font-display font-bold text-white text-lg">Member {pkg.name}</h3>
                 <div className="font-display text-2xl font-bold gradient-text my-2">{pkg.price}</div>
                 <p className="text-white/30 text-xs">sekali bayar</p>
               </div>

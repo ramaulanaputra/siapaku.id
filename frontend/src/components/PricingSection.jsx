@@ -6,16 +6,16 @@ const packages = [
     id: "standar",
     name: "Standar",
     price: 99000,
-    color: "#6B7280",
-    accent: "#9CA3AF",
-    gradient: "from-gray-700 to-gray-900",
+    color: "#6366F1",
+    accent: "#818CF8",
+    gradient: "from-indigo-600 to-indigo-900",
     features: [
-      "✓ Tes MBTI Lengkap",
-      "✓ Hasil Analisis Karakter",
-      "✓ Rekomendasi Karier",
-      "✓ Akses Hasil Digital",
+      "✓ Sertifikat Online PDF (verifikasi kode unik/barcode)",
+      "✓ Printout Fisik Sertifikat Resmi dikirim ke rumah",
+      "✓ Report Personalized & Tailored",
+      "✓ Dihubungi Tim Siapa Aku untuk diskusi hasil tes",
     ],
-    cta: "Mulai Tes",
+    cta: "Gabung Member",
     popular: false,
     consultCredits: 0,
   },
@@ -27,13 +27,13 @@ const packages = [
     accent: "#A78BFA",
     gradient: "from-violet-600 to-purple-900",
     features: [
-      "✓ Semua di Paket Standar",
-      "✓ PDF Report Premium",
-      "✓ Printout Fisik Report",
+      "✓ Semua benefit Paket Standar",
+      "✓ PDF Report Premium Ekstra",
+      "✓ Printout Fisik Report Premium",
       "✓ 1× Konsul Psikolog Gratis",
-      "✓ Unlock Fitur Konsultasi",
+      "✓ Unlock Fitur Konsultasi Psikolog",
     ],
-    cta: "Pilih Premium",
+    cta: "Gabung Premium",
     popular: true,
     consultCredits: 1,
   },
@@ -45,13 +45,13 @@ const packages = [
     accent: "#FCD34D",
     gradient: "from-amber-600 to-yellow-900",
     features: [
-      "✓ Semua di Paket Premium",
+      "✓ Semua benefit Paket Premium",
       "✓ T-Shirt MBTI Personalized",
       "✓ Notebook Eksklusif",
       "✓ Tumbler atau Tote Bag Premium",
       "✓ 2× Konsul Psikolog Gratis",
     ],
-    cta: "Pilih Ultimate",
+    cta: "Gabung Ultimate",
     popular: false,
     consultCredits: 2,
   },
@@ -346,13 +346,13 @@ export default function PricingSection({ user, onPayment }) {
           transition: "all 0.8s cubic-bezier(0.16,1,0.3,1)",
         }}>
           <div style={{ fontSize: 12, color: "#7C3AED", fontWeight: 800, letterSpacing: 4, marginBottom: 12 }}>
-            HARGA & PAKET
+            PAKET MEMBER
           </div>
           <h2 style={{ fontSize: 42, fontWeight: 900, color: "#fff", lineHeight: 1.15, margin: 0 }}>
-            Pilih Paket Tes MBTI
+            Pilih Paket Member
           </h2>
           <p style={{ color: "#6B7280", fontSize: 16, marginTop: 16, maxWidth: 480, margin: "16px auto 0" }}>
-            Kenali dirimu lebih dalam dengan laporan yang komprehensif dan support psikolog profesional.
+            Tes MBTI gratis untuk semua. Upgrade ke Member untuk sertifikat resmi, report personal, dan konsultasi psikolog.
           </p>
         </div>
 

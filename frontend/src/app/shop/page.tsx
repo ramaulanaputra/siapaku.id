@@ -9,7 +9,9 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 /* ─────────────────────────────────────────────
-   PAKET TES MBTI
+   PAKET MEMBER SIAPA AKU
+   Tes MBTI & report digital dasar GRATIS.
+   Paket member = benefit eksklusif tambahan.
    ───────────────────────────────────────────── */
 const PACKAGES = [
   {
@@ -20,12 +22,12 @@ const PACKAGES = [
     emoji: "🎓",
     color: "#6366F1",
     accent: "#818CF8",
-    tagline: "Mulai perjalanan kenali diri",
+    tagline: "Sertifikat resmi & report personalized",
     features: [
-      "Tes MBTI Lengkap",
-      "Hasil Analisis Karakter",
-      "Rekomendasi Karier",
-      "Akses Hasil Digital",
+      "Sertifikat Online PDF (verifikasi via kode unik/barcode)",
+      "Printout Fisik Sertifikat Resmi dikirim ke rumah",
+      "Report Personalized & Tailored",
+      "Dihubungi Tim Siapa Aku untuk diskusi hasil tes",
     ],
     popular: false,
     badge: null,
@@ -39,13 +41,13 @@ const PACKAGES = [
     emoji: "👑",
     color: "#7C3AED",
     accent: "#A78BFA",
-    tagline: "Report lengkap + bonus konsul psikolog",
+    tagline: "Semua di Standar + bonus konsul psikolog",
     features: [
-      "Semua di Paket Standar",
-      "PDF Report Premium",
-      "Printout Fisik Report",
+      "Semua benefit Paket Standar",
+      "PDF Report Premium Ekstra",
+      "Printout Fisik Report Premium",
       "1× Konsul Psikolog Gratis",
-      "Unlock Fitur Konsultasi",
+      "Unlock Fitur Konsultasi Psikolog",
     ],
     popular: true,
     badge: "Terpopuler",
@@ -61,7 +63,7 @@ const PACKAGES = [
     accent: "#FCD34D",
     tagline: "Full experience + merchandise eksklusif",
     features: [
-      "Semua di Paket Premium",
+      "Semua benefit Paket Premium",
       "T-Shirt MBTI Personalized",
       "Notebook Eksklusif",
       "Pilih: Tumbler atau Tote Bag Premium",
@@ -247,7 +249,7 @@ export default function ShopPage() {
               Wujudkan <span className="gradient-text">Identity Kamu</span>
             </h1>
             <p className="text-white/50 text-lg max-w-xl mx-auto">
-              Sertifikat, report, merchandise, dan konsultasi psikolog yang mencerminkan kepribadian unikmu.
+              Tes MBTI gratis untuk semua. Upgrade ke Member untuk sertifikat resmi, report personal, merchandise, dan konsultasi psikolog.
             </p>
           </motion.div>
         </motion.div>
@@ -257,7 +259,7 @@ export default function ShopPage() {
       <div className="sticky top-16 z-40 px-6 py-4 bg-brand-dark/80 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-4xl mx-auto flex gap-2 flex-wrap">
           {[
-            { id: "certificate", label: "🏆 Paket Tes" },
+            { id: "certificate", label: "🏆 Paket Member" },
             { id: "psikolog", label: "🧠 Konsul Psikolog" },
             { id: "merch", label: "🛍️ Merchandise" },
           ].map((tab) => (
@@ -282,6 +284,15 @@ export default function ShopPage() {
       {activeTab === "certificate" && (
         <section className="py-16 px-6">
           <div className="max-w-5xl mx-auto">
+            {/* Free test info */}
+            <motion.div {...fadeUp} className="mb-8 glass rounded-2xl p-5 border border-emerald-500/20 flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-green-500/20 flex items-center justify-center text-2xl shrink-0">🆓</div>
+              <div>
+                <p className="text-emerald-400 font-semibold text-sm">Tes MBTI & Report Digital Dasar — Gratis!</p>
+                <p className="text-white/40 text-xs">Semua orang bisa ikut tes dan lihat hasil dasar tanpa bayar. Paket Member memberikan benefit eksklusif tambahan.</p>
+              </div>
+            </motion.div>
+
             {/* Consult credits banner */}
             {consultCredits > 0 && (
               <motion.div {...fadeUp} className="mb-8 glass rounded-2xl p-5 border border-green-500/30 flex items-center gap-4">
@@ -327,7 +338,7 @@ export default function ShopPage() {
                   />
 
                   <div className="text-4xl mb-4">{pkg.emoji}</div>
-                  <h3 className="font-display text-2xl font-bold text-white mb-1">Paket {pkg.name}</h3>
+                  <h3 className="font-display text-2xl font-bold text-white mb-1">Member {pkg.name}</h3>
                   <p className="text-white/40 text-xs mb-4">{pkg.tagline}</p>
                   <div className="font-display text-3xl font-bold mb-2" style={{ color: pkg.color }}>
                     {pkg.priceLabel}
@@ -373,7 +384,7 @@ export default function ShopPage() {
                         Memproses...
                       </span>
                     ) : (
-                      `Beli Paket ${pkg.name} →`
+                      `Gabung Member ${pkg.name} →`
                     )}
                   </motion.button>
                 </motion.div>
