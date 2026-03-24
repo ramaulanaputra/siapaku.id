@@ -199,54 +199,56 @@ const TESTIMONIALS = [
 
 const PRICING = [
   {
-    name: "Starter",
-    price: "Gratis",
-    period: "selamanya",
-    desc: "Mulai perjalanan self-discovery kamu.",
+    name: "Standar",
+    price: "Rp 99K",
+    period: "sekali bayar",
+    desc: "Sertifikat resmi & report personalized.",
     features: [
-      "Tes MBTI 100 pertanyaan",
-      "Profil tipe kepribadian dasar",
-      "1 dimensi analisis (EI)",
-      "Squad & badge kamu",
+      "Sertifikat Online PDF (verifikasi via kode unik/barcode)",
+      "Printout Fisik Sertifikat Resmi dikirim ke rumah",
+      "Report PDF Personalized & Tailored",
+      "Dihubungi Tim Siapa Aku untuk diskusi hasil tes",
     ],
-    cta: "Mulai Gratis",
+    cta: "Gabung Member Standar →",
     popular: false,
     accent: "from-white/5 to-white/10",
     border: "border-white/10",
+    emoji: "🎓",
   },
   {
-    name: "Deep Dive",
-    price: "Rp 49K",
+    name: "Premium",
+    price: "Rp 199K",
     period: "sekali bayar",
-    desc: "Unlock semua 8 dimensi kepribadian.",
+    desc: "Semua di Standar + bonus konsul psikolog.",
     features: [
-      "Semua fitur Starter",
-      "8 dimensi analisis lengkap",
-      "Shadow Work & Core Values",
-      "Love Language & Romantic Style",
-      "Career Path recommendation",
-      "PDF report personal",
+      "Semua benefit Member Standar",
+      "Printout Fisik Report Premium (dikirim ke rumah)",
+      "1× Konsul Psikolog Gratis",
+      "Unlock Fitur Konsultasi Psikolog",
     ],
-    cta: "Unlock Deep Dive",
+    cta: "Gabung Member Premium →",
     popular: true,
     accent: "from-purple-500 to-pink-500",
     border: "border-purple-500/40",
+    emoji: "👑",
   },
   {
-    name: "Duo / Couple",
-    price: "Rp 79K",
-    period: "untuk 2 orang",
-    desc: "Bandingkan kepribadian dengan pasangan / sahabat.",
+    name: "Ultimate",
+    price: "Rp 399K",
+    period: "sekali bayar",
+    desc: "Full experience + merchandise eksklusif.",
     features: [
-      "Semua fitur Deep Dive × 2",
-      "Compatibility analysis",
-      "Communication style comparison",
-      "Relationship dynamics insight",
+      "Semua benefit Member Premium",
+      "T-Shirt MBTI Personalized",
+      "Notebook Eksklusif",
+      "Pilih: Tumbler atau Tote Bag Premium",
+      "2× Konsul Psikolog Gratis",
     ],
-    cta: "Mulai Berdua",
+    cta: "Gabung Member Ultimate →",
     popular: false,
-    accent: "from-white/5 to-white/10",
-    border: "border-white/10",
+    accent: "from-amber-500 to-yellow-500",
+    border: "border-amber-500/30",
+    emoji: "💎",
   },
 ];
 
@@ -485,14 +487,15 @@ export default function HomePage() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="mb-8"
           >
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-md text-sm text-purple-300 shadow-[0_0_20px_rgba(168,85,247,0.15)]">
+            <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-md text-xs sm:text-sm text-purple-300 shadow-[0_0_20px_rgba(168,85,247,0.15)] max-w-[90vw] text-center leading-snug">
               <motion.span
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
+                className="shrink-0"
               >
                 ✦
               </motion.span>
-              Platform Self-Discovery #1 Indonesia
+              <span className="whitespace-nowrap">Platform Self-Discovery #1 Indonesia</span>
             </span>
           </motion.div>
 
@@ -945,8 +948,23 @@ export default function HomePage() {
               variants={fadeInUp}
               className="text-white/50 max-w-lg mx-auto"
             >
-              Mulai gratis, upgrade kapan aja.
+              Tes MBTI gratis untuk semua. Upgrade ke Member untuk sertifikat resmi, report personal, dan konsultasi psikolog.
             </motion.p>
+          </motion.div>
+
+          {/* Free test notice */}
+          <motion.div
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="mb-8 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 backdrop-blur-sm p-5 flex items-center gap-4"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-2xl shrink-0">🆓</div>
+            <div>
+              <p className="text-emerald-400 font-semibold text-sm">Tes MBTI & Report Digital Dasar — Gratis!</p>
+              <p className="text-white/40 text-xs">Semua orang bisa ikut tes dan lihat hasil dasar tanpa bayar. Paket Member memberikan benefit eksklusif tambahan.</p>
+            </div>
           </motion.div>
 
           {/* Pricing cards */}
@@ -993,8 +1011,9 @@ export default function HomePage() {
                   </div>
                 )}
 
+                <div className="text-3xl mb-3">{(pkg as any).emoji}</div>
                 <h3 className="text-lg font-semibold text-white mb-1">
-                  {pkg.name}
+                  Member {pkg.name}
                 </h3>
                 <p className="text-sm text-white/40 mb-4">{pkg.desc}</p>
                 <div className="mb-6">
