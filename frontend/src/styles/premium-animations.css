@@ -12,52 +12,60 @@
 
 /* ── Scroll reveal: data-scroll attribute selectors ───────── */
 
-/* All data-scroll elements start hidden */
+/* 
+ * SAFE SCROLL REVEAL: Elements are visible by default.
+ * Only hidden AFTER JavaScript adds .scroll-ready to <html>.
+ * This prevents blank pages if JS fails to load.
+ */
+
+/* Default: all elements visible */
 [data-scroll] {
-  opacity: 0;
   transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo), filter 0.8s var(--ease-out-expo);
   will-change: opacity, transform;
 }
 
-/* Direction-specific initial transforms */
-[data-scroll="up"] {
+/* Only hide elements once JS is ready */
+html.scroll-ready [data-scroll] {
+  opacity: 0;
+}
+html.scroll-ready [data-scroll="up"] {
   transform: translateY(48px);
 }
-[data-scroll="down"] {
+html.scroll-ready [data-scroll="down"] {
   transform: translateY(-48px);
 }
-[data-scroll="left"] {
+html.scroll-ready [data-scroll="left"] {
   transform: translateX(-60px);
 }
-[data-scroll="right"] {
+html.scroll-ready [data-scroll="right"] {
   transform: translateX(60px);
 }
-[data-scroll="zoom-in"] {
+html.scroll-ready [data-scroll="zoom-in"] {
   transform: scale(0.85);
 }
-[data-scroll="zoom-out"] {
+html.scroll-ready [data-scroll="zoom-out"] {
   transform: scale(1.15);
 }
-[data-scroll="fade"] {
+html.scroll-ready [data-scroll="fade"] {
   transform: none;
 }
-[data-scroll="blur"] {
+html.scroll-ready [data-scroll="blur"] {
   transform: translateY(24px);
   filter: blur(8px);
 }
-[data-scroll="rotate-in"] {
+html.scroll-ready [data-scroll="rotate-in"] {
   transform: rotate(-6deg) scale(0.9);
 }
-[data-scroll="slide-up-blur"] {
+html.scroll-ready [data-scroll="slide-up-blur"] {
   transform: translateY(60px);
   filter: blur(6px);
 }
 
-/* Revealed state — all directions reset to normal */
+/* Revealed state — reset to normal */
 [data-scroll].revealed {
-  opacity: 1;
-  transform: translateY(0) translateX(0) scale(1) rotate(0deg);
-  filter: blur(0);
+  opacity: 1 !important;
+  transform: translateY(0) translateX(0) scale(1) rotate(0deg) !important;
+  filter: blur(0) !important;
 }
 
 /* data-delay attribute support */

@@ -84,9 +84,9 @@ export default function HomePage() {
               transition={{ delay: 0.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-[1.05]"
             >
-              Sebelum Kenal Orang,
+              Satu Tes.
               <br />
-              <span className="gradient-text">Kenal Diri Dulu</span>
+              <span className="gradient-text">Ribuan Jawaban Tentang Kamu.</span>
             </motion.h1>
 
             <motion.p
@@ -95,8 +95,8 @@ export default function HomePage() {
               transition={{ delay: 0.5, duration: 0.8 }}
               className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
             >
-              Tak kenal maka tak sayang — tapi kapan kamu mulai menyayangi 
-              diri sendiri? SIAPA AKU hadir untuk menjadi cermin diri sejati kamu.
+              SIAPA AKU menggali 8 dimensi kepribadianmu — dari cara berpikir, 
+              emosi, hingga love language. Gratis, personal, dan mendalam.
             </motion.p>
 
             <motion.div
@@ -323,7 +323,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 pt-4">
             {[
               { name: "Standar", price: "Rp 99rb", emoji: "🎓", highlight: false },
               { name: "Premium", price: "Rp 199rb", emoji: "👑", highlight: true },
@@ -333,13 +333,13 @@ export default function HomePage() {
                 key={pkg.name}
                 data-scroll="up"
                 data-delay={`${(i + 1) * 100}`}
-                className={`glass rounded-2xl p-6 text-center card-hover card-shine ${
-                  pkg.highlight ? "ring-2 ring-purple-500/50 relative" : ""
+                className={`glass rounded-2xl p-6 text-center card-hover card-shine relative overflow-visible ${
+                  pkg.highlight ? "ring-2 ring-purple-500/50" : ""
                 }`}
               >
                 {pkg.highlight && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                    Terpopuler
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10 whitespace-nowrap">
+                    ✦ Terpopuler
                   </div>
                 )}
                 <div className="text-3xl mb-3">{pkg.emoji}</div>
