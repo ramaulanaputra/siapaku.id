@@ -158,10 +158,11 @@ const cardVariants = {
     transition: { type: "spring", stiffness: 80, damping: 18 },
   },
 };
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+const fadeUpVariants = {
+  offscreen: { opacity: 0, y: 30 },
+  onscreen: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
 };
+const fadeUp = { variants: fadeUpVariants, initial: "offscreen" as const, whileInView: "onscreen" as const, viewport: { once: true } };
 
 export default function ShopPage() {
   const { data: session } = useSession();

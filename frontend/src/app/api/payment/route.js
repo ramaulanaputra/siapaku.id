@@ -1,22 +1,8 @@
 // ============================================================
-// api/payment/route.js
-// Midtrans Payment Integration
+// api/payment/route.js — Next.js App Router
+// Midtrans Payment Integration + Credit System
 // ============================================================
-const midtransClient = require("midtrans-client");
-const nodemailer = require("nodemailer");
-const { createClient } = require("@supabase/supabase-js");
-
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
-);
-
-// Midtrans Snap client
-const snap = new midtransClient.Snap({
-  isProduction: process.env.NODE_ENV === "production",
-  serverKey: process.env.MIDTRANS_SERVER_KEY,
-  clientKey: process.env.MIDTRANS_CLIENT_KEY,
-});
+import { NextResponse } from "next/server";
 
 // ── Paket definitions ─────────────────────────────────────────
 const TEST_PACKAGES = {
@@ -65,15 +51,54 @@ const CONSULT_PACKAGES = {
 
 const ALL_PACKAGES = { ...TEST_PACKAGES, ...CONSULT_PACKAGES };
 
-// ── Create Midtrans Transaction ───────────────────────────────
-async function createTransaction(req, res) {
+// ── Lazy-load heavy deps (only in Node runtime) ──────────────
+let _snap = null;
+function getSnap() {
+  if (!_snap) {
+    const midtransClient = require("midtrans-client");
+    _snap = new midtransClient.Snap({
+      isProduction: process.env.NODE_ENV === "production",
+      serverKey: process.env.MIDTRANS_SERVER_KEY,
+      clientKey: process.env.MIDTRANS_CLIENT_KEY,
+    });
+  }
+  return _snap;
+}
+
+let _supabase = null;
+function getSupabase() {
+  if (!_supabase) {
+    const { createClient } = require("@supabase/supabase-js");
+    _supabase = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_KEY
+    );
+  }
+  return _supabase;
+}
+
+// ── POST /api/payment — Create Midtrans Transaction ──────────
+export async function POST(request) {
   try {
-    const { packageId, userId, userEmail, userName } = req.body;
+    const body = await request.json();
+    const { packageId, userId, userEmail, userName, action } = body;
+
+    // Webhook notification handler
+    if (action === "notification") {
+      return handleNotification(body);
+    }
 
     const pkg = ALL_PACKAGES[packageId];
-    if (!pkg) return res.status(400).json({ error: "Paket tidak ditemukan" });
+    if (!pkg) {
+      return NextResponse.json(
+        { error: "Paket tidak ditemukan" },
+        { status: 400 }
+      );
+    }
 
-    const orderId = `ORDER-${Date.now()}-${userId.slice(0, 8)}`;
+    const snap = getSnap();
+    const supabase = getSupabase();
+    const orderId = `ORDER-${Date.now()}-${(userId || "guest").slice(0, 8)}`;
 
     // Save pending order to DB
     await supabase.from("orders").insert({
@@ -108,26 +133,29 @@ async function createTransaction(req, res) {
     };
 
     const transaction = await snap.createTransaction(parameter);
-    res.json({ token: transaction.token, orderId });
+    return NextResponse.json({ token: transaction.token, orderId });
   } catch (err) {
     console.error("Midtrans error:", err);
-    res.status(500).json({ error: "Gagal membuat transaksi" });
+    return NextResponse.json(
+      { error: "Gagal membuat transaksi" },
+      { status: 500 }
+    );
   }
 }
 
-// ── Midtrans Webhook (Notification Handler) ───────────────────
-async function handleNotification(req, res) {
+// ── Webhook Notification Handler ─────────────────────────────
+async function handleNotification(body) {
   try {
-    const notification = await snap.transaction.notification(req.body);
-    const {
-      order_id,
-      transaction_status,
-      fraud_status,
-      payment_type,
-    } = notification;
+    const snap = getSnap();
+    const supabase = getSupabase();
+
+    const notification = await snap.transaction.notification(body);
+    const { order_id, transaction_status, fraud_status, payment_type } =
+      notification;
 
     let isPaid = false;
-    if (transaction_status === "capture" && fraud_status === "accept") isPaid = true;
+    if (transaction_status === "capture" && fraud_status === "accept")
+      isPaid = true;
     if (transaction_status === "settlement") isPaid = true;
 
     if (!isPaid) {
@@ -137,7 +165,7 @@ async function handleNotification(req, res) {
           .update({ status: transaction_status })
           .eq("id", order_id);
       }
-      return res.json({ message: "Notification received" });
+      return NextResponse.json({ message: "Notification received" });
     }
 
     // ── Payment SUCCESS ──────────────────────────────────────
@@ -147,12 +175,21 @@ async function handleNotification(req, res) {
       .eq("id", order_id)
       .single();
 
-    if (!order) return res.status(404).json({ error: "Order not found" });
+    if (!order) {
+      return NextResponse.json(
+        { error: "Order not found" },
+        { status: 404 }
+      );
+    }
 
     // Update order to paid
     await supabase
       .from("orders")
-      .update({ status: "paid", paid_at: new Date().toISOString(), payment_type })
+      .update({
+        status: "paid",
+        paid_at: new Date().toISOString(),
+        payment_type,
+      })
       .eq("id", order_id);
 
     // ── Update user profile / credits ────────────────────────
@@ -162,38 +199,54 @@ async function handleNotification(req, res) {
       .eq("id", order.user_id)
       .single();
 
-    const updates = {};
-    const credits = order.consult_credits || 0;
+    if (profile) {
+      const updates = {};
+      const credits = order.consult_credits || 0;
 
-    if (order.type === "test") {
-      updates.test_package = order.package_id;
-      updates.has_pdf_report = ["premium", "ultimate"].includes(order.package_id);
-      updates.has_physical_merch = order.package_id === "ultimate";
-      updates.consult_unlocked =
-        ["premium", "ultimate"].includes(order.package_id) || profile.consult_unlocked;
+      if (order.type === "test") {
+        updates.test_package = order.package_id;
+        updates.has_pdf_report = ["premium", "ultimate"].includes(
+          order.package_id
+        );
+        updates.has_physical_merch = order.package_id === "ultimate";
+        updates.consult_unlocked =
+          ["premium", "ultimate"].includes(order.package_id) ||
+          profile.consult_unlocked;
+      }
+
+      if (credits > 0) {
+        updates.consult_credits = (profile.consult_credits || 0) + credits;
+      }
+
+      if (Object.keys(updates).length > 0) {
+        await supabase
+          .from("profiles")
+          .update(updates)
+          .eq("id", order.user_id);
+      }
+
+      // ── Send confirmation email ──────────────────────────────
+      try {
+        await sendConfirmationEmail(order, profile, credits);
+      } catch (emailErr) {
+        console.error("Email error (non-blocking):", emailErr);
+      }
     }
 
-    if (credits > 0) {
-      updates.consult_credits = (profile.consult_credits || 0) + credits;
-    }
-
-    await supabase
-      .from("profiles")
-      .update(updates)
-      .eq("id", order.user_id);
-
-    // ── Send confirmation email ──────────────────────────────
-    await sendConfirmationEmail(order, profile, credits);
-
-    res.json({ message: "Payment processed successfully" });
+    return NextResponse.json({ message: "Payment processed successfully" });
   } catch (err) {
     console.error("Webhook error:", err);
-    res.status(500).json({ error: "Webhook processing failed" });
+    return NextResponse.json(
+      { error: "Webhook processing failed" },
+      { status: 500 }
+    );
   }
 }
 
 // ── Email Sender ─────────────────────────────────────────────
 async function sendConfirmationEmail(order, profile, consultCredits) {
+  const nodemailer = require("nodemailer");
+  
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: 587,
@@ -251,17 +304,13 @@ async function sendConfirmationEmail(order, profile, consultCredits) {
               <span class="label">Total Bayar</span>
               <span class="value">Rp ${order.amount.toLocaleString("id-ID")}</span>
             </div>
-            <div class="detail-row">
-              <span class="label">Tanggal</span>
-              <span class="value">${new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}</span>
-            </div>
           </div>
 
           ${creditsHtml}
           
           <p>Kredit dan fitur telah otomatis aktif di akun kamu. Kamu bisa langsung menggunakannya!</p>
           
-          <a href="${process.env.APP_URL}/profile" class="cta">Lihat Profil Saya →</a>
+          <a href="${process.env.APP_URL || "https://siapaku.id"}/profile" class="cta">Lihat Profil Saya →</a>
         </div>
         <div class="footer">
           <p>Email ini dikirim otomatis. Jangan balas email ini.</p>
@@ -279,5 +328,3 @@ async function sendConfirmationEmail(order, profile, consultCredits) {
     html,
   });
 }
-
-module.exports = { createTransaction, handleNotification };
