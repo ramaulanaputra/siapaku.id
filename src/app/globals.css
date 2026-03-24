@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply bg-brand-cream text-brand-dark font-sans; }
+  ::selection { @apply bg-brand-blue/20 text-brand-dark; }
+}
+@layer components {
+  .btn-primary { @apply bg-brand-blue text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95; }
+  .btn-secondary { @apply bg-brand-tan text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-amber-600 transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95; }
+  .btn-outline { @apply border-2 border-brand-blue text-brand-blue px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-blue hover:text-white transition-all duration-300; }
+  .card-glass { @apply bg-white/70 backdrop-blur-lg rounded-3xl shadow-lg border border-white/50 p-8; }
+  .gradient-text { @apply bg-gradient-to-r from-brand-blue to-brand-tan bg-clip-text text-transparent; }
+  .section-padding { @apply py-20 md:py-28 px-4 md:px-8; }
+}
