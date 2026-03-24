@@ -1,42 +1,42 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export async function GET() {
   const clientId = process.env.GOOGLE_CLIENT_ID || "";
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET || "";
   
-  // Test if client_id + client_secret are valid by calling Google's tokeninfo
-  let tokenTestResult = "not tested";
+  // Test token exchange
+  let tokenTest = "skipped";
   try {
-    // Try token exchange with a dummy code to see if credentials are recognized
-    const tokenRes = await fetch("https://oauth2.googleapis.com/token", {
+    const res = await fetch("https://oauth2.googleapis.com/token", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
-        code: "test_invalid_code",
         client_id: clientId,
         client_secret: clientSecret,
-        redirect_uri: "https://siapaku.vercel.app/api/auth/callback/google",
+        code: "test",
         grant_type: "authorization_code",
+        redirect_uri: "https://siapaku.vercel.app/api/auth/callback/google",
       }),
     });
-    const tokenData = await tokenRes.json();
-    // If credentials are valid but code is invalid, we get "invalid_grant"
-    // If credentials are invalid, we get "invalid_client"
-    tokenTestResult = JSON.stringify(tokenData);
-  } catch (err: any) {
-    tokenTestResult = `Error: ${err.message}`;
+    tokenTest = await res.text();
+  } catch (e: any) {
+    tokenTest = e.message;
   }
 
-  const diagnostics = {
+  const resp = NextResponse.json({
     timestamp: new Date().toISOString(),
     env: {
-      GOOGLE_CLIENT_ID: clientId ? `${clientId.substring(0, 20)}... (${clientId.length} chars)` : "NOT SET",
+      GOOGLE_CLIENT_ID: clientId ? `${clientId.substring(0, 12)}... (${clientId.length} chars)` : "NOT SET",
       GOOGLE_CLIENT_SECRET: clientSecret ? `SET (${clientSecret.length} chars, starts with: ${clientSecret.substring(0, 6)}...)` : "NOT SET",
       NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET ? `SET (${process.env.NEXTAUTH_SECRET.length} chars)` : "NOT SET",
       NEXTAUTH_URL: process.env.NEXTAUTH_URL || "NOT SET",
     },
-    googleTokenExchangeTest: tokenTestResult,
-  };
-
-  return NextResponse.json(diagnostics);
+    googleTokenExchangeTest: tokenTest,
+  });
+  
+  resp.headers.set("Cache-Control", "no-store, no-cache, must-revalidate");
+  return resp;
 }
