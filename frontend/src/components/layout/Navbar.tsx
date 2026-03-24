@@ -38,9 +38,13 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
-            <span className="text-white font-display font-bold text-sm">SA</span>
-          </div>
+          <Image
+            src="/logo.svg"
+            alt="SIAPA AKU"
+            width={38}
+            height={38}
+            className="group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(168,85,247,0.4)]"
+          />
           <span className="font-display font-bold text-lg text-white tracking-tight">
             SIAPA <span className="gradient-text">AKU</span>
           </span>

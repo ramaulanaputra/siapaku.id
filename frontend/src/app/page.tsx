@@ -24,7 +24,7 @@ const FEATURES = [
 const STATS = [
   { value: "16", label: "Tipe MBTI" },
   { value: "8", label: "Dimensi Analisis" },
-  { value: "100+", label: "Pertanyaan Unik" },
+  { value: "1000+", label: "Pertanyaan Unik" },
   { value: "Gratis", label: "Selamanya" },
 ];
 
