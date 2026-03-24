@@ -67,6 +67,8 @@ function EditableField({
   multiline = false,
   maxLength,
   onSave,
+  validate,
+  helperText,
 }: {
   label: string;
   icon: string;
@@ -77,6 +79,8 @@ function EditableField({
   multiline?: boolean;
   maxLength?: number;
   onSave: (key: string, val: string) => Promise<void>;
+  validate?: (val: string) => string | null;
+  helperText?: string;
 }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(value);
@@ -86,7 +90,17 @@ function EditableField({
     setDraft(value);
   }, [value]);
 
+  const [validationError, setValidationError] = useState<string | null>(null);
+
   const handleSave = async () => {
+    if (validate) {
+      const err = validate(draft);
+      if (err) {
+        setValidationError(err);
+        return;
+      }
+    }
+    setValidationError(null);
     setSaving(true);
     try {
       await onSave(fieldKey, draft);
@@ -135,13 +149,16 @@ function EditableField({
               {saving ? "..." : "✓"}
             </button>
             <button
-              onClick={() => { setEditing(false); setDraft(value); }}
+              onClick={() => { setEditing(false); setDraft(value); setValidationError(null); }}
               className="px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-white/50 text-xs transition-colors"
             >
               ✕
             </button>
           </div>
         </div>
+        {validationError && (
+          <p className="text-red-400 text-xs mt-1.5">{validationError}</p>
+        )}
       ) : (
         <button
           onClick={() => setEditing(true)}
@@ -154,6 +171,9 @@ function EditableField({
           )}
           <span className="text-white/0 group-hover:text-white/30 text-xs ml-2 transition-colors">✏️</span>
         </button>
+      )}
+      {helperText && !editing && (
+        <p className="text-white/20 text-[11px] mt-1 ml-4">{helperText}</p>
       )}
     </div>
   );
@@ -179,15 +199,83 @@ export default function ProfilePage() {
     } catch {
       if (session?.user) {
         setProfile({
-          nama: session.user.name || "",
+          nama: "",
           email: session.user.email || "",
-          profile_picture_url: session.user.image || "",
+          profile_picture_url: "",
           testHistory: [],
         });
       }
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate type
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      toast.error("Format harus JPG, PNG, atau WebP");
+      return;
+    }
+
+    // Validate size (max 1.5MB)
+    if (file.size > 1.5 * 1024 * 1024) {
+      toast.error("Ukuran gambar maksimal 1.5MB");
+      return;
+    }
+
+    try {
+      // Compress and resize client-side
+      const compressed = await compressImage(file, 256, 0.8);
+
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user/profile-picture`,
+        { profile_picture_url: compressed },
+        { headers: { Authorization: `Bearer ${(session as any)?.accessToken}` } }
+      );
+
+      setProfile((prev) => prev ? { ...prev, profile_picture_url: compressed } : prev);
+      toast.success("Foto profil diperbarui!");
+    } catch (err: any) {
+      toast.error(err?.response?.data?.error || "Gagal upload foto");
+    }
+
+    // Reset input
+    e.target.value = "";
+  };
+
+  // Client-side image compression
+  const compressImage = (file: File, maxSize: number, quality: number): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      const img = document.createElement("img");
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        img.onload = () => {
+          // Calculate dimensions
+          let w = img.width;
+          let h = img.height;
+          if (w > h) {
+            if (w > maxSize) { h = h * (maxSize / w); w = maxSize; }
+          } else {
+            if (h > maxSize) { w = w * (maxSize / h); h = maxSize; }
+          }
+
+          canvas.width = w;
+          canvas.height = h;
+          ctx?.drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL("image/webp", quality));
+        };
+        img.onerror = reject;
+        img.src = e.target?.result as string;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
   };
 
   const saveField = async (key: string, value: string) => {
@@ -276,29 +364,44 @@ export default function ProfilePage() {
             <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full opacity-5 blur-3xl" style={{ background: squadColor }} />
 
             <div className="flex flex-col md:flex-row items-start gap-6 relative z-10">
-              {/* Avatar */}
+              {/* Avatar with upload */}
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.15, type: "spring" }}
-                className="relative"
+                className="relative group/avatar"
               >
-                {profile?.profile_picture_url ? (
+                {profile?.profile_picture_url && !profile.profile_picture_url.includes("googleusercontent.com") ? (
                   <Image
                     src={profile.profile_picture_url}
                     alt="Profile"
                     width={88}
                     height={88}
-                    className="rounded-2xl ring-2 ring-white/10"
+                    className="rounded-2xl ring-2 ring-white/10 object-cover w-[88px] h-[88px]"
+                    unoptimized
                   />
                 ) : (
                   <div
                     className="w-[88px] h-[88px] rounded-2xl flex items-center justify-center text-3xl font-display font-bold text-white"
                     style={{ background: `linear-gradient(135deg, ${squadColor}80, ${squadColor}40)` }}
                   >
-                    {profile?.nama?.[0] || "?"}
+                    {profile?.nama?.[0]?.toUpperCase() || "?"}
                   </div>
                 )}
+                {/* Upload overlay */}
+                <label
+                  htmlFor="avatar-upload"
+                  className="absolute inset-0 rounded-2xl bg-black/50 opacity-0 group-hover/avatar:opacity-100 transition-opacity cursor-pointer flex items-center justify-center"
+                >
+                  <span className="text-white text-xs font-medium">📷 Ganti</span>
+                </label>
+                <input
+                  id="avatar-upload"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  className="hidden"
+                  onChange={handleAvatarUpload}
+                />
                 {mbtiProfile && (
                   <div
                     className="absolute -bottom-2 -right-2 w-9 h-9 rounded-lg flex items-center justify-center text-sm shadow-lg ring-2 ring-brand-dark"
@@ -313,7 +416,7 @@ export default function ProfilePage() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3 flex-wrap">
                   <h1 className="font-display text-3xl font-bold text-white">
-                    {profile?.nama || session?.user?.name}
+                    {profile?.nama || "Atur Nama Kamu"}
                   </h1>
                   {packageLabel && (
                     <div className="inline-flex items-center gap-1.5 glass rounded-full px-3 py-1 text-xs font-semibold text-purple-300">
@@ -392,17 +495,29 @@ export default function ProfilePage() {
                     value={profile?.username || ""}
                     placeholder="Pilih username unik kamu..."
                     fieldKey="username"
-                    maxLength={50}
+                    maxLength={30}
                     onSave={saveField}
+                    validate={(val) => {
+                      if (val && !/^[a-z0-9_]+$/.test(val)) {
+                        return "Hanya huruf kecil, angka, dan underscore (_)";
+                      }
+                      if (val && val.length < 3) {
+                        return "Minimal 3 karakter";
+                      }
+                      return null;
+                    }}
+                    helperText="Huruf kecil, angka, underscore. Min 3 karakter."
                   />
 
                   <EditableField
-                    label="Nama Lengkap"
+                    label="Nama"
                     icon="👤"
                     value={profile?.nama || ""}
-                    placeholder="Nama lengkap kamu..."
+                    placeholder="Tulis nama kamu..."
                     fieldKey="nama"
+                    maxLength={30}
                     onSave={saveField}
+                    helperText="Maks 30 karakter"
                   />
 
                   <EditableField

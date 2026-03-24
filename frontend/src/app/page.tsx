@@ -302,19 +302,23 @@ export default function HomePage() {
                 key={pkg.name}
                 data-scroll="up"
                 data-delay={`${(i + 1) * 100}`}
-                className={`glass rounded-2xl p-6 text-center card-hover card-shine relative overflow-visible ${
-                  pkg.highlight ? "ring-2 ring-purple-500/50" : ""
-                }`}
+                className="relative"
               >
                 {pkg.highlight && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10 whitespace-nowrap">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-4 py-1.5 rounded-full z-20 whitespace-nowrap shadow-lg shadow-purple-500/25">
                     ✦ Terpopuler
                   </div>
                 )}
-                <div className="text-3xl mb-3">{pkg.emoji}</div>
-                <h3 className="font-display font-bold text-white text-lg">Member {pkg.name}</h3>
-                <div className="font-display text-2xl font-bold gradient-text my-2">{pkg.price}</div>
-                <p className="text-white/30 text-xs">sekali bayar</p>
+                <div
+                  className={`glass rounded-2xl p-6 text-center card-hover card-shine relative ${
+                    pkg.highlight ? "ring-2 ring-purple-500/50" : ""
+                  }`}
+                >
+                  <div className="text-3xl mb-3">{pkg.emoji}</div>
+                  <h3 className="font-display font-bold text-white text-lg">Member {pkg.name}</h3>
+                  <div className="font-display text-2xl font-bold gradient-text my-2">{pkg.price}</div>
+                  <p className="text-white/30 text-xs">sekali bayar</p>
+                </div>
               </div>
             ))}
           </div>

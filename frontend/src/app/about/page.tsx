@@ -193,9 +193,9 @@ export default function AboutPage() {
               <motion.div variants={stagger} className="space-y-5 text-white/55 leading-relaxed text-[15px]">
                 <motion.p variants={fadeUp}>
                   Pepatah lama yang menyimpan kebenaran universal. Kita menghafal nama teman-teman kita,
-                  mengetahui makanan favorit mereka, memahami mimpi mereka. Namun ketika ditanya —
-                  <span className="text-white/80 italic"> apa mimpimu yang paling dalam?</span> —
-                  banyak dari kita terdiam.
+                  mengetahui makanan favorit mereka, memahami cara mereka berpikir. Namun ketika seseorang bertanya —
+                  <span className="text-white/80 italic"> kamu itu sebenarnya orang yang seperti apa?</span> —
+                  banyak dari kita justru terdiam.
                 </motion.p>
                 <motion.p variants={fadeUp}>
                   SIAPA AKU lahir dari satu keyakinan sederhana:{" "}

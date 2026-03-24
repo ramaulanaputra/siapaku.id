@@ -97,14 +97,20 @@ router.put("/profile", authenticate, async (req: AuthRequest, res: Response): Pr
       return;
     }
 
+    // Check nama max 30 chars
+    if (nama && nama.length > 30) {
+      res.status(400).json({ error: "Nama maksimal 30 karakter" });
+      return;
+    }
+
     // Check username uniqueness if provided
     if (username) {
-      if (username.length < 3 || username.length > 50) {
-        res.status(400).json({ error: "Username harus 3-50 karakter" });
+      if (username.length < 3 || username.length > 30) {
+        res.status(400).json({ error: "Username harus 3-30 karakter" });
         return;
       }
-      if (!/^[a-zA-Z0-9._-]+$/.test(username)) {
-        res.status(400).json({ error: "Username hanya boleh huruf, angka, titik, underscore, atau strip" });
+      if (!/^[a-z0-9_]+$/.test(username)) {
+        res.status(400).json({ error: "Username hanya boleh huruf kecil, angka, dan underscore" });
         return;
       }
       const existing = await query(
@@ -223,6 +229,58 @@ router.get("/consult-credits", authenticate, async (req: AuthRequest, res: Respo
     });
   } catch (error) {
     res.status(500).json({ error: "Gagal ambil data kredit konsultasi" });
+  }
+});
+
+// PUT /api/user/profile-picture
+router.put("/profile-picture", authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.user!.id;
+    const { profile_picture_url } = req.body;
+
+    if (!profile_picture_url) {
+      res.status(400).json({ error: "URL gambar diperlukan" });
+      return;
+    }
+
+    // Accept base64 data URLs (max ~2MB) or external URLs
+    if (profile_picture_url.startsWith("data:image/")) {
+      // Check base64 size (~1.37x of original)
+      const base64Length = profile_picture_url.length;
+      if (base64Length > 2 * 1024 * 1024) {
+        res.status(400).json({ error: "Ukuran gambar maksimal 1.5MB" });
+        return;
+      }
+    } else if (!profile_picture_url.startsWith("https://")) {
+      res.status(400).json({ error: "URL tidak valid" });
+      return;
+    }
+
+    await query(
+      `UPDATE users SET profile_picture_url = $1, updated_at = NOW() WHERE id = $2`,
+      [profile_picture_url, userId]
+    );
+
+    res.json({ success: true, profile_picture_url });
+  } catch (error) {
+    console.error("Profile picture upload error:", error);
+    res.status(500).json({ error: "Gagal update foto profil" });
+  }
+});
+
+// DELETE /api/user/profile-picture
+router.delete("/profile-picture", authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.user!.id;
+
+    await query(
+      `UPDATE users SET profile_picture_url = NULL, updated_at = NOW() WHERE id = $1`,
+      [userId]
+    );
+
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: "Gagal hapus foto profil" });
   }
 });
 
