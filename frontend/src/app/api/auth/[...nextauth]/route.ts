@@ -19,6 +19,7 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider === "google") {
+        console.log("[AUTH] Google signIn callback - user:", user.email);
         // Sync user to backend (non-blocking — login succeeds even if backend is down)
         try {
           const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -33,9 +34,10 @@ const authOptions: NextAuthOptions = {
               },
               { timeout: 5000 }
             );
+            console.log("[AUTH] Backend sync success");
           }
         } catch (error: any) {
-          console.error("Backend sync failed (non-blocking):", error?.message || error);
+          console.error("[AUTH] Backend sync failed (non-blocking):", error?.message || error);
         }
         return true;
       }
@@ -82,14 +84,15 @@ const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/auth/signin",
-    error: "/auth/error",
+    error: "/auth/signin",  // Redirect errors to signin page so user sees error message
   },
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60,
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NODE_ENV === "development",
+  // Enable debug in production temporarily to diagnose OAuth issues
+  debug: true,
 };
 
 const handler = NextAuth(authOptions);

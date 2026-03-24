@@ -6,12 +6,33 @@ import { useEffect, useState, Suspense } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
+const ERROR_MESSAGES: Record<string, string> = {
+  OAuthSignin: "Gagal memulai login Google. Coba lagi.",
+  OAuthCallback: "Gagal saat proses callback dari Google. Pastikan konfigurasi Google OAuth sudah benar.",
+  OAuthCreateAccount: "Gagal membuat akun. Coba lagi.",
+  Callback: "Terjadi error saat login. Pastikan Google OAuth redirect URI sudah benar di Google Cloud Console.",
+  OAuthAccountNotLinked: "Email ini sudah terdaftar dengan metode login lain.",
+  AccessDenied: "Akses ditolak. Pastikan OAuth Consent Screen sudah dipublish (bukan Testing mode).",
+  Configuration: "Ada masalah konfigurasi server. Cek GOOGLE_CLIENT_ID dan GOOGLE_CLIENT_SECRET.",
+  Default: "Terjadi kesalahan saat login. Coba lagi.",
+};
+
 function SignInContent() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const errorParam = searchParams.get("error");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (errorParam) {
+      const msg = ERROR_MESSAGES[errorParam] || ERROR_MESSAGES.Default;
+      setError(`${msg} (code: ${errorParam})`);
+      setLoading(false);
+    }
+  }, [errorParam]);
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -20,8 +41,14 @@ function SignInContent() {
   }, [status, router, callbackUrl]);
 
   const handleGoogleSignIn = async () => {
-    setLoading(true);
-    await signIn("google", { callbackUrl });
+    try {
+      setLoading(true);
+      setError(null);
+      await signIn("google", { callbackUrl, redirect: true });
+    } catch (err: any) {
+      setError(`Error: ${err?.message || "Gagal memulai login"}`);
+      setLoading(false);
+    }
   };
 
   return (
@@ -66,6 +93,18 @@ function SignInContent() {
           <p className="text-white/50 mb-8 leading-relaxed text-sm">
             Login untuk memulai perjalanan self-discovery kamu dan menyimpan hasil tes secara personal.
           </p>
+
+          {/* Error message */}
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-left"
+            >
+              <p className="text-red-300 text-sm font-medium mb-1">⚠️ Login Gagal</p>
+              <p className="text-red-200/70 text-xs leading-relaxed">{error}</p>
+            </motion.div>
+          )}
 
           {/* Google Sign In Button */}
           <motion.button

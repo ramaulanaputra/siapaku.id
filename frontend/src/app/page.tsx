@@ -48,7 +48,7 @@ export default function HomePage() {
       <Navbar />
 
       {/* ═══════════════ HERO ═══════════════ */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[80vh] flex items-center justify-center pt-24 pb-16 overflow-hidden">
         {/* Animated orbs — contained within hero */}
         <div className="orb w-[500px] h-[500px] bg-purple-600 top-10 -left-32 animate-pulse-slow animate-morph" />
         <div className="orb w-96 h-96 bg-pink-600 bottom-10 -right-24 animate-pulse-slow animate-morph" style={{ animationDelay: "2s" }} />
