@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "@/styles/premium-animations.css";
 import { Providers } from "@/components/layout/Providers";
 import { Toaster } from "react-hot-toast";
 import ScrollReveal from "@/components/ScrollReveal";
