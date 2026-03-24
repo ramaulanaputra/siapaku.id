@@ -22,10 +22,10 @@ const FEATURES = [
 ];
 
 const STATS = [
-  { value: "10K+", label: "Pengguna Aktif" },
-  { value: "100+", label: "Soal Unik" },
-  { value: "16", label: "Tipe Kepribadian" },
-  { value: "4.9★", label: "Rating" },
+  { value: "16", label: "Tipe MBTI" },
+  { value: "8", label: "Dimensi Analisis" },
+  { value: "100+", label: "Pertanyaan Unik" },
+  { value: "Gratis", label: "Selamanya" },
 ];
 
 const TESTIMONIALS = [
