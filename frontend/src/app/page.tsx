@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useSession, signIn } from "next-auth/react";
 import { Navbar } from "@/components/layout/Navbar";
@@ -20,127 +21,190 @@ const FEATURES = [
   { icon: "🎯", title: "Actionable Insights", desc: "Career path, romance dynamics, social tips, dan purpose direction yang spesifik untuk tipe kepribadian kamu." },
 ];
 
+const STATS = [
+  { value: "10K+", label: "Pengguna Aktif" },
+  { value: "100+", label: "Soal Unik" },
+  { value: "16", label: "Tipe Kepribadian" },
+  { value: "4.9★", label: "Rating" },
+];
+
+const TESTIMONIALS = [
+  { name: "Aulia R.", type: "INFP", text: "Hasilnya detail banget! Akhirnya aku tau kenapa aku begini. Terasa sangat personal.", avatar: "🌸" },
+  { name: "Dimas K.", type: "ENTJ", text: "Career path recommendations-nya akurat. Langsung jadi acuan karir gw ke depan.", avatar: "⚡" },
+  { name: "Siti N.", type: "ISFJ", text: "Konsultasi psikolognya sangat membantu. Psikolognya ramah dan profesional.", avatar: "🌼" },
+];
+
 export default function HomePage() {
   const { data: session } = useSession();
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.7], [1, 0.92]);
 
   return (
     <main className="min-h-screen bg-brand-dark relative overflow-hidden">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20">
-        {/* Background orbs */}
-        <div className="orb w-96 h-96 bg-purple-600 top-20 -left-20" />
-        <div className="orb w-80 h-80 bg-pink-600 bottom-20 -right-20" />
-        <div className="orb w-64 h-64 bg-blue-600 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+      {/* ═══════════════ HERO ═══════════════ */}
+      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20">
+        {/* Animated orbs */}
+        <div className="orb w-[500px] h-[500px] bg-purple-600 top-10 -left-32 animate-pulse-slow animate-morph" />
+        <div className="orb w-96 h-96 bg-pink-600 bottom-10 -right-24 animate-pulse-slow animate-morph" style={{ animationDelay: "2s" }} />
+        <div className="orb w-72 h-72 bg-blue-600 top-1/3 left-1/2 -translate-x-1/2 animate-pulse-slow" style={{ animationDelay: "4s" }} />
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+        {/* Grid lines (subtle background pattern) */}
+        <div className="absolute inset-0 opacity-[0.015]" style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+          backgroundSize: "60px 60px"
+        }} />
+
+        <motion.div
+          style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}
+          className="relative z-10 max-w-5xl mx-auto px-6 text-center"
+        >
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8 text-sm text-white/60">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
+              className="inline-flex items-center gap-2 glass rounded-full px-5 py-2.5 mb-8 text-sm text-white/60 animate-glow-pulse"
+            >
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
               Platform Self-Discovery #1 Indonesia
-            </div>
+            </motion.div>
 
-            <h1 className="font-display text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-[1.05]"
+            >
               Sebelum Kenal Orang,
               <br />
               <span className="gradient-text">Kenal Diri Dulu</span>
-            </h1>
+            </motion.h1>
 
-            <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+            >
               Tak kenal maka tak sayang — tapi kapan kamu mulai menyayangi 
               diri sendiri? SIAPA AKU hadir untuk menjadi cermin diri sejati kamu.
-            </p>
+            </motion.p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.7 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            >
               {session ? (
-                <Link href="/test" className="btn-primary text-lg px-10 py-4">
+                <Link href="/test" className="btn-primary text-lg px-10 py-4 hover:scale-105 transition-transform">
                   Yuk, Ketemu Diri Elu 🚀
                 </Link>
               ) : (
-                <button
-                  onClick={() => signIn("google")}
-                  className="btn-primary text-lg px-10 py-4"
-                >
+                <button onClick={() => signIn("google")} className="btn-primary text-lg px-10 py-4 hover:scale-105 transition-transform">
                   Yuk, Ketemu Diri Elu 🚀
                 </button>
               )}
               <Link href="/about" className="btn-secondary text-lg px-10 py-4">
                 Pelajari Lebih Lanjut
               </Link>
-            </div>
+            </motion.div>
 
-            <p className="text-white/30 text-sm mt-6">
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.9 }}
+              className="text-white/30 text-sm mt-6"
+            >
               Gratis selamanya · Login dengan Google · Hasil lengkap & personal
-            </p>
+            </motion.p>
           </motion.div>
 
           {/* Floating personality cards */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4 }}
+            transition={{ duration: 1.2, delay: 1 }}
             className="mt-16 flex flex-wrap justify-center gap-3"
           >
             {["INFP 🌟", "ENTJ ⚡", "ISFJ 🛡️", "ENTP 🚀", "INTJ ⚡", "ENFP 🌟"].map((type, i) => (
               <motion.div
                 key={type}
-                animate={{ y: [0, -8, 0] }}
+                animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
-                className="glass rounded-full px-4 py-2 text-sm text-white/60 font-medium"
+                className="glass rounded-full px-4 py-2 text-sm text-white/60 font-medium hover:text-white/80 hover:bg-white/10 transition-all cursor-default"
               >
                 {type}
               </motion.div>
             ))}
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* Scroll indicator */}
         <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          animate={{ y: [0, 12, 0] }}
+          transition={{ duration: 2.5, repeat: Infinity }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/20"
         >
-          <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <path d="M12 5v14M5 12l7 7 7-7" />
-          </svg>
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-xs tracking-widest uppercase">Scroll</span>
+            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+          </div>
         </motion.div>
       </section>
 
-      {/* Squad Section */}
-      <section className="py-24 px-6">
+      {/* ═══════════════ STATS COUNTER ═══════════════ */}
+      <section className="py-12 px-6 relative z-10">
+        <div className="max-w-4xl mx-auto glass rounded-3xl p-8" data-scroll="zoom-in">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {STATS.map((stat, i) => (
+              <div key={stat.label} className="text-center" data-scroll="up" data-delay={`${(i + 1) * 100}`}>
+                <div className="font-display text-3xl md:text-4xl font-bold gradient-text mb-1">{stat.value}</div>
+                <div className="text-white/40 text-sm">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════ SQUAD SECTION ═══════════════ */}
+      <section className="py-24 px-6 relative">
+        <div className="orb w-80 h-80 bg-purple-500/30 top-0 right-0 animate-pulse-slow" />
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4">
+          <div className="text-center mb-16">
+            <div className="text-xs text-purple-400 font-bold tracking-[5px] mb-4" data-scroll="fade">
+              4 SQUAD UNIK
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4" data-scroll="up">
               Kamu di Squad <span className="gradient-text">Mana?</span>
             </h2>
-            <p className="text-white/40 text-lg max-w-xl mx-auto">
+            <p className="text-white/40 text-lg max-w-xl mx-auto" data-scroll="up" data-delay="100">
               16 kepribadian dikelompokkan dalam 4 squad dengan karakter unik masing-masing.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {SQUADS.map((squad, i) => (
-              <motion.div
+              <div
                 key={squad.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="glass rounded-2xl p-6 card-hover cursor-pointer group"
+                data-scroll={i % 2 === 0 ? "left" : "right"}
+                data-delay={`${(i + 1) * 100}`}
+                className="glass rounded-2xl p-6 card-hover card-shine cursor-pointer group"
                 style={{ borderColor: squad.color + "30" }}
               >
                 <div
-                  className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform"
+                  className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500"
                   style={{ background: squad.color + "20" }}
                 >
                   {squad.emoji}
@@ -153,96 +217,183 @@ export default function HomePage() {
                   {squad.types.map((type) => (
                     <span
                       key={type}
-                      className="text-xs px-2 py-0.5 rounded-full font-mono font-bold"
+                      className="text-xs px-2 py-0.5 rounded-full font-mono font-bold transition-all duration-300 hover:scale-110"
                       style={{ background: squad.color + "20", color: squad.color }}
                     >
                       {type}
                     </span>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* ═══════════════ FEATURES ═══════════════ */}
       <section className="py-24 px-6 relative">
-        <div className="orb w-64 h-64 bg-purple-600 top-1/2 -left-32" />
+        <div className="orb w-64 h-64 bg-purple-600 top-1/2 -left-32 animate-morph" />
+        <div className="orb w-48 h-48 bg-pink-600/30 bottom-20 right-10" />
+
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4">
+          <div className="text-center mb-16">
+            <div className="text-xs text-pink-400 font-bold tracking-[5px] mb-4" data-scroll="fade">
+              KENAPA SIAPA AKU?
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4" data-scroll="up">
               Lebih dari Sekadar
               <br />
               <span className="gradient-text">Tes Kepribadian</span>
             </h2>
-            <p className="text-white/40 text-lg max-w-xl mx-auto">
+            <p className="text-white/40 text-lg max-w-xl mx-auto" data-scroll="up" data-delay="100">
               SIAPA AKU adalah perjalanan penemuan diri yang bermakna.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {FEATURES.map((feature, i) => (
-              <motion.div
+              <div
                 key={feature.title}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="glass rounded-2xl p-8 flex gap-5 card-hover"
+                data-scroll={i % 2 === 0 ? "left" : "right"}
+                data-delay={`${(i + 1) * 100}`}
+                className="glass rounded-2xl p-8 flex gap-5 card-hover card-shine group"
               >
-                <div className="text-4xl shrink-0">{feature.icon}</div>
+                <div className="text-4xl shrink-0 group-hover:scale-125 group-hover:-rotate-6 transition-all duration-500">
+                  {feature.icon}
+                </div>
                 <div>
-                  <h3 className="font-bold text-white text-lg mb-2">{feature.title}</h3>
+                  <h3 className="font-bold text-white text-lg mb-2 group-hover:text-purple-300 transition-colors">
+                    {feature.title}
+                  </h3>
                   <p className="text-white/40 text-sm leading-relaxed">{feature.desc}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* ═══════════════ TESTIMONIALS ═══════════════ */}
+      <section className="py-24 px-6 relative">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="text-xs text-blue-400 font-bold tracking-[5px] mb-4" data-scroll="fade">
+              TESTIMONIALS
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4" data-scroll="up">
+              Apa Kata <span className="gradient-text">Mereka?</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {TESTIMONIALS.map((t, i) => (
+              <div
+                key={t.name}
+                data-scroll="slide-up-blur"
+                data-delay={`${(i + 1) * 150}`}
+                className="glass rounded-2xl p-6 card-hover card-shine relative"
+              >
+                <div className="text-3xl mb-4">{t.avatar}</div>
+                <p className="text-white/70 text-sm leading-relaxed mb-4 italic">"{t.text}"</p>
+                <div className="flex items-center gap-3">
+                  <div>
+                    <div className="text-white font-semibold text-sm">{t.name}</div>
+                    <div className="text-purple-400 text-xs font-mono">{t.type}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════ PRICING PREVIEW ═══════════════ */}
+      <section className="py-24 px-6 relative">
+        <div className="orb w-72 h-72 bg-amber-500/20 top-1/3 right-0" />
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="text-xs text-amber-400 font-bold tracking-[5px] mb-4" data-scroll="fade">
+              HARGA & PAKET
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4" data-scroll="up">
+              Mulai dari <span className="gradient-text-gold">Rp 99.000</span>
+            </h2>
+            <p className="text-white/40 text-lg" data-scroll="up" data-delay="100">
+              Tes gratis, tapi unlock fitur lengkap? Harganya terjangkau banget.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            {[
+              { name: "Standar", price: "Rp 99rb", emoji: "🎓", highlight: false },
+              { name: "Premium", price: "Rp 199rb", emoji: "👑", highlight: true },
+              { name: "Ultimate", price: "Rp 399rb", emoji: "💎", highlight: false },
+            ].map((pkg, i) => (
+              <div
+                key={pkg.name}
+                data-scroll="up"
+                data-delay={`${(i + 1) * 100}`}
+                className={`glass rounded-2xl p-6 text-center card-hover card-shine ${
+                  pkg.highlight ? "ring-2 ring-purple-500/50 relative" : ""
+                }`}
+              >
+                {pkg.highlight && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Terpopuler
+                  </div>
+                )}
+                <div className="text-3xl mb-3">{pkg.emoji}</div>
+                <h3 className="font-display font-bold text-white text-lg">Paket {pkg.name}</h3>
+                <div className="font-display text-2xl font-bold gradient-text my-2">{pkg.price}</div>
+                <p className="text-white/30 text-xs">sekali bayar</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center" data-scroll="zoom-in" data-delay="400">
+            <Link
+              href="/shop"
+              className="btn-primary text-lg px-12 py-4 inline-block hover:scale-105 transition-transform"
+            >
+              Lihat Semua Paket →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════ CTA ═══════════════ */}
       <section className="py-24 px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="glass rounded-3xl p-12 relative overflow-hidden"
+          <div
+            data-scroll="zoom-in"
+            className="glass rounded-3xl p-12 relative overflow-hidden animated-border"
           >
-            <div className="orb w-48 h-48 bg-purple-500 -top-10 -right-10" />
-            <div className="orb w-40 h-40 bg-pink-500 -bottom-10 -left-10" />
+            <div className="orb w-48 h-48 bg-purple-500 -top-10 -right-10 animate-morph" />
+            <div className="orb w-40 h-40 bg-pink-500 -bottom-10 -left-10 animate-morph" style={{ animationDelay: "3s" }} />
             <div className="relative z-10">
-              <p className="text-5xl mb-6">💜</p>
-              <h2 className="font-display text-4xl font-bold text-white mb-4">
+              <p className="text-5xl mb-6" data-scroll="zoom-in" data-delay="100">💜</p>
+              <h2 className="font-display text-4xl font-bold text-white mb-4" data-scroll="up" data-delay="200">
                 Mereka Mengenal Kamu.
                 <br />
                 <span className="gradient-text">Sekarang Giliran Kamu.</span>
               </h2>
-              <p className="text-white/50 mb-8 leading-relaxed">
+              <p className="text-white/50 mb-8 leading-relaxed" data-scroll="up" data-delay="300">
                 Ribuan orang sudah memulai perjalanan self-discovery mereka. 
                 Kapan giliran kamu?
               </p>
-              {session ? (
-                <Link href="/test" className="btn-primary text-lg px-12 py-4 inline-block">
-                  Mulai Tes Sekarang — Gratis
-                </Link>
-              ) : (
-                <button
-                  onClick={() => signIn("google")}
-                  className="btn-primary text-lg px-12 py-4"
-                >
-                  Mulai Tes Sekarang — Gratis
-                </button>
-              )}
+              <div data-scroll="up" data-delay="400">
+                {session ? (
+                  <Link href="/test" className="btn-primary text-lg px-12 py-4 inline-block hover:scale-105 transition-transform">
+                    Mulai Tes Sekarang — Gratis
+                  </Link>
+                ) : (
+                  <button onClick={() => signIn("google")} className="btn-primary text-lg px-12 py-4 hover:scale-105 transition-transform">
+                    Mulai Tes Sekarang — Gratis
+                  </button>
+                )}
+              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 

@@ -19,15 +19,25 @@ const migrate = async () => {
       role                  VARCHAR(20) DEFAULT 'user' CHECK (role IN ('user', 'admin')),
       has_premium_package   BOOLEAN DEFAULT false,
       free_psikolog_session BOOLEAN DEFAULT false,
+      consult_credits       INTEGER DEFAULT 0,
+      consult_unlocked      BOOLEAN DEFAULT false,
+      test_package          VARCHAR(30),
+      has_pdf_report        BOOLEAN DEFAULT false,
+      has_physical_merch    BOOLEAN DEFAULT false,
       is_active             BOOLEAN DEFAULT true,
       created_at            TIMESTAMPTZ DEFAULT NOW(),
       updated_at            TIMESTAMPTZ DEFAULT NOW()
     )
   `);
 
-  // Add columns if upgrading from old schema
+  // Add new columns if upgrading from old schema
   await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS has_premium_package BOOLEAN DEFAULT false`);
   await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS free_psikolog_session BOOLEAN DEFAULT false`);
+  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS consult_credits INTEGER DEFAULT 0`);
+  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS consult_unlocked BOOLEAN DEFAULT false`);
+  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS test_package VARCHAR(30)`);
+  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS has_pdf_report BOOLEAN DEFAULT false`);
+  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS has_physical_merch BOOLEAN DEFAULT false`);
 
   // TEST RECORDS
   await query(`
@@ -50,13 +60,13 @@ const migrate = async () => {
   await query(`CREATE INDEX IF NOT EXISTS idx_test_records_user_id ON test_records(user_id)`);
   await query(`CREATE INDEX IF NOT EXISTS idx_test_records_test_date ON test_records(test_date DESC)`);
 
-  // ORDERS
+  // ORDERS — updated CHECK constraint to include new package types
   await query(`
     CREATE TABLE IF NOT EXISTS orders (
       id                      UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
       user_id                 UUID NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
       order_number            VARCHAR(50) UNIQUE NOT NULL,
-      package_type            VARCHAR(30) NOT NULL CHECK (package_type IN ('standard', 'premium', 'merchandise', 'psikolog-basic', 'psikolog-extra', 'psikolog-ultimate')),
+      package_type            VARCHAR(30) NOT NULL,
       items                   JSONB NOT NULL DEFAULT '[]',
       subtotal                DECIMAL(12,2) NOT NULL DEFAULT 0,
       shipping_cost           DECIMAL(12,2) NOT NULL DEFAULT 0,
@@ -82,6 +92,11 @@ const migrate = async () => {
       updated_at              TIMESTAMPTZ DEFAULT NOW()
     )
   `);
+
+  // Remove old CHECK constraint and make package_type flexible
+  await query(`
+    ALTER TABLE orders DROP CONSTRAINT IF EXISTS orders_package_type_check
+  `).catch(() => {});
 
   // Migrate old package_type values if upgrading
   await query(`UPDATE orders SET package_type = 'standard' WHERE package_type = 'growth'`).catch(() => {});
@@ -112,30 +127,11 @@ const migrate = async () => {
   await query(`CREATE INDEX IF NOT EXISTS idx_certificates_user_id ON certificates(user_id)`);
   await query(`CREATE INDEX IF NOT EXISTS idx_certificates_code ON certificates(certificate_code)`);
 
-  // PSIKOLOG SUBSCRIPTIONS
-  await query(`
-    CREATE TABLE IF NOT EXISTS psikolog_subscriptions (
-      id                UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-      user_id           UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-      order_id          UUID REFERENCES orders(id),
-      plan_type         VARCHAR(30) NOT NULL CHECK (plan_type IN ('psikolog-basic', 'psikolog-extra', 'psikolog-ultimate')),
-      sessions_per_month INTEGER NOT NULL,
-      sessions_used     INTEGER DEFAULT 0,
-      sessions_remaining INTEGER NOT NULL,
-      period_start      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-      period_end        TIMESTAMPTZ NOT NULL,
-      is_active         BOOLEAN DEFAULT true,
-      created_at        TIMESTAMPTZ DEFAULT NOW(),
-      updated_at        TIMESTAMPTZ DEFAULT NOW()
-    )
-  `);
-  await query(`CREATE INDEX IF NOT EXISTS idx_psikolog_subs_user_id ON psikolog_subscriptions(user_id)`);
-
-  // PSIKOLOG SESSIONS
+  // PSIKOLOG SESSIONS (used for booking individual sessions from credits)
   await query(`
     CREATE TABLE IF NOT EXISTS psikolog_sessions (
       id               UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-      subscription_id  UUID REFERENCES psikolog_subscriptions(id),
+      subscription_id  UUID,
       user_id          UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
       is_free_session  BOOLEAN DEFAULT false,
       scheduled_at     TIMESTAMPTZ,
@@ -147,6 +143,21 @@ const migrate = async () => {
     )
   `);
   await query(`CREATE INDEX IF NOT EXISTS idx_psikolog_sessions_user_id ON psikolog_sessions(user_id)`);
+
+  // CONSULT CREDIT LOGS — tracks credit purchases
+  await query(`
+    CREATE TABLE IF NOT EXISTS consult_credit_logs (
+      id             UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+      user_id        UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      order_id       UUID REFERENCES orders(id),
+      package_type   VARCHAR(30) NOT NULL,
+      credits_added  INTEGER NOT NULL,
+      price_paid     DECIMAL(12,2) NOT NULL DEFAULT 0,
+      source         VARCHAR(30) DEFAULT 'purchase',
+      created_at     TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+  await query(`CREATE INDEX IF NOT EXISTS idx_consult_credit_logs_user_id ON consult_credit_logs(user_id)`);
 
   // PRODUCTS
   await query(`
@@ -166,6 +177,25 @@ const migrate = async () => {
       updated_at      TIMESTAMPTZ DEFAULT NOW()
     )
   `);
+
+  // Keep psikolog_subscriptions for backwards compat but we don't actively use it
+  await query(`
+    CREATE TABLE IF NOT EXISTS psikolog_subscriptions (
+      id                UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+      user_id           UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      order_id          UUID REFERENCES orders(id),
+      plan_type         VARCHAR(30) NOT NULL,
+      sessions_per_month INTEGER NOT NULL,
+      sessions_used     INTEGER DEFAULT 0,
+      sessions_remaining INTEGER NOT NULL,
+      period_start      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      period_end        TIMESTAMPTZ NOT NULL,
+      is_active         BOOLEAN DEFAULT true,
+      created_at        TIMESTAMPTZ DEFAULT NOW(),
+      updated_at        TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+  await query(`CREATE INDEX IF NOT EXISTS idx_psikolog_subs_user_id ON psikolog_subscriptions(user_id)`);
 
   // UPDATED_AT TRIGGER
   await query(`

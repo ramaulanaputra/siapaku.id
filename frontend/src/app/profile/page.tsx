@@ -17,6 +17,11 @@ interface UserProfile {
   email: string;
   profile_picture_url?: string;
   tentang_diri?: string;
+  consult_credits?: number;
+  consult_unlocked?: boolean;
+  test_package?: string;
+  has_pdf_report?: boolean;
+  has_physical_merch?: boolean;
   latestTest?: {
     mbti_type: MBTIType;
     squad: string;
@@ -27,7 +32,23 @@ interface UserProfile {
     mbti_type: MBTIType;
     test_date: string;
   }>;
+  orderCount?: number;
+  certificates?: Array<{
+    certificate_code: string;
+    certificate_type: string;
+    mbti_type: string;
+    issued_date: string;
+  }>;
 }
+
+const fadeUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+};
+
+const stagger = {
+  animate: { transition: { staggerChildren: 0.08 } },
+};
 
 export default function ProfilePage() {
   const { data: session, status } = useSession();
@@ -50,7 +71,6 @@ export default function ProfilePage() {
       setProfile(res.data);
       setBio(res.data.tentang_diri || "");
     } catch {
-      // Use session data as fallback
       if (session?.user) {
         setProfile({
           nama: session.user.name || "",
@@ -84,8 +104,9 @@ export default function ProfilePage() {
         <Navbar />
         <div className="flex-1 flex items-center justify-center px-6">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ type: "spring", stiffness: 100 }}
             className="glass rounded-3xl p-10 max-w-md w-full text-center"
           >
             <div className="text-5xl mb-4">👤</div>
@@ -113,21 +134,36 @@ export default function ProfilePage() {
     ? formatDistanceToNow(nextTestDate, { locale: id, addSuffix: true })
     : null;
 
+  const consultCredits = profile?.consult_credits || 0;
+  const consultUnlocked = profile?.consult_unlocked || false;
+  const testPackage = profile?.test_package;
+
+  const packageLabel = testPackage === "ultimate" ? "Ultimate 💎" : testPackage === "premium" ? "Premium 👑" : testPackage === "standard" ? "Standar 🎓" : null;
+
   return (
     <main className="min-h-screen bg-brand-dark">
       <Navbar />
 
       <div className="pt-24 pb-16 px-6">
         <div className="max-w-5xl mx-auto">
-          {/* Profile Header */}
+          {/* ═══════════════ PROFILE HEADER ═══════════════ */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="glass rounded-3xl p-8 mb-6"
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="glass rounded-3xl p-8 mb-6 relative overflow-hidden"
           >
-            <div className="flex flex-col md:flex-row items-start gap-6">
+            {/* Background glow */}
+            <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full opacity-10 blur-3xl" style={{ background: squadColor }} />
+
+            <div className="flex flex-col md:flex-row items-start gap-6 relative z-10">
               {/* Avatar */}
-              <div className="relative">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.15, type: "spring" }}
+                className="relative"
+              >
                 {profile?.profile_picture_url ? (
                   <Image
                     src={profile.profile_picture_url}
@@ -143,13 +179,13 @@ export default function ProfilePage() {
                 )}
                 {mbtiProfile && (
                   <div
-                    className="absolute -bottom-2 -right-2 w-8 h-8 rounded-lg flex items-center justify-center text-sm"
+                    className="absolute -bottom-2 -right-2 w-8 h-8 rounded-lg flex items-center justify-center text-sm shadow-lg"
                     style={{ background: squadColor }}
                   >
                     {squadEmoji}
                   </div>
                 )}
-              </div>
+              </motion.div>
 
               {/* Info */}
               <div className="flex-1">
@@ -157,6 +193,13 @@ export default function ProfilePage() {
                   {profile?.nama || session?.user?.name}
                 </h1>
                 <p className="text-white/40 text-sm mb-3">{profile?.email}</p>
+
+                {/* Package badge */}
+                {packageLabel && (
+                  <div className="inline-flex items-center gap-2 glass rounded-full px-3 py-1 text-xs font-semibold text-purple-300 mb-3">
+                    Paket {packageLabel}
+                  </div>
+                )}
 
                 {editBio ? (
                   <div className="flex gap-2">
@@ -168,7 +211,7 @@ export default function ProfilePage() {
                       rows={2}
                     />
                     <div className="flex flex-col gap-2">
-                      <button onClick={saveBio} className="px-3 py-1.5 bg-purple-600 rounded-lg text-white text-xs">
+                      <button onClick={saveBio} className="px-3 py-1.5 bg-purple-600 rounded-lg text-white text-xs hover:bg-purple-500 transition-colors">
                         Simpan
                       </button>
                       <button onClick={() => setEditBio(false)} className="px-3 py-1.5 glass rounded-lg text-white/60 text-xs">
@@ -188,7 +231,10 @@ export default function ProfilePage() {
 
               {/* MBTI Badge */}
               {mbtiProfile && (
-                <div
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.2, type: "spring" }}
                   className="rounded-2xl p-4 text-center min-w-28 shrink-0"
                   style={{ background: squadColor + "15", border: `1px solid ${squadColor}30` }}
                 >
@@ -197,19 +243,66 @@ export default function ProfilePage() {
                     {mbtiProfile.type}
                   </div>
                   <div className="text-white/40 text-xs">{mbtiProfile.nickname}</div>
-                </div>
+                </motion.div>
               )}
             </div>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* MBTI Result Card */}
+          {/* ═══════════════ KREDIT KONSUL CARD ═══════════════ */}
+          {consultUnlocked && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+              className="glass rounded-2xl p-6 mb-6 relative overflow-hidden"
+            >
+              <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full bg-sky-500 opacity-10 blur-3xl" />
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 relative z-10">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500/20 to-purple-500/20 flex items-center justify-center text-2xl flex-shrink-0">
+                  🧠
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-white text-sm mb-1">Kredit Konsultasi Psikolog</h3>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl font-display font-bold text-sky-400">{consultCredits}</span>
+                    <span className="text-white/40 text-sm">sesi tersedia</span>
+                  </div>
+                  <p className="text-white/30 text-xs mt-1">Kredit tidak hangus · Gunakan kapan saja</p>
+                </div>
+                <Link
+                  href="/shop"
+                  className="glass rounded-xl px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap"
+                >
+                  {consultCredits > 0 ? "Booking Sesi →" : "Beli Kredit →"}
+                </Link>
+              </div>
+
+              {/* Progress dots showing credits */}
+              {consultCredits > 0 && (
+                <div className="flex gap-2 mt-4">
+                  {Array.from({ length: Math.min(consultCredits, 10) }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-3 h-3 rounded-full bg-gradient-to-r from-sky-400 to-purple-400"
+                      style={{ animationDelay: `${i * 0.1}s` }}
+                    />
+                  ))}
+                  {consultCredits > 10 && (
+                    <span className="text-white/30 text-xs ml-1">+{consultCredits - 10}</span>
+                  )}
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          <motion.div variants={stagger} initial="initial" animate="animate" className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* ═══════════════ LEFT COLUMN ═══════════════ */}
             <div className="md:col-span-2 space-y-6">
+              {/* MBTI Result Card */}
               {mbtiProfile ? (
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
+                  variants={fadeUp}
+                  transition={{ delay: 0.15 }}
                   className="glass rounded-2xl p-6"
                 >
                   <h2 className="font-semibold text-white mb-4">Kepribadianmu</h2>
@@ -236,9 +329,8 @@ export default function ProfilePage() {
                 </motion.div>
               ) : (
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
+                  variants={fadeUp}
+                  transition={{ delay: 0.15 }}
                   className="glass rounded-2xl p-8 text-center"
                 >
                   <div className="text-5xl mb-4">🔮</div>
@@ -257,8 +349,7 @@ export default function ProfilePage() {
               {/* Test History */}
               {profile?.testHistory && profile.testHistory.length > 0 && (
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  variants={fadeUp}
                   transition={{ delay: 0.2 }}
                   className="glass rounded-2xl p-6"
                 >
@@ -269,7 +360,13 @@ export default function ProfilePage() {
                       if (!p) return null;
                       const color = getSquadColor(p.squad);
                       return (
-                        <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/3">
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.3 + i * 0.05 }}
+                          className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-colors"
+                        >
                           <div className="flex items-center gap-3">
                             <span className="text-lg">{p.emoji}</span>
                             <div>
@@ -280,20 +377,44 @@ export default function ProfilePage() {
                           <span className="text-white/30 text-xs">
                             {formatDistanceToNow(new Date(test.test_date), { locale: id, addSuffix: true })}
                           </span>
-                        </div>
+                        </motion.div>
                       );
                     })}
                   </div>
                 </motion.div>
               )}
+
+              {/* Purchases & Certificates */}
+              {profile?.certificates && profile.certificates.length > 0 && (
+                <motion.div
+                  variants={fadeUp}
+                  transition={{ delay: 0.25 }}
+                  className="glass rounded-2xl p-6"
+                >
+                  <h2 className="font-semibold text-white mb-4">Sertifikat</h2>
+                  <div className="space-y-3">
+                    {profile.certificates.map((cert, i) => (
+                      <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03]">
+                        <div className="flex items-center gap-3">
+                          <span className="text-lg">🏆</span>
+                          <div>
+                            <span className="font-bold text-sm text-amber-400">{cert.certificate_type === "premium" ? "Premium" : "Standar"}</span>
+                            <p className="text-white/30 text-xs font-mono">{cert.certificate_code}</p>
+                          </div>
+                        </div>
+                        <span className="text-white/40 text-xs font-mono">{cert.mbti_type}</span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
             </div>
 
-            {/* Sidebar */}
+            {/* ═══════════════ RIGHT SIDEBAR ═══════════════ */}
             <div className="space-y-6">
               {/* Next Test */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                variants={fadeUp}
                 transition={{ delay: 0.15 }}
                 className="glass rounded-2xl p-6 text-center"
               >
@@ -322,10 +443,30 @@ export default function ProfilePage() {
                 )}
               </motion.div>
 
+              {/* Consult Credits Quick Card */}
+              {consultUnlocked && (
+                <motion.div
+                  variants={fadeUp}
+                  transition={{ delay: 0.18 }}
+                  className="rounded-2xl p-6 text-center"
+                  style={{ background: "rgba(14,165,233,0.08)", border: "1px solid rgba(14,165,233,0.2)" }}
+                >
+                  <div className="text-3xl mb-2">🧠</div>
+                  <h3 className="font-semibold text-white mb-1">Kredit Konsul</h3>
+                  <div className="text-3xl font-display font-bold text-sky-400 mb-1">{consultCredits}</div>
+                  <p className="text-white/30 text-xs mb-3">sesi tersedia</p>
+                  <Link
+                    href="/shop"
+                    className="text-sm text-sky-400 hover:text-sky-300 transition-colors"
+                  >
+                    {consultCredits > 0 ? "Gunakan kredit →" : "Beli kredit →"}
+                  </Link>
+                </motion.div>
+              )}
+
               {/* Certificate */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                variants={fadeUp}
                 transition={{ delay: 0.2 }}
                 className="glass rounded-2xl p-6 text-center"
               >
@@ -342,8 +483,7 @@ export default function ProfilePage() {
               {/* Squad Info */}
               {mbtiProfile && (
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  variants={fadeUp}
                   transition={{ delay: 0.25 }}
                   className="rounded-2xl p-6 text-center"
                   style={{ background: squadColor + "15", border: `1px solid ${squadColor}25` }}
@@ -361,7 +501,7 @@ export default function ProfilePage() {
                 </motion.div>
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 

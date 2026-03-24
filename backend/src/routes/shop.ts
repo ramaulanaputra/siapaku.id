@@ -11,10 +11,22 @@ const generateOrderNumber = () => {
   return `SA-${timestamp}-${random}`;
 };
 
-const PSIKOLOG_PLANS: Record<string, { sessions: number; price: number }> = {
-  "psikolog-basic":    { sessions: 2, price: 399000 },
-  "psikolog-extra":   { sessions: 3, price: 499000 },
-  "psikolog-ultimate": { sessions: 4, price: 599000 },
+/* ─────────────────────────────────────────────
+   Package definitions
+   ───────────────────────────────────────────── */
+
+// Test packages
+const TEST_PACKAGES: Record<string, { name: string; price: number; consultCredits: number; unlockConsult: boolean }> = {
+  standard:  { name: "Paket Standar",  price: 99000,  consultCredits: 0, unlockConsult: false },
+  premium:   { name: "Paket Premium",  price: 199000, consultCredits: 1, unlockConsult: true },
+  ultimate:  { name: "Paket Ultimate", price: 399000, consultCredits: 2, unlockConsult: true },
+};
+
+// Consultation credit packages (one-time purchase, NOT subscription)
+const CONSULT_PACKAGES: Record<string, { name: string; price: number; sessions: number }> = {
+  "consult-basic":    { name: "Basic Service Konsultasi",    price: 299000, sessions: 2 },
+  "consult-premium":  { name: "Premium Service Konsultasi",  price: 399000, sessions: 3 },
+  "consult-ultimate": { name: "Ultimate Service Konsultasi", price: 499000, sessions: 4 },
 };
 
 // GET /api/shop/products
@@ -52,18 +64,19 @@ router.post("/orders", authenticate, async (req: AuthRequest, res: Response): Pr
       res.status(400).json({ error: "Data order tidak lengkap" }); return;
     }
 
-    // Check psikolog access — harus punya premium
-    if (PSIKOLOG_PLANS[package_type]) {
-      const userResult = await query(`SELECT has_premium_package FROM users WHERE id = $1`, [userId]);
-      if (!userResult.rows[0]?.has_premium_package) {
-        res.status(403).json({ error: "Fitur konsul psikolog hanya untuk pengguna Paket Premium" }); return;
+    // Consult credit packages require consult_unlocked
+    if (CONSULT_PACKAGES[package_type]) {
+      const userResult = await query(`SELECT consult_unlocked FROM users WHERE id = $1`, [userId]);
+      if (!userResult.rows[0]?.consult_unlocked) {
+        res.status(403).json({ error: "Fitur konsul psikolog hanya untuk pengguna Paket Premium / Ultimate. Beli paket terlebih dahulu." }); return;
       }
     }
 
     let subtotal = 0;
     for (const item of items) { subtotal += (item.price || 0) * (item.quantity || 1); }
 
-    const shipping_cost = ["premium", "merchandise"].includes(package_type) ? 25000 : 0;
+    const needsShipping = ["ultimate", "merchandise"].includes(package_type);
+    const shipping_cost = needsShipping ? 25000 : 0;
     const total_price = subtotal + shipping_cost;
     const orderNumber = generateOrderNumber();
 
@@ -102,33 +115,27 @@ router.get("/orders/:orderNumber", authenticate, async (req: AuthRequest, res: R
   }
 });
 
-// GET /api/shop/psikolog/status — cek status subscription & sesi gratis
-router.get("/psikolog/status", authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
+// GET /api/shop/consult/status — check consult credits & access
+router.get("/consult/status", authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
     const userResult = await query(
-      `SELECT has_premium_package, free_psikolog_session FROM users WHERE id = $1`, [userId]
+      `SELECT consult_unlocked, consult_credits FROM users WHERE id = $1`, [userId]
     );
     const user = userResult.rows[0];
 
-    const activeSub = await query(
-      `SELECT * FROM psikolog_subscriptions WHERE user_id = $1 AND is_active = true AND period_end > NOW()
-       ORDER BY created_at DESC LIMIT 1`, [userId]
-    );
-
-    const freeSessions = await query(
-      `SELECT * FROM psikolog_sessions WHERE user_id = $1 AND is_free_session = true AND status != 'cancelled'`,
+    const sessionsUsed = await query(
+      `SELECT COUNT(*) FROM psikolog_sessions WHERE user_id = $1 AND status = 'completed'`,
       [userId]
     );
 
     res.json({
-      has_premium: user?.has_premium_package || false,
-      free_session_available: user?.free_psikolog_session || false,
-      free_sessions_used: freeSessions.rows.length,
-      active_subscription: activeSub.rows[0] || null,
+      consult_unlocked: user?.consult_unlocked || false,
+      consult_credits: user?.consult_credits || 0,
+      sessions_used: parseInt(sessionsUsed.rows[0].count),
     });
   } catch {
-    res.status(500).json({ error: "Gagal ambil status psikolog" });
+    res.status(500).json({ error: "Gagal ambil status konsultasi" });
   }
 });
 
@@ -159,67 +166,83 @@ router.post("/midtrans/webhook", async (req: Request, res: Response): Promise<vo
 
     if (orderResult.rows.length > 0 && paymentStatus === "paid") {
       const order = orderResult.rows[0];
+      const userId = order.user_id;
 
-      // Activate premium flag + free psikolog session
-      if (order.package_type === "premium") {
+      // ── Test package activation ──────────────────────────
+      if (TEST_PACKAGES[order.package_type]) {
+        const pkg = TEST_PACKAGES[order.package_type];
+        const updates: string[] = [];
+        const values: any[] = [];
+        let paramIndex = 1;
+
+        // Set test_package
+        updates.push(`test_package = $${paramIndex++}`);
+        values.push(order.package_type);
+
+        // PDF report for premium & ultimate
+        if (["premium", "ultimate"].includes(order.package_type)) {
+          updates.push(`has_pdf_report = true`);
+        }
+
+        // Physical merch for ultimate
+        if (order.package_type === "ultimate") {
+          updates.push(`has_physical_merch = true`);
+        }
+
+        // Unlock consult for premium & ultimate
+        if (pkg.unlockConsult) {
+          updates.push(`consult_unlocked = true`);
+        }
+
+        // Add bonus consult credits
+        if (pkg.consultCredits > 0) {
+          updates.push(`consult_credits = COALESCE(consult_credits, 0) + $${paramIndex++}`);
+          values.push(pkg.consultCredits);
+        }
+
+        updates.push(`updated_at = NOW()`);
+        values.push(userId);
+
         await query(
-          `UPDATE users SET has_premium_package=true, free_psikolog_session=true, updated_at=NOW() WHERE id=$1`,
-          [order.user_id]
+          `UPDATE users SET ${updates.join(", ")} WHERE id = $${paramIndex}`,
+          values
         );
-        // Create free session record
-        await query(
-          `INSERT INTO psikolog_sessions (user_id, is_free_session, status) VALUES ($1, true, 'pending')`,
-          [order.user_id]
-        );
-        // Generate certificate + PDF report
+
+        // Generate certificate
         const lastTest = await query(
           `SELECT mbti_type FROM test_records WHERE user_id=$1 ORDER BY test_date DESC LIMIT 1`,
-          [order.user_id]
+          [userId]
         );
         if (lastTest.rows.length > 0) {
           const certCode = `CERT-${Date.now().toString(36).toUpperCase()}`;
           const verifyCode = uuidv4().replace(/-/g, "").substring(0, 16).toUpperCase();
+          const certType = ["premium", "ultimate"].includes(order.package_type) ? "premium" : "standard";
           await query(
             `INSERT INTO certificates (order_id, user_id, certificate_code, certificate_type, mbti_type, verification_code)
-             VALUES ($1,$2,$3,'premium',$4,$5)`,
-            [order.id, order.user_id, certCode, lastTest.rows[0].mbti_type, verifyCode]
+             VALUES ($1,$2,$3,$4,$5,$6)`,
+            [order.id, userId, certCode, certType, lastTest.rows[0].mbti_type, verifyCode]
           );
         }
       }
 
-      // Standard package — certificate + PDF report
-      if (order.package_type === "standard") {
-        const lastTest = await query(
-          `SELECT mbti_type FROM test_records WHERE user_id=$1 ORDER BY test_date DESC LIMIT 1`,
-          [order.user_id]
-        );
-        if (lastTest.rows.length > 0) {
-          const certCode = `CERT-${Date.now().toString(36).toUpperCase()}`;
-          const verifyCode = uuidv4().replace(/-/g, "").substring(0, 16).toUpperCase();
-          await query(
-            `INSERT INTO certificates (order_id, user_id, certificate_code, certificate_type, mbti_type, verification_code)
-             VALUES ($1,$2,$3,'standard',$4,$5)`,
-            [order.id, order.user_id, certCode, lastTest.rows[0].mbti_type, verifyCode]
-          );
-        }
-      }
+      // ── Consultation credit package ──────────────────────
+      if (CONSULT_PACKAGES[order.package_type]) {
+        const pkg = CONSULT_PACKAGES[order.package_type];
 
-      // Psikolog subscription activation
-      if (PSIKOLOG_PLANS[order.package_type]) {
-        const plan = PSIKOLOG_PLANS[order.package_type];
-        const periodEnd = new Date();
-        periodEnd.setMonth(periodEnd.getMonth() + 1);
-        // Deactivate old subscription if any
+        // Add credits to user profile
         await query(
-          `UPDATE psikolog_subscriptions SET is_active=false WHERE user_id=$1 AND is_active=true`,
-          [order.user_id]
+          `UPDATE users SET consult_credits = COALESCE(consult_credits, 0) + $1, updated_at = NOW() WHERE id = $2`,
+          [pkg.sessions, userId]
         );
+
+        // Log the credit purchase
         await query(
-          `INSERT INTO psikolog_subscriptions
-            (user_id, order_id, plan_type, sessions_per_month, sessions_remaining, period_end)
-           VALUES ($1,$2,$3,$4,$4,$5)`,
-          [order.user_id, order.id, order.package_type, plan.sessions, periodEnd.toISOString()]
-        );
+          `INSERT INTO consult_credit_logs (user_id, order_id, package_type, credits_added, price_paid)
+           VALUES ($1, $2, $3, $4, $5)`,
+          [userId, order.id, order.package_type, pkg.sessions, pkg.sessions * 100000]
+        ).catch(() => {
+          // Table might not exist yet, that's okay
+        });
       }
     }
 

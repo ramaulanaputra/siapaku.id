@@ -9,9 +9,12 @@ router.get("/profile", authenticate, async (req: AuthRequest, res: Response): Pr
   try {
     const userId = req.user!.id;
 
-    // Get user data
+    // Get user data including credit system fields
     const userResult = await query(
-      `SELECT id, email, nama, no_hp, alamat, tentang_diri, profile_picture_url, created_at
+      `SELECT id, email, nama, no_hp, alamat, tentang_diri, profile_picture_url,
+              consult_credits, consult_unlocked, test_package,
+              has_pdf_report, has_physical_merch,
+              created_at
        FROM users WHERE id = $1`,
       [userId]
     );
@@ -61,6 +64,11 @@ router.get("/profile", authenticate, async (req: AuthRequest, res: Response): Pr
 
     res.json({
       ...user,
+      consult_credits: user.consult_credits || 0,
+      consult_unlocked: user.consult_unlocked || false,
+      test_package: user.test_package || null,
+      has_pdf_report: user.has_pdf_report || false,
+      has_physical_merch: user.has_physical_merch || false,
       latestTest: latestTest.rows[0] || null,
       testHistory: historyResult.rows,
       orderCount: parseInt(orderCount.rows[0].count),
@@ -78,7 +86,6 @@ router.put("/profile", authenticate, async (req: AuthRequest, res: Response): Pr
     const userId = req.user!.id;
     const { nama, no_hp, alamat, tentang_diri } = req.body;
 
-    // Validate input lengths
     if (tentang_diri && tentang_diri.length > 500) {
       res.status(400).json({ error: "Bio maksimal 500 karakter" });
       return;
@@ -139,6 +146,52 @@ router.get("/certificates", authenticate, async (req: AuthRequest, res: Response
     res.json({ certificates: result.rows });
   } catch (error) {
     res.status(500).json({ error: "Gagal ambil sertifikat" });
+  }
+});
+
+// GET /api/user/consult-credits — dedicated endpoint for credit balance
+router.get("/consult-credits", authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.user!.id;
+
+    const userResult = await query(
+      `SELECT consult_credits, consult_unlocked FROM users WHERE id = $1`,
+      [userId]
+    );
+
+    const sessionsResult = await query(
+      `SELECT
+        COUNT(*) FILTER (WHERE status = 'completed') as sessions_completed,
+        COUNT(*) FILTER (WHERE status = 'scheduled') as sessions_scheduled,
+        COUNT(*) FILTER (WHERE status = 'pending') as sessions_pending
+       FROM psikolog_sessions WHERE user_id = $1`,
+      [userId]
+    );
+
+    const purchaseHistory = await query(
+      `SELECT o.package_type, o.total_price, o.created_at
+       FROM orders o
+       WHERE o.user_id = $1
+         AND o.payment_status = 'paid'
+         AND o.package_type IN ('consult-basic', 'consult-premium', 'consult-ultimate')
+       ORDER BY o.created_at DESC
+       LIMIT 10`,
+      [userId]
+    );
+
+    const user = userResult.rows[0];
+    const stats = sessionsResult.rows[0];
+
+    res.json({
+      consult_unlocked: user?.consult_unlocked || false,
+      consult_credits: user?.consult_credits || 0,
+      sessions_completed: parseInt(stats?.sessions_completed || "0"),
+      sessions_scheduled: parseInt(stats?.sessions_scheduled || "0"),
+      sessions_pending: parseInt(stats?.sessions_pending || "0"),
+      purchase_history: purchaseHistory.rows,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Gagal ambil data kredit konsultasi" });
   }
 });
 

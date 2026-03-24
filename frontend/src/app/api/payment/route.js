@@ -1,5 +1,5 @@
 // ============================================================
-// api/payment/create-transaction.js  (atau route Express/Next)
+// api/payment/route.js
 // Midtrans Payment Integration
 // ============================================================
 const midtransClient = require("midtrans-client");
@@ -43,19 +43,19 @@ const TEST_PACKAGES = {
 };
 
 const CONSULT_PACKAGES = {
-  basic: {
+  "consult-basic": {
     name: "Basic Service Konsultasi",
     price: 299000,
     sessions: 2,
     type: "consult",
   },
-  premium_consult: {
+  "consult-premium": {
     name: "Premium Service Konsultasi",
     price: 399000,
     sessions: 3,
     type: "consult",
   },
-  ultimate_consult: {
+  "consult-ultimate": {
     name: "Ultimate Service Konsultasi",
     price: 499000,
     sessions: 4,
@@ -131,7 +131,6 @@ async function handleNotification(req, res) {
     if (transaction_status === "settlement") isPaid = true;
 
     if (!isPaid) {
-      // Update order status if failed/cancelled
       if (["cancel", "deny", "expire"].includes(transaction_status)) {
         await supabase
           .from("orders")
@@ -142,7 +141,6 @@ async function handleNotification(req, res) {
     }
 
     // ── Payment SUCCESS ──────────────────────────────────────
-    // Get order details
     const { data: order } = await supabase
       .from("orders")
       .select("*")
@@ -208,7 +206,7 @@ async function sendConfirmationEmail(order, profile, consultCredits) {
 
   const creditsHtml =
     consultCredits > 0
-      ? `<p>✅ <strong>${consultCredits}× kredit konsultasi psikolog</strong> telah ditambahkan ke akun kamu!</p>`
+      ? `<p>✅ <strong>${consultCredits}× kredit konsultasi psikolog</strong> telah ditambahkan ke akun kamu! Kredit ini tidak hangus dan bisa digunakan kapan saja.</p>`
       : "";
 
   const html = `
@@ -263,11 +261,11 @@ async function sendConfirmationEmail(order, profile, consultCredits) {
           
           <p>Kredit dan fitur telah otomatis aktif di akun kamu. Kamu bisa langsung menggunakannya!</p>
           
-          <a href="${process.env.APP_URL}/dashboard" class="cta">Lihat Dashboard Saya →</a>
+          <a href="${process.env.APP_URL}/profile" class="cta">Lihat Profil Saya →</a>
         </div>
         <div class="footer">
           <p>Email ini dikirim otomatis. Jangan balas email ini.</p>
-          <p>© 2025 MBTI Test Platform. All rights reserved.</p>
+          <p>© 2025 SIAPA AKU. All rights reserved.</p>
         </div>
       </div>
     </body>
@@ -275,7 +273,7 @@ async function sendConfirmationEmail(order, profile, consultCredits) {
   `;
 
   await transporter.sendMail({
-    from: `"MBTI Platform" <${process.env.SMTP_USER}>`,
+    from: `"SIAPA AKU" <${process.env.SMTP_USER}>`,
     to: profile.email,
     subject: `✅ Konfirmasi Pembelian - ${order.package_name}`,
     html,

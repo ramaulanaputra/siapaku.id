@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useRef } from "react";
 
 const packages = [
@@ -117,7 +118,9 @@ function PricingCard({ pkg, index, onSelect }) {
       style={{
         opacity: inView ? 1 : 0,
         transform: inView
-          ? "translateY(0) scale(1)"
+          ? hovered
+            ? "translateY(-8px) scale(1.02)"
+            : "translateY(0) scale(1)"
           : "translateY(60px) scale(0.95)",
         transition: `all 0.7s cubic-bezier(0.16,1,0.3,1) ${index * 0.12}s`,
         cursor: "pointer",
@@ -132,11 +135,6 @@ function PricingCard({ pkg, index, onSelect }) {
           : pkg.popular
           ? `0 20px 40px -8px ${pkg.color}44`
           : "0 8px 32px rgba(0,0,0,0.3)",
-        transform: inView
-          ? hovered
-            ? "translateY(-8px) scale(1.02)"
-            : "translateY(0) scale(1)"
-          : "translateY(60px) scale(0.95)",
       }}
     >
       {pkg.popular && (
@@ -380,7 +378,7 @@ export default function PricingSection({ user, onPayment }) {
         gap: 24,
       }}>
         <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.1))" }} />
-        <div style={{ fontSize: 14, color: "#6B7280", whiteSpace: "nowrap" }}>atau tambah sesi konsultasi</div>
+        <div style={{ fontSize: 14, color: "#6B7280", whiteSpace: "nowrap" }}>atau tambah kredit konsultasi</div>
         <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, rgba(255,255,255,0.1), transparent)" }} />
       </div>
 
@@ -434,8 +432,8 @@ export default function PricingSection({ user, onPayment }) {
             {[
               { step: "1", text: "Pilih paket & bayar via Midtrans" },
               { step: "2", text: "Kredit masuk otomatis ke profil" },
-              { step: "3", text: "Email konfirmasi dikirim ke kamu" },
-              { step: "4", text: "Gunakan kredit kapan saja untuk booking" },
+              { step: "3", text: "Gunakan kredit kapan saja untuk booking" },
+              { step: "4", text: "Konsul via webcall tanpa batas waktu" },
             ].map(({ step, text }) => (
               <div key={step} style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{
