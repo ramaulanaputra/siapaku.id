@@ -107,11 +107,11 @@ export default function HomePage() {
             >
               {session ? (
                 <Link href="/test" className="btn-primary text-lg px-10 py-4 hover:scale-105 transition-transform">
-                  Yuk, Ketemu Diri Elu 🚀
+                  Yuk, Ketemu Diri Kamu 🚀
                 </Link>
               ) : (
                 <button onClick={() => signIn("google")} className="btn-primary text-lg px-10 py-4 hover:scale-105 transition-transform">
-                  Yuk, Ketemu Diri Elu 🚀
+                  Yuk, Ketemu Diri Kamu 🚀
                 </button>
               )}
               <Link href="/about" className="btn-secondary text-lg px-10 py-4">

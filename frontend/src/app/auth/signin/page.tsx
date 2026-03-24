@@ -41,9 +41,11 @@ function SignInContent() {
         <div className="glass rounded-3xl p-10 text-center">
           {/* Logo */}
           <Link href="/" className="inline-flex items-center gap-3 mb-8 group">
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform">
-              <span className="text-white font-display font-bold">SA</span>
-            </div>
+            <img
+              src="/logo.svg"
+              alt="SIAPA AKU"
+              className="w-11 h-11 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(168,85,247,0.4)]"
+            />
             <span className="font-display font-bold text-xl text-white">
               SIAPA <span className="gradient-text">AKU</span>
             </span>
@@ -59,7 +61,7 @@ function SignInContent() {
           </motion.div>
 
           <h1 className="font-display text-3xl font-bold text-white mb-2">
-            Yuk, Ketemu Diri Elu
+            Yuk, Ketemu Diri Kamu
           </h1>
           <p className="text-white/50 mb-8 leading-relaxed text-sm">
             Login untuk memulai perjalanan self-discovery kamu dan menyimpan hasil tes secara personal.
