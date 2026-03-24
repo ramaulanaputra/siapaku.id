@@ -14,6 +14,7 @@ const ERROR_MESSAGES: Record<string, string> = {
   OAuthAccountNotLinked: "Email ini sudah terdaftar dengan metode login lain.",
   AccessDenied: "Akses ditolak. Pastikan OAuth Consent Screen sudah dipublish (bukan Testing mode).",
   Configuration: "Ada masalah konfigurasi server. Cek GOOGLE_CLIENT_ID dan GOOGLE_CLIENT_SECRET.",
+  google: "Gagal menghubungi Google OAuth. Kemungkinan GOOGLE_CLIENT_ID atau GOOGLE_CLIENT_SECRET belum dikonfigurasi di server.",
   Default: "Terjadi kesalahan saat login. Coba lagi.",
 };
 
