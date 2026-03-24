@@ -38,17 +38,18 @@ export default function HomePage() {
   const { data: session } = useSession();
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  /* Fix: hero moves UP (negative) as you scroll, fading out without overlapping content below */
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.7], [1, 0.92]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.7], [1, 0.95]);
 
   return (
-    <main className="min-h-screen bg-brand-dark relative overflow-hidden">
+    <main className="min-h-screen bg-brand-dark relative">
       <Navbar />
 
       {/* ═══════════════ HERO ═══════════════ */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20">
-        {/* Animated orbs */}
+      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        {/* Animated orbs — contained within hero */}
         <div className="orb w-[500px] h-[500px] bg-purple-600 top-10 -left-32 animate-pulse-slow animate-morph" />
         <div className="orb w-96 h-96 bg-pink-600 bottom-10 -right-24 animate-pulse-slow animate-morph" style={{ animationDelay: "2s" }} />
         <div className="orb w-72 h-72 bg-blue-600 top-1/3 left-1/2 -translate-x-1/2 animate-pulse-slow" style={{ animationDelay: "4s" }} />
@@ -110,7 +111,7 @@ export default function HomePage() {
                   Yuk, Ketemu Diri Kamu 🚀
                 </Link>
               ) : (
-                <button onClick={() => signIn("google")} className="btn-primary text-lg px-10 py-4 hover:scale-105 transition-transform">
+                <button onClick={() => signIn("google", { callbackUrl: "/" })} className="btn-primary text-lg px-10 py-4 hover:scale-105 transition-transform">
                   Yuk, Ketemu Diri Kamu 🚀
                 </button>
               )}
@@ -133,7 +134,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════ TRUST BAR ═══════════════ */}
-      <section className="py-16 px-6 relative z-10">
+      <section className="relative z-10 py-16 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 md:gap-x-16">
             {STATS.map((stat, i) => (
@@ -147,9 +148,9 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════ SQUAD SECTION ═══════════════ */}
-      <section className="py-24 px-6 relative">
+      <section className="relative z-10 py-24 px-6 overflow-hidden">
         <div className="orb w-80 h-80 bg-purple-500/30 top-0 right-0 animate-pulse-slow" />
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto relative z-[1]">
           <div className="text-center mb-16">
             <div className="text-xs text-purple-400 font-bold tracking-[5px] mb-4" data-scroll="fade">
               4 SQUAD UNIK
@@ -199,11 +200,11 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════ FEATURES ═══════════════ */}
-      <section className="py-24 px-6 relative">
+      <section className="relative z-10 py-24 px-6 overflow-hidden">
         <div className="orb w-64 h-64 bg-purple-600 top-1/2 -left-32 animate-morph" />
         <div className="orb w-48 h-48 bg-pink-600/30 bottom-20 right-10" />
 
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto relative z-[1]">
           <div className="text-center mb-16">
             <div className="text-xs text-pink-400 font-bold tracking-[5px] mb-4" data-scroll="fade">
               KENAPA SIAPA AKU?
@@ -242,7 +243,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════ TESTIMONIALS ═══════════════ */}
-      <section className="py-24 px-6 relative">
+      <section className="relative z-10 py-24 px-6 overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <div className="text-xs text-blue-400 font-bold tracking-[5px] mb-4" data-scroll="fade">
@@ -276,9 +277,9 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════ PRICING PREVIEW ═══════════════ */}
-      <section className="py-24 px-6 relative">
+      <section className="relative z-10 py-24 px-6 overflow-hidden">
         <div className="orb w-72 h-72 bg-amber-500/20 top-1/3 right-0" />
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto relative z-[1]">
           <div className="text-center mb-12">
             <div className="text-xs text-amber-400 font-bold tracking-[5px] mb-4" data-scroll="fade">
               PAKET MEMBER
@@ -330,7 +331,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════ CTA ═══════════════ */}
-      <section className="py-24 px-6">
+      <section className="relative z-10 py-24 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <div
             data-scroll="zoom-in"
@@ -355,7 +356,7 @@ export default function HomePage() {
                     Mulai Tes Sekarang — Gratis
                   </Link>
                 ) : (
-                  <button onClick={() => signIn("google")} className="btn-primary text-lg px-12 py-4 hover:scale-105 transition-transform">
+                  <button onClick={() => signIn("google", { callbackUrl: "/" })} className="btn-primary text-lg px-12 py-4 hover:scale-105 transition-transform">
                     Mulai Tes Sekarang — Gratis
                   </button>
                 )}

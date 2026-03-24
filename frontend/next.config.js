@@ -3,11 +3,10 @@ const nextConfig = {
   images: {
     domains: ["lh3.googleusercontent.com", "res.cloudinary.com"],
   },
+  // Only expose public env vars here. Server-side secrets
+  // (NEXTAUTH_SECRET, GOOGLE_CLIENT_SECRET) are read automatically
+  // from process.env at runtime — do NOT inline them into bundles.
   env: {
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   },
 };

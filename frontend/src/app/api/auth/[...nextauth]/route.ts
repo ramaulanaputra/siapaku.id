@@ -19,23 +19,27 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider === "google") {
+        // Sync user to backend (non-blocking — login succeeds even if backend is down)
         try {
-          await axios.post(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/auth/google`,
-            {
-              google_id: account.providerAccountId,
-              email: user.email,
-              nama: user.name,
-              profile_picture_url: user.image,
-            },
-            { timeout: 5000 }
-          );
-        } catch (error) {
-          console.error("Backend sync failed (non-blocking):", error);
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+          if (apiUrl) {
+            await axios.post(
+              `${apiUrl}/api/auth/google`,
+              {
+                google_id: account.providerAccountId,
+                email: user.email,
+                nama: user.name,
+                profile_picture_url: user.image,
+              },
+              { timeout: 5000 }
+            );
+          }
+        } catch (error: any) {
+          console.error("Backend sync failed (non-blocking):", error?.message || error);
         }
         return true;
       }
-      return false;
+      return true;
     },
     async jwt({ token, account, trigger }) {
       if (account) {
@@ -44,14 +48,17 @@ const authOptions: NextAuthOptions = {
       }
       if (trigger === "update" || account) {
         try {
-          const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/user/me`,
-            { headers: { Authorization: `Bearer ${token.accessToken}` }, timeout: 3000 }
-          );
-          token.has_premium_package = res.data?.user?.has_premium_package || false;
-          token.free_psikolog_session = res.data?.user?.free_psikolog_session || false;
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+          if (apiUrl && token.accessToken) {
+            const res = await axios.get(
+              `${apiUrl}/api/user/me`,
+              { headers: { Authorization: `Bearer ${token.accessToken}` }, timeout: 3000 }
+            );
+            token.has_premium_package = res.data?.user?.has_premium_package || false;
+            token.free_psikolog_session = res.data?.user?.free_psikolog_session || false;
+          }
         } catch {
-          // Non-blocking
+          // Non-blocking — use cached values
         }
       }
       return token;
@@ -65,6 +72,12 @@ const authOptions: NextAuthOptions = {
         (session as any).accessToken = token.accessToken;
       }
       return session;
+    },
+    async redirect({ url, baseUrl }) {
+      // Ensure redirects stay within the app
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
     },
   },
   pages: {
