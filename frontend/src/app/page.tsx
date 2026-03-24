@@ -17,7 +17,7 @@ const SQUADS = [
 const FEATURES = [
   { icon: "🧠", title: "8 Dimensi Psikologi", desc: "Bukan sekadar 4 huruf MBTI. Kamu dapat insight mendalam tentang emosi, shadow, love language, dan purpose." },
   { icon: "✨", title: "Journey Self-Love", desc: "Setiap hasil tes dibuat personal untuk membantu kamu menerima dan mencintai diri sendiri dengan tulus." },
-  { icon: "🔄", title: "Retest Setiap 7 Hari", desc: "Track perkembangan diri kamu. Soal selalu beda dari pool 100+ pertanyaan yang dirancang dengan cermat." },
+  { icon: "🔄", title: "Retest Setiap 7 Hari", desc: "Track perkembangan diri kamu. Setiap tes 100 soal dipilih acak dari bank 1000+ pertanyaan yang dirancang cermat." },
   { icon: "🎯", title: "Actionable Insights", desc: "Career path, romance dynamics, social tips, dan purpose direction yang spesifik untuk tipe kepribadian kamu." },
 ];
 
@@ -96,8 +96,9 @@ export default function HomePage() {
               transition={{ delay: 0.5, duration: 0.8 }}
               className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
             >
-              SIAPA AKU menggali 8 dimensi kepribadianmu — dari cara berpikir, 
-              emosi, hingga love language. Gratis, personal, dan mendalam.
+              SIAPA AKU membantu kamu mengenali 16 tipe MBTI dan 8 dimensi
+              kepribadianmu — dari cara berpikir, emosi, shadow, hingga love language. 
+              Gratis, personal, dan mendalam.
             </motion.p>
 
             <motion.div

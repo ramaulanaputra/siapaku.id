@@ -64,6 +64,11 @@ const migrate = async () => {
       created_at               TIMESTAMPTZ DEFAULT NOW()
     )
   `);
+  // Add new columns for 5-dimension scoring (A/T identity)
+  await query(`ALTER TABLE test_records ADD COLUMN IF NOT EXISTS score_at JSONB NOT NULL DEFAULT '{}'`);
+  await query(`ALTER TABLE test_records ADD COLUMN IF NOT EXISTS identity CHAR(1) DEFAULT 'A'`);
+  await query(`ALTER TABLE test_records ADD COLUMN IF NOT EXISTS full_type VARCHAR(6)`);
+
   await query(`CREATE INDEX IF NOT EXISTS idx_test_records_user_id ON test_records(user_id)`);
   await query(`CREATE INDEX IF NOT EXISTS idx_test_records_test_date ON test_records(test_date DESC)`);
 

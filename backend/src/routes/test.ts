@@ -126,6 +126,74 @@ router.post("/submit", authenticate, async (req: AuthRequest, res: Response): Pr
   }
 });
 
+// POST /api/test/result
+// Save test results (called from frontend with email-based lookup)
+router.post("/result", async (req, res: Response): Promise<void> => {
+  try {
+    const { email, result } = req.body;
+
+    if (!email || !result || !result.mbtiType) {
+      res.status(400).json({ error: "Data tidak lengkap" });
+      return;
+    }
+
+    // Find user by email
+    const userResult = await query(
+      `SELECT id FROM users WHERE email = $1 LIMIT 1`,
+      [email]
+    );
+
+    if (userResult.rows.length === 0) {
+      res.status(404).json({ error: "User tidak ditemukan" });
+      return;
+    }
+
+    const userId = userResult.rows[0].id;
+    const mbtiType = result.mbtiType.toUpperCase();
+    const identity = result.identity || "A";
+    const fullType = result.fullType || `${mbtiType}-${identity}`;
+
+    // Squad map
+    const squadMap: Record<string, string> = {
+      ESTP: "Explorer", ESFP: "Explorer", ISTP: "Explorer", ISFP: "Explorer",
+      ESTJ: "Guardian", ESFJ: "Guardian", ISTJ: "Guardian", ISFJ: "Guardian",
+      ENTJ: "Visionary", ENTP: "Visionary", INTJ: "Visionary", INTP: "Visionary",
+      ENFJ: "Harmonizer", ENFP: "Harmonizer", INFJ: "Harmonizer", INFP: "Harmonizer",
+    };
+    const squad = squadMap[mbtiType] || "Explorer";
+
+    // Extract dimension scores
+    const dims = result.dimensions || [];
+    const getScore = (dim: string) => {
+      const d = dims.find((x: any) => x.dimension === dim);
+      return d ? JSON.stringify(d) : "{}";
+    };
+
+    // Next test: 7 days
+    const nextTestDate = new Date();
+    nextTestDate.setDate(nextTestDate.getDate() + 7);
+
+    const insertResult = await query(
+      `INSERT INTO test_records
+        (user_id, mbti_type, squad, score_ei, score_sn, score_tf, score_jp, score_at, identity, full_type, detailed_results, next_test_available_date)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+       RETURNING id, mbti_type, squad, test_date`,
+      [
+        userId, mbtiType, squad,
+        getScore("EI"), getScore("SN"), getScore("TF"), getScore("JP"), getScore("AT"),
+        identity, fullType,
+        JSON.stringify(result),
+        nextTestDate.toISOString(),
+      ]
+    );
+
+    res.status(201).json({ success: true, testRecord: insertResult.rows[0] });
+  } catch (error) {
+    console.error("Test result save error:", error);
+    res.status(500).json({ error: "Gagal menyimpan hasil" });
+  }
+});
+
 // GET /api/test/history
 // Get user's test history
 router.get("/history", authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
