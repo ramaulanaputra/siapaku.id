@@ -2,21 +2,27 @@
 
 import { useState, useEffect } from "react";
 import { useSession, signIn } from "next-auth/react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MBTI_PROFILES, MBTIType, getSquadColor, getSquadEmoji } from "@/lib/mbtiData";
 import axios from "axios";
+import toast from "react-hot-toast";
 import { formatDistanceToNow } from "date-fns";
-import { id } from "date-fns/locale";
+import { id as idLocale } from "date-fns/locale";
 
 interface UserProfile {
   nama: string;
   email: string;
   profile_picture_url?: string;
   tentang_diri?: string;
+  username?: string;
+  tanggal_lahir?: string;
+  pekerjaan?: string;
+  hobby?: string;
+  setauku_aku_ini?: string;
   consult_credits?: number;
   consult_unlocked?: boolean;
   test_package?: string;
@@ -50,12 +56,113 @@ const stagger = {
   animate: { transition: { staggerChildren: 0.08 } },
 };
 
+// Editable field component
+function EditableField({
+  label,
+  icon,
+  value,
+  placeholder,
+  fieldKey,
+  type = "text",
+  multiline = false,
+  maxLength,
+  onSave,
+}: {
+  label: string;
+  icon: string;
+  value: string;
+  placeholder: string;
+  fieldKey: string;
+  type?: string;
+  multiline?: boolean;
+  maxLength?: number;
+  onSave: (key: string, val: string) => Promise<void>;
+}) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(value);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    setDraft(value);
+  }, [value]);
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await onSave(fieldKey, draft);
+      setEditing(false);
+    } catch {
+      // error handled by parent
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="group">
+      <label className="text-white/40 text-xs font-medium mb-1.5 flex items-center gap-1.5">
+        <span>{icon}</span> {label}
+      </label>
+      {editing ? (
+        <div className="flex gap-2">
+          {multiline ? (
+            <textarea
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              placeholder={placeholder}
+              maxLength={maxLength}
+              className="flex-1 bg-white/[0.06] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 resize-none transition-all"
+              rows={3}
+              autoFocus
+            />
+          ) : (
+            <input
+              type={type}
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              placeholder={placeholder}
+              maxLength={maxLength}
+              className="flex-1 bg-white/[0.06] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 transition-all"
+              autoFocus
+            />
+          )}
+          <div className="flex flex-col gap-1.5">
+            <button
+              onClick={handleSave}
+              disabled={saving}
+              className="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 rounded-lg text-white text-xs font-medium transition-colors disabled:opacity-50"
+            >
+              {saving ? "..." : "✓"}
+            </button>
+            <button
+              onClick={() => { setEditing(false); setDraft(value); }}
+              className="px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-white/50 text-xs transition-colors"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      ) : (
+        <button
+          onClick={() => setEditing(true)}
+          className="w-full text-left px-4 py-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-transparent hover:border-white/10 transition-all group"
+        >
+          {value ? (
+            <span className="text-white/80 text-sm">{value}</span>
+          ) : (
+            <span className="text-white/20 text-sm italic">{placeholder}</span>
+          )}
+          <span className="text-white/0 group-hover:text-white/30 text-xs ml-2 transition-colors">✏️</span>
+        </button>
+      )}
+    </div>
+  );
+}
+
 export default function ProfilePage() {
   const { data: session, status } = useSession();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
-  const [editBio, setEditBio] = useState(false);
-  const [bio, setBio] = useState("");
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -69,7 +176,6 @@ export default function ProfilePage() {
         headers: { Authorization: `Bearer ${(session as any)?.accessToken}` },
       });
       setProfile(res.data);
-      setBio(res.data.tentang_diri || "");
     } catch {
       if (session?.user) {
         setProfile({
@@ -84,17 +190,19 @@ export default function ProfilePage() {
     }
   };
 
-  const saveBio = async () => {
+  const saveField = async (key: string, value: string) => {
     try {
       await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL}/api/user/profile`,
-        { tentang_diri: bio },
+        { [key]: value || null },
         { headers: { Authorization: `Bearer ${(session as any)?.accessToken}` } }
       );
-      setProfile((prev) => prev ? { ...prev, tentang_diri: bio } : prev);
-      setEditBio(false);
-    } catch {
-      setEditBio(false);
+      setProfile((prev) => prev ? { ...prev, [key]: value } : prev);
+      toast.success("Tersimpan!");
+    } catch (err: any) {
+      const msg = err?.response?.data?.error || "Gagal menyimpan";
+      toast.error(msg);
+      throw err;
     }
   };
 
@@ -131,14 +239,24 @@ export default function ProfilePage() {
     : null;
   const canTest = !nextTestDate || nextTestDate <= new Date();
   const countdown = nextTestDate && !canTest
-    ? formatDistanceToNow(nextTestDate, { locale: id, addSuffix: true })
+    ? formatDistanceToNow(nextTestDate, { locale: idLocale, addSuffix: true })
     : null;
 
   const consultCredits = profile?.consult_credits || 0;
   const consultUnlocked = profile?.consult_unlocked || false;
   const testPackage = profile?.test_package;
-
   const packageLabel = testPackage === "ultimate" ? "Ultimate 💎" : testPackage === "premium" ? "Premium 👑" : testPackage === "standard" ? "Standar 🎓" : null;
+
+  // Format date for display
+  const formatBirthdate = (dateStr?: string) => {
+    if (!dateStr) return "";
+    try {
+      const d = new Date(dateStr);
+      return d.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+    } catch {
+      return dateStr;
+    }
+  };
 
   return (
     <main className="min-h-screen bg-brand-dark">
@@ -154,7 +272,8 @@ export default function ProfilePage() {
             className="glass rounded-3xl p-8 mb-6 relative overflow-hidden"
           >
             {/* Background glow */}
-            <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full opacity-10 blur-3xl" style={{ background: squadColor }} />
+            <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full opacity-10 blur-3xl" style={{ background: squadColor }} />
+            <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full opacity-5 blur-3xl" style={{ background: squadColor }} />
 
             <div className="flex flex-col md:flex-row items-start gap-6 relative z-10">
               {/* Avatar */}
@@ -168,18 +287,21 @@ export default function ProfilePage() {
                   <Image
                     src={profile.profile_picture_url}
                     alt="Profile"
-                    width={80}
-                    height={80}
-                    className="rounded-2xl"
+                    width={88}
+                    height={88}
+                    className="rounded-2xl ring-2 ring-white/10"
                   />
                 ) : (
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-2xl font-display font-bold text-white">
+                  <div
+                    className="w-[88px] h-[88px] rounded-2xl flex items-center justify-center text-3xl font-display font-bold text-white"
+                    style={{ background: `linear-gradient(135deg, ${squadColor}80, ${squadColor}40)` }}
+                  >
                     {profile?.nama?.[0] || "?"}
                   </div>
                 )}
                 {mbtiProfile && (
                   <div
-                    className="absolute -bottom-2 -right-2 w-8 h-8 rounded-lg flex items-center justify-center text-sm shadow-lg"
+                    className="absolute -bottom-2 -right-2 w-9 h-9 rounded-lg flex items-center justify-center text-sm shadow-lg ring-2 ring-brand-dark"
                     style={{ background: squadColor }}
                   >
                     {squadEmoji}
@@ -188,45 +310,43 @@ export default function ProfilePage() {
               </motion.div>
 
               {/* Info */}
-              <div className="flex-1">
-                <h1 className="font-display text-3xl font-bold text-white mb-1">
-                  {profile?.nama || session?.user?.name}
-                </h1>
-                <p className="text-white/40 text-sm mb-3">{profile?.email}</p>
-
-                {/* Package badge */}
-                {packageLabel && (
-                  <div className="inline-flex items-center gap-2 glass rounded-full px-3 py-1 text-xs font-semibold text-purple-300 mb-3">
-                    Paket {packageLabel}
-                  </div>
-                )}
-
-                {editBio ? (
-                  <div className="flex gap-2">
-                    <textarea
-                      value={bio}
-                      onChange={(e) => setBio(e.target.value)}
-                      placeholder="Ceritakan diri kamu..."
-                      className="input-dark resize-none text-sm flex-1"
-                      rows={2}
-                    />
-                    <div className="flex flex-col gap-2">
-                      <button onClick={saveBio} className="px-3 py-1.5 bg-purple-600 rounded-lg text-white text-xs hover:bg-purple-500 transition-colors">
-                        Simpan
-                      </button>
-                      <button onClick={() => setEditBio(false)} className="px-3 py-1.5 glass rounded-lg text-white/60 text-xs">
-                        Batal
-                      </button>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-3 flex-wrap">
+                  <h1 className="font-display text-3xl font-bold text-white">
+                    {profile?.nama || session?.user?.name}
+                  </h1>
+                  {packageLabel && (
+                    <div className="inline-flex items-center gap-1.5 glass rounded-full px-3 py-1 text-xs font-semibold text-purple-300">
+                      Paket {packageLabel}
                     </div>
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => setEditBio(true)}
-                    className="text-white/50 text-sm hover:text-white/80 transition-colors text-left"
-                  >
-                    {profile?.tentang_diri || "Tambahkan bio... ✏️"}
-                  </button>
+                  )}
+                </div>
+                {profile?.username && (
+                  <p className="text-white/30 text-sm mt-0.5">@{profile.username}</p>
                 )}
+                <p className="text-white/40 text-sm mt-1">{profile?.email}</p>
+
+                {/* Quick stats row */}
+                <div className="flex flex-wrap gap-4 mt-4">
+                  {profile?.testHistory && profile.testHistory.length > 0 && (
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-white">{profile.testHistory.length}</div>
+                      <div className="text-white/30 text-xs">Tes Selesai</div>
+                    </div>
+                  )}
+                  {consultUnlocked && (
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-sky-400">{consultCredits}</div>
+                      <div className="text-white/30 text-xs">Kredit Konsul</div>
+                    </div>
+                  )}
+                  {profile?.certificates && profile.certificates.length > 0 && (
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-amber-400">{profile.certificates.length}</div>
+                      <div className="text-white/30 text-xs">Sertifikat</div>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* MBTI Badge */}
@@ -235,77 +355,119 @@ export default function ProfilePage() {
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: 0.2, type: "spring" }}
-                  className="rounded-2xl p-4 text-center min-w-28 shrink-0"
+                  className="rounded-2xl p-5 text-center min-w-32 shrink-0"
                   style={{ background: squadColor + "15", border: `1px solid ${squadColor}30` }}
                 >
-                  <div className="text-3xl mb-1">{mbtiProfile.emoji}</div>
-                  <div className="font-display font-bold text-xl" style={{ color: squadColor }}>
+                  <div className="text-4xl mb-1">{mbtiProfile.emoji}</div>
+                  <div className="font-display font-bold text-2xl" style={{ color: squadColor }}>
                     {mbtiProfile.type}
                   </div>
-                  <div className="text-white/40 text-xs">{mbtiProfile.nickname}</div>
+                  <div className="text-white/40 text-xs mt-0.5">{mbtiProfile.nickname}</div>
+                  <div className="text-xs mt-2 px-2 py-0.5 rounded-full" style={{ background: squadColor + "20", color: squadColor }}>
+                    Squad {mbtiProfile.squad}
+                  </div>
                 </motion.div>
               )}
             </div>
           </motion.div>
 
-          {/* ═══════════════ KREDIT KONSUL CARD ═══════════════ */}
-          {consultUnlocked && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-              className="glass rounded-2xl p-6 mb-6 relative overflow-hidden"
-            >
-              <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full bg-sky-500 opacity-10 blur-3xl" />
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 relative z-10">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500/20 to-purple-500/20 flex items-center justify-center text-2xl flex-shrink-0">
-                  🧠
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-white text-sm mb-1">Kredit Konsultasi Psikolog</h3>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-display font-bold text-sky-400">{consultCredits}</span>
-                    <span className="text-white/40 text-sm">sesi tersedia</span>
-                  </div>
-                  <p className="text-white/30 text-xs mt-1">Kredit tidak hangus · Gunakan kapan saja</p>
-                </div>
-                <Link
-                  href="/shop"
-                  className="glass rounded-xl px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap"
-                >
-                  {consultCredits > 0 ? "Booking Sesi →" : "Beli Kredit →"}
-                </Link>
-              </div>
-
-              {/* Progress dots showing credits */}
-              {consultCredits > 0 && (
-                <div className="flex gap-2 mt-4">
-                  {Array.from({ length: Math.min(consultCredits, 10) }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="w-3 h-3 rounded-full bg-gradient-to-r from-sky-400 to-purple-400"
-                      style={{ animationDelay: `${i * 0.1}s` }}
-                    />
-                  ))}
-                  {consultCredits > 10 && (
-                    <span className="text-white/30 text-xs ml-1">+{consultCredits - 10}</span>
-                  )}
-                </div>
-              )}
-            </motion.div>
-          )}
-
           <motion.div variants={stagger} initial="initial" animate="animate" className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* ═══════════════ LEFT COLUMN ═══════════════ */}
             <div className="md:col-span-2 space-y-6">
-              {/* MBTI Result Card */}
+
+              {/* ═══════════════ PROFIL KAMU — Editable Fields ═══════════════ */}
+              <motion.div
+                variants={fadeUp}
+                transition={{ delay: 0.1 }}
+                className="glass rounded-2xl p-6"
+              >
+                <h2 className="font-semibold text-white mb-5 flex items-center gap-2">
+                  <span className="text-lg">📝</span> Profil Kamu
+                </h2>
+
+                <div className="space-y-4">
+                  <EditableField
+                    label="Username"
+                    icon="@"
+                    value={profile?.username || ""}
+                    placeholder="Pilih username unik kamu..."
+                    fieldKey="username"
+                    maxLength={50}
+                    onSave={saveField}
+                  />
+
+                  <EditableField
+                    label="Nama Lengkap"
+                    icon="👤"
+                    value={profile?.nama || ""}
+                    placeholder="Nama lengkap kamu..."
+                    fieldKey="nama"
+                    onSave={saveField}
+                  />
+
+                  <EditableField
+                    label="Tanggal Lahir"
+                    icon="🎂"
+                    value={profile?.tanggal_lahir ? profile.tanggal_lahir.split("T")[0] : ""}
+                    placeholder="Pilih tanggal lahir..."
+                    fieldKey="tanggal_lahir"
+                    type="date"
+                    onSave={saveField}
+                  />
+
+                  <EditableField
+                    label="Pekerjaan"
+                    icon="💼"
+                    value={profile?.pekerjaan || ""}
+                    placeholder="Apa pekerjaan kamu?"
+                    fieldKey="pekerjaan"
+                    maxLength={100}
+                    onSave={saveField}
+                  />
+
+                  <EditableField
+                    label="Hobby"
+                    icon="🎯"
+                    value={profile?.hobby || ""}
+                    placeholder="Apa hobby kamu? (Bisa lebih dari satu)"
+                    fieldKey="hobby"
+                    onSave={saveField}
+                  />
+
+                  <EditableField
+                    label="Tentang Diri"
+                    icon="💬"
+                    value={profile?.tentang_diri || ""}
+                    placeholder="Ceritakan sedikit tentang diri kamu..."
+                    fieldKey="tentang_diri"
+                    multiline
+                    maxLength={500}
+                    onSave={saveField}
+                  />
+
+                  <EditableField
+                    label="Setauku Aku Ini..."
+                    icon="🪞"
+                    value={profile?.setauku_aku_ini || ""}
+                    placeholder="Menurutmu, kamu itu orang yang seperti apa? Tulis bebas..."
+                    fieldKey="setauku_aku_ini"
+                    multiline
+                    maxLength={1000}
+                    onSave={saveField}
+                  />
+                </div>
+              </motion.div>
+
+              {/* ═══════════════ MBTI Result Card ═══════════════ */}
               {mbtiProfile ? (
                 <motion.div
                   variants={fadeUp}
                   transition={{ delay: 0.15 }}
                   className="glass rounded-2xl p-6"
                 >
-                  <h2 className="font-semibold text-white mb-4">Kepribadianmu</h2>
+                  <h2 className="font-semibold text-white mb-4 flex items-center gap-2">
+                    <span className="text-lg">🧬</span> Kepribadianmu
+                  </h2>
                   <p className="text-white/60 text-sm leading-relaxed mb-4">
                     {mbtiProfile.description}
                   </p>
@@ -346,14 +508,46 @@ export default function ProfilePage() {
                 </motion.div>
               )}
 
-              {/* Test History */}
+              {/* ═══════════════ Kredit Konsul Card ═══════════════ */}
+              {consultUnlocked && (
+                <motion.div
+                  variants={fadeUp}
+                  transition={{ delay: 0.18 }}
+                  className="glass rounded-2xl p-6 relative overflow-hidden"
+                >
+                  <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full bg-sky-500 opacity-10 blur-3xl" />
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 relative z-10">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500/20 to-purple-500/20 flex items-center justify-center text-2xl flex-shrink-0">
+                      🧠
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-white text-sm mb-1">Kredit Konsultasi Psikolog</h3>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-3xl font-display font-bold text-sky-400">{consultCredits}</span>
+                        <span className="text-white/40 text-sm">sesi tersedia</span>
+                      </div>
+                      <p className="text-white/30 text-xs mt-1">Kredit tidak hangus · Gunakan kapan saja</p>
+                    </div>
+                    <Link
+                      href="/shop"
+                      className="glass rounded-xl px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap"
+                    >
+                      {consultCredits > 0 ? "Booking Sesi →" : "Beli Kredit →"}
+                    </Link>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* ═══════════════ Test History ═══════════════ */}
               {profile?.testHistory && profile.testHistory.length > 0 && (
                 <motion.div
                   variants={fadeUp}
                   transition={{ delay: 0.2 }}
                   className="glass rounded-2xl p-6"
                 >
-                  <h2 className="font-semibold text-white mb-4">History Tes</h2>
+                  <h2 className="font-semibold text-white mb-4 flex items-center gap-2">
+                    <span className="text-lg">📊</span> History Tes
+                  </h2>
                   <div className="space-y-3">
                     {profile.testHistory.slice(0, 5).map((test, i) => {
                       const p = MBTI_PROFILES[test.mbti_type];
@@ -375,7 +569,7 @@ export default function ProfilePage() {
                             </div>
                           </div>
                           <span className="text-white/30 text-xs">
-                            {formatDistanceToNow(new Date(test.test_date), { locale: id, addSuffix: true })}
+                            {formatDistanceToNow(new Date(test.test_date), { locale: idLocale, addSuffix: true })}
                           </span>
                         </motion.div>
                       );
@@ -384,14 +578,16 @@ export default function ProfilePage() {
                 </motion.div>
               )}
 
-              {/* Purchases & Certificates */}
+              {/* ═══════════════ Sertifikat ═══════════════ */}
               {profile?.certificates && profile.certificates.length > 0 && (
                 <motion.div
                   variants={fadeUp}
                   transition={{ delay: 0.25 }}
                   className="glass rounded-2xl p-6"
                 >
-                  <h2 className="font-semibold text-white mb-4">Sertifikat</h2>
+                  <h2 className="font-semibold text-white mb-4 flex items-center gap-2">
+                    <span className="text-lg">🏆</span> Sertifikat
+                  </h2>
                   <div className="space-y-3">
                     {profile.certificates.map((cert, i) => (
                       <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03]">
@@ -498,6 +694,37 @@ export default function ProfilePage() {
                      mbtiProfile.squad === "Guardian" ? "Loyal · Responsible · Structured" :
                      "Adventurous · Adaptable · Action-oriented"}
                   </p>
+                </motion.div>
+              )}
+
+              {/* Profile Info Card */}
+              {(profile?.pekerjaan || profile?.hobby || profile?.tanggal_lahir) && (
+                <motion.div
+                  variants={fadeUp}
+                  transition={{ delay: 0.28 }}
+                  className="glass rounded-2xl p-6"
+                >
+                  <h3 className="font-semibold text-white text-sm mb-4">Info Singkat</h3>
+                  <div className="space-y-3">
+                    {profile.tanggal_lahir && (
+                      <div className="flex items-center gap-2 text-sm">
+                        <span className="text-white/30">🎂</span>
+                        <span className="text-white/60">{formatBirthdate(profile.tanggal_lahir)}</span>
+                      </div>
+                    )}
+                    {profile.pekerjaan && (
+                      <div className="flex items-center gap-2 text-sm">
+                        <span className="text-white/30">💼</span>
+                        <span className="text-white/60">{profile.pekerjaan}</span>
+                      </div>
+                    )}
+                    {profile.hobby && (
+                      <div className="flex items-center gap-2 text-sm">
+                        <span className="text-white/30">🎯</span>
+                        <span className="text-white/60">{profile.hobby}</span>
+                      </div>
+                    )}
+                  </div>
                 </motion.div>
               )}
             </div>

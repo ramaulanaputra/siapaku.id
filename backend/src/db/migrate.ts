@@ -39,6 +39,13 @@ const migrate = async () => {
   await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS has_pdf_report BOOLEAN DEFAULT false`);
   await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS has_physical_merch BOOLEAN DEFAULT false`);
 
+  // Profile detail fields
+  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS username VARCHAR(50) UNIQUE`);
+  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS tanggal_lahir DATE`);
+  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS pekerjaan VARCHAR(100)`);
+  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS hobby TEXT`);
+  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS setauku_aku_ini TEXT`);
+
   // TEST RECORDS
   await query(`
     CREATE TABLE IF NOT EXISTS test_records (

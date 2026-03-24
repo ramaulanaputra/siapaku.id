@@ -14,6 +14,7 @@ router.get("/profile", authenticate, async (req: AuthRequest, res: Response): Pr
       `SELECT id, email, nama, no_hp, alamat, tentang_diri, profile_picture_url,
               consult_credits, consult_unlocked, test_package,
               has_pdf_report, has_physical_merch,
+              username, tanggal_lahir, pekerjaan, hobby, setauku_aku_ini,
               created_at
        FROM users WHERE id = $1`,
       [userId]
@@ -84,11 +85,36 @@ router.get("/profile", authenticate, async (req: AuthRequest, res: Response): Pr
 router.put("/profile", authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
-    const { nama, no_hp, alamat, tentang_diri } = req.body;
+    const { nama, no_hp, alamat, tentang_diri, username, tanggal_lahir, pekerjaan, hobby, setauku_aku_ini } = req.body;
 
     if (tentang_diri && tentang_diri.length > 500) {
       res.status(400).json({ error: "Bio maksimal 500 karakter" });
       return;
+    }
+
+    if (setauku_aku_ini && setauku_aku_ini.length > 1000) {
+      res.status(400).json({ error: "Setauku aku ini maksimal 1000 karakter" });
+      return;
+    }
+
+    // Check username uniqueness if provided
+    if (username) {
+      if (username.length < 3 || username.length > 50) {
+        res.status(400).json({ error: "Username harus 3-50 karakter" });
+        return;
+      }
+      if (!/^[a-zA-Z0-9._-]+$/.test(username)) {
+        res.status(400).json({ error: "Username hanya boleh huruf, angka, titik, underscore, atau strip" });
+        return;
+      }
+      const existing = await query(
+        `SELECT id FROM users WHERE username = $1 AND id != $2`,
+        [username.toLowerCase(), userId]
+      );
+      if (existing.rows.length > 0) {
+        res.status(400).json({ error: "Username sudah dipakai" });
+        return;
+      }
     }
 
     const result = await query(
@@ -97,10 +123,15 @@ router.put("/profile", authenticate, async (req: AuthRequest, res: Response): Pr
         no_hp = COALESCE($2, no_hp),
         alamat = COALESCE($3, alamat),
         tentang_diri = COALESCE($4, tentang_diri),
+        username = COALESCE($5, username),
+        tanggal_lahir = COALESCE($6, tanggal_lahir),
+        pekerjaan = COALESCE($7, pekerjaan),
+        hobby = COALESCE($8, hobby),
+        setauku_aku_ini = COALESCE($9, setauku_aku_ini),
         updated_at = NOW()
-       WHERE id = $5
-       RETURNING id, nama, no_hp, alamat, tentang_diri`,
-      [nama, no_hp, alamat, tentang_diri, userId]
+       WHERE id = $10
+       RETURNING id, nama, no_hp, alamat, tentang_diri, username, tanggal_lahir, pekerjaan, hobby, setauku_aku_ini`,
+      [nama, no_hp, alamat, tentang_diri, username?.toLowerCase(), tanggal_lahir, pekerjaan, hobby, setauku_aku_ini, userId]
     );
 
     res.json({ success: true, user: result.rows[0] });
