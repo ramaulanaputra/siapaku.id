@@ -422,7 +422,7 @@ export default function HomePage() {
       {/* ══════════════════ HERO ══════════════════ */}
       <section
         ref={heroRef}
-        className="relative min-h-[90vh] flex items-center justify-center overflow-hidden"
+        className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center overflow-hidden py-16 sm:py-20"
       >
         {/* Particle background */}
         <ParticleField />
