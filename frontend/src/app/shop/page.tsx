@@ -26,7 +26,7 @@ const PACKAGES = [
     features: [
       "Sertifikat Online PDF (verifikasi via kode unik/barcode)",
       "Printout Fisik Sertifikat Resmi dikirim ke rumah",
-      "Report Personalized & Tailored",
+      "Report PDF Personalized & Tailored",
       "Dihubungi Tim Siapa Aku untuk diskusi hasil tes",
     ],
     popular: false,
@@ -43,9 +43,8 @@ const PACKAGES = [
     accent: "#A78BFA",
     tagline: "Semua di Standar + bonus konsul psikolog",
     features: [
-      "Semua benefit Paket Standar",
-      "PDF Report Premium Ekstra",
-      "Printout Fisik Report Premium",
+      "Semua benefit Member Standar",
+      "Printout Fisik Report Premium (dikirim ke rumah)",
       "1× Konsul Psikolog Gratis",
       "Unlock Fitur Konsultasi Psikolog",
     ],
@@ -63,7 +62,7 @@ const PACKAGES = [
     accent: "#FCD34D",
     tagline: "Full experience + merchandise eksklusif",
     features: [
-      "Semua benefit Paket Premium",
+      "Semua benefit Member Premium",
       "T-Shirt MBTI Personalized",
       "Notebook Eksklusif",
       "Pilih: Tumbler atau Tote Bag Premium",

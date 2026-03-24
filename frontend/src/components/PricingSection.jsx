@@ -12,7 +12,7 @@ const packages = [
     features: [
       "✓ Sertifikat Online PDF (verifikasi kode unik/barcode)",
       "✓ Printout Fisik Sertifikat Resmi dikirim ke rumah",
-      "✓ Report Personalized & Tailored",
+      "✓ Report PDF Personalized & Tailored",
       "✓ Dihubungi Tim Siapa Aku untuk diskusi hasil tes",
     ],
     cta: "Gabung Member",
@@ -27,9 +27,8 @@ const packages = [
     accent: "#A78BFA",
     gradient: "from-violet-600 to-purple-900",
     features: [
-      "✓ Semua benefit Paket Standar",
-      "✓ PDF Report Premium Ekstra",
-      "✓ Printout Fisik Report Premium",
+      "✓ Semua benefit Member Standar",
+      "✓ Printout Fisik Report Premium (dikirim ke rumah)",
       "✓ 1× Konsul Psikolog Gratis",
       "✓ Unlock Fitur Konsultasi Psikolog",
     ],
@@ -45,7 +44,7 @@ const packages = [
     accent: "#FCD34D",
     gradient: "from-amber-600 to-yellow-900",
     features: [
-      "✓ Semua benefit Paket Premium",
+      "✓ Semua benefit Member Premium",
       "✓ T-Shirt MBTI Personalized",
       "✓ Notebook Eksklusif",
       "✓ Tumbler atau Tote Bag Premium",
