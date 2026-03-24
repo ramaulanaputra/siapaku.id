@@ -18,10 +18,10 @@ const PACKAGES = [
     color: "#6366F1",
     tagline: "Mulai perjalanan kenali diri",
     features: [
-      "Sertifikat online (PDF) dengan nama & MBTI type",
+      "Sertifikat online (PDF) & printout fisik dengan nama & MBTI type",
       "Barcode verification code",
       "Design premium & shareable sosial media",
-      "Personalised Interactive PDF Report (20-30 hal)",
+      "Personalised Interactive PDF Report",
       "Career, romance & social advice detail",
       "Practical planning & strategy sections",
     ],
@@ -63,7 +63,7 @@ const PSIKOLOG_PLANS = [
       "2x sesi konsultasi per bulan",
       "Durasi 1 jam per sesi",
       "Psikolog berlisensi & berpengalaman",
-      "Jadwal fleksibel via video call",
+      "Jadwal fleksibel via webcall (audio/video)",
       "Catatan sesi & rekomendasi tindak lanjut",
     ],
   },
@@ -80,7 +80,7 @@ const PSIKOLOG_PLANS = [
       "3x sesi konsultasi per bulan",
       "Durasi 1 jam per sesi",
       "Psikolog berlisensi & berpengalaman",
-      "Jadwal fleksibel via video call",
+      "Jadwal fleksibel via webcall (audio/video)",
       "Catatan sesi & rekomendasi tindak lanjut",
       "Priority booking",
     ],
@@ -98,7 +98,7 @@ const PSIKOLOG_PLANS = [
       "4x sesi konsultasi per bulan",
       "Durasi 1 jam per sesi",
       "Psikolog berlisensi & berpengalaman",
-      "Jadwal fleksibel via video call",
+      "Jadwal fleksibel via webcall (audio/video)",
       "Catatan sesi & rekomendasi tindak lanjut",
       "Priority booking",
       "Dedicated psikolog tetap",
@@ -183,7 +183,7 @@ export default function ShopPage() {
       <div className="sticky top-16 z-40 px-6 py-4 bg-brand-dark/80 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-4xl mx-auto flex gap-2 flex-wrap">
           {[
-            { id: "certificate", label: "🏆 Paket Sertifikat" },
+            { id: "certificate", label: "🏆 Paket" },
             { id: "psikolog", label: "🧠 Konsul Psikolog" },
             { id: "merch", label: "🛍️ Merchandise" },
           ].map((tab) => (
@@ -347,7 +347,7 @@ export default function ShopPage() {
               <p className="text-2xl mb-2">🧠</p>
               <h3 className="font-semibold text-white mb-2">Psikolog Berlisensi & Berpengalaman</h3>
               <p className="text-white/40 text-sm leading-relaxed max-w-md mx-auto">
-                Semua sesi dilakukan via video call dengan psikolog yang telah tersertifikasi.
+                Semua sesi dilakukan via webcall (audio/video) dengan psikolog yang telah tersertifikasi.
                 Jadwal fleksibel, privasi terjaga, dan hasil konsultasi tersimpan di profilmu.
               </p>
             </motion.div>
