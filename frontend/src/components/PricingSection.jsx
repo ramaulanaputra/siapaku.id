@@ -360,6 +360,7 @@ export default function PricingSection({ user, onPayment }) {
           gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
           gap: 24,
           alignItems: "start",
+          paddingTop: 24,
         }}>
           {packages.map((pkg, i) => (
             <PricingCard key={pkg.id} pkg={pkg} index={i} onSelect={handlePackageSelect} />

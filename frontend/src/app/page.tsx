@@ -291,7 +291,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 pt-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 pt-6">
             {[
               { name: "Standar", price: "Rp 99rb", emoji: "🎓", highlight: false },
               { name: "Premium", price: "Rp 199rb", emoji: "👑", highlight: true },
