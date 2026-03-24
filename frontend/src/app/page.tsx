@@ -129,49 +129,17 @@ export default function HomePage() {
             </motion.p>
           </motion.div>
 
-          {/* Floating personality cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 1 }}
-            className="mt-16 flex flex-wrap justify-center gap-3"
-          >
-            {["INFP 🌟", "ENTJ ⚡", "ISFJ 🛡️", "ENTP 🚀", "INTJ ⚡", "ENFP 🌟"].map((type, i) => (
-              <motion.div
-                key={type}
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
-                className="glass rounded-full px-4 py-2 text-sm text-white/60 font-medium hover:text-white/80 hover:bg-white/10 transition-all cursor-default"
-              >
-                {type}
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          animate={{ y: [0, 12, 0] }}
-          transition={{ duration: 2.5, repeat: Infinity }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/20"
-        >
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-xs tracking-widest uppercase">Scroll</span>
-            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path d="M12 5v14M5 12l7 7 7-7" />
-            </svg>
-          </div>
         </motion.div>
       </section>
 
-      {/* ═══════════════ STATS COUNTER ═══════════════ */}
-      <section className="py-12 px-6 relative z-10">
-        <div className="max-w-4xl mx-auto glass rounded-3xl p-8" data-scroll="zoom-in">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      {/* ═══════════════ TRUST BAR ═══════════════ */}
+      <section className="py-16 px-6 relative z-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 md:gap-x-16">
             {STATS.map((stat, i) => (
-              <div key={stat.label} className="text-center" data-scroll="up" data-delay={`${(i + 1) * 100}`}>
-                <div className="font-display text-3xl md:text-4xl font-bold gradient-text mb-1">{stat.value}</div>
-                <div className="text-white/40 text-sm">{stat.label}</div>
+              <div key={stat.label} className="flex items-center gap-3 group" data-scroll="fade" data-delay={`${(i + 1) * 100}`}>
+                <span className="font-display text-2xl md:text-3xl font-bold text-white group-hover:text-purple-300 transition-colors">{stat.value}</span>
+                <span className="text-white/30 text-sm border-l border-white/10 pl-3">{stat.label}</span>
               </div>
             ))}
           </div>
