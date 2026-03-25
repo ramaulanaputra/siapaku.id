@@ -196,7 +196,7 @@ export default function AboutPage() {
       {/* ══════════════════ HERO ══════════════════ */}
       <section
         ref={heroRef}
-        className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center overflow-hidden py-16 sm:py-20"
+        className="relative flex items-center justify-center overflow-hidden pt-28 pb-12 sm:pt-32 sm:pb-16"
       >
         {/* Particle background */}
         <ParticleField />
