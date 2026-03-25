@@ -19,7 +19,7 @@ const PACKAGES = [
     name: "Standar",
     price: 99000,
     priceLabel: "Rp 99.000",
-    emoji: "🎓",
+    emoji: "📚",
     color: "#6366F1",
     accent: "#818CF8",
     tagline: "Sertifikat resmi & report personalized",
@@ -28,6 +28,7 @@ const PACKAGES = [
       "Printout Fisik Sertifikat Resmi dikirim ke rumah",
       "Report PDF Personalized & Tailored",
       "Dihubungi Tim Siapa Aku untuk diskusi hasil tes",
+      "Unlock Tes Big Five dan Enneagram",
     ],
     popular: false,
     badge: null,
@@ -36,8 +37,8 @@ const PACKAGES = [
   {
     id: "premium",
     name: "Premium",
-    price: 199000,
-    priceLabel: "Rp 199.000",
+    price: 299000,
+    priceLabel: "Rp 299.000",
     emoji: "👑",
     color: "#7C3AED",
     accent: "#A78BFA",
@@ -55,8 +56,8 @@ const PACKAGES = [
   {
     id: "ultimate",
     name: "Ultimate",
-    price: 399000,
-    priceLabel: "Rp 399.000",
+    price: 549000,
+    priceLabel: "Rp 549.000",
     emoji: "💎",
     color: "#D97706",
     accent: "#FCD34D",
@@ -230,7 +231,7 @@ export default function ShopPage() {
   const confirmUltimateOrder = () => {
     if (!ultimateChoice) { toast.error("Pilih dulu: Tumbler atau Tote Bag"); return; }
     setShowUltimateModal(false);
-    handleOrder("ultimate", 399000, { bonus_item: ultimateChoice });
+    handleOrder("ultimate", 549000, { bonus_item: ultimateChoice });
   };
 
   return (

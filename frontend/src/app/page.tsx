@@ -170,6 +170,8 @@ const STATS = [
   { value: 16, suffix: "", label: "Tipe MBTI" },
   { value: 8, suffix: "", label: "Dimensi Analisis" },
   { value: 1000, suffix: "+", label: "Pertanyaan Unik" },
+  { value: 0, suffix: "", label: "Big Five", display: "▪︎" },
+  { value: 0, suffix: "", label: "Enneagram", display: "▪︎" },
   { value: 0, suffix: "", label: "Gratis Selamanya", display: "∞" },
 ];
 
@@ -208,16 +210,17 @@ const PRICING = [
       "Printout Fisik Sertifikat Resmi dikirim ke rumah",
       "Report PDF Personalized & Tailored",
       "Dihubungi Tim Siapa Aku untuk diskusi hasil tes",
+      "Unlock Tes Big Five dan Enneagram",
     ],
     cta: "Gabung Member Standar →",
     popular: false,
     accent: "from-white/5 to-white/10",
     border: "border-white/10",
-    emoji: "🎓",
+    emoji: "📚",
   },
   {
     name: "Premium",
-    price: "Rp 199K",
+    price: "Rp 299K",
     period: "sekali bayar",
     desc: "Semua di Standar + bonus konsul psikolog.",
     features: [
@@ -234,7 +237,7 @@ const PRICING = [
   },
   {
     name: "Ultimate",
-    price: "Rp 399K",
+    price: "Rp 549K",
     period: "sekali bayar",
     desc: "Full experience + merchandise eksklusif.",
     features: [
@@ -266,7 +269,7 @@ const STEPS = [
   {
     icon: "✨",
     title: "Dapatkan Insight Mendalam",
-    desc: "16 tipe MBTI, 8 dimensi, dan profil personal yang detail.",
+    desc: "16 tipe MBTI, 8 dimensi, Big Five, Enneagram, dan profil personal yang detail.",
   },
 ];
 
@@ -560,11 +563,24 @@ export default function HomePage() {
               delay: 0.45,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="text-base sm:text-lg text-white/50 max-w-2xl leading-relaxed mb-10"
+            className="text-base sm:text-lg text-white/50 max-w-2xl leading-relaxed mb-4"
           >
             SIAPA AKU membantu kamu mengenali 16 tipe MBTI dan 8 dimensi
             kepribadianmu — dari cara berpikir, emosi, shadow, hingga love
             language. Gratis, personal, dan mendalam.
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.8,
+              delay: 0.5,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="text-sm sm:text-base text-white/40 max-w-2xl leading-relaxed mb-10"
+          >
+            Mendapatkan akses ke tes kepribadian tingkat lanjutan berbasis scientific proof, yaitu Big Five dan Enneagram, yang dirancang khusus secara eksklusif untuk pengguna yang berstatus Member.
           </motion.p>
 
           {/* Buttons */}
@@ -627,7 +643,7 @@ export default function HomePage() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="max-w-5xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-0"
+          className="max-w-5xl mx-auto px-4 grid grid-cols-2 md:grid-cols-3 gap-0"
         >
           {STATS.map((stat, i) => (
             <div key={stat.label} className="relative">
@@ -934,7 +950,7 @@ export default function HomePage() {
               variants={fadeInUp}
               className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
             >
-              Harga
+              Gabung Member
             </motion.span>
             <motion.h2
               variants={fadeInUp}
@@ -1048,6 +1064,23 @@ export default function HomePage() {
                 </button>
               </motion.div>
             ))}
+          </motion.div>
+
+          {/* Lihat lebih banyak button */}
+          <motion.div
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="mt-10 text-center"
+          >
+            <Link
+              href="/shop"
+              className="group relative inline-flex items-center gap-2 px-8 py-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm font-semibold text-white/80 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Lebih Banyak Lagi
+              <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+            </Link>
           </motion.div>
         </div>
       </section>
