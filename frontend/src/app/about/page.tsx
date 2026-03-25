@@ -393,8 +393,10 @@ export default function AboutPage() {
               {[
                 { stat: "16", label: "Tipe Kepribadian", suffix: "Unik" },
                 { stat: "8", label: "Dimensi Psikologi", suffix: "Mendalam" },
-                { stat: "100+", label: "Soal di Bank", suffix: "Pertanyaan" },
+                { stat: "1000+", label: "Soal di Bank", suffix: "Pertanyaan" },
                 { stat: "4", label: "Squad Eksklusif", suffix: "Komunitas" },
+                { stat: "🧬", label: "Big Five", suffix: "Personality Traits" },
+                { stat: "✦", label: "Enneagram", suffix: "Core Motivation" },
               ].map((item) => (
                 <motion.div
                   key={item.label}

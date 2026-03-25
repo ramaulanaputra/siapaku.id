@@ -170,8 +170,8 @@ const STATS = [
   { value: 16, suffix: "", label: "Tipe MBTI" },
   { value: 8, suffix: "", label: "Dimensi Analisis" },
   { value: 1000, suffix: "+", label: "Pertanyaan Unik" },
-  { value: 0, suffix: "", label: "Big Five", display: "▪︎" },
-  { value: 0, suffix: "", label: "Enneagram", display: "▪︎" },
+  { value: 0, suffix: "", label: "Big Five", display: "🧬" },
+  { value: 0, suffix: "", label: "Enneagram", display: "✦" },
   { value: 0, suffix: "", label: "Gratis Selamanya", display: "∞" },
 ];
 
@@ -206,11 +206,11 @@ const PRICING = [
     period: "sekali bayar",
     desc: "Sertifikat resmi & report personalized.",
     features: [
+      "Unlock Tes Big Five dan Enneagram",
       "Sertifikat Online PDF (verifikasi via kode unik/barcode)",
-      "Printout Fisik Sertifikat Resmi dikirim ke rumah",
+      "Printout Fisik Sertifikat Resmi (dikirim ke rumah)",
       "Report PDF Personalized & Tailored",
       "Dihubungi Tim Siapa Aku untuk diskusi hasil tes",
-      "Unlock Tes Big Five dan Enneagram",
     ],
     cta: "Gabung Member Standar →",
     popular: false,
@@ -226,8 +226,8 @@ const PRICING = [
     features: [
       "Semua benefit Member Standar",
       "Printout Fisik Report Premium (dikirim ke rumah)",
-      "1× Konsul Psikolog Gratis",
       "Unlock Fitur Konsultasi Psikolog",
+      "1× Konsul Psikolog Gratis",
     ],
     cta: "Gabung Member Premium →",
     popular: true,
