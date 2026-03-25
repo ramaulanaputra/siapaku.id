@@ -125,48 +125,60 @@ function ParticleField() {
 /* ── Data ──────────────────────────────────────────── */
 const FAQS = [
   {
-    q: "Apakah tes ini akurat secara psikologis?",
-    a: "SIAPA AKU dibangun di atas framework MBTI yang telah divalidasi secara ilmiah, diperkaya dengan 8 dimensi psikologi tambahan. Hasilnya sangat reliabel sebagai instrumen self-reflection — gunakan sebagai cermin untuk memahami diri, bukan sebagai label permanen.",
-  },
-  {
-    q: "Mengapa saya harus login terlebih dahulu?",
-    a: "Autentikasi memungkinkan kami menyimpan hasil tes secara aman di profil personalmu, melacak perkembangan kepribadian dari waktu ke waktu, dan memastikan rate limiting (1× per 7 hari) berjalan dengan benar agar kamu punya ruang refleksi yang cukup.",
-  },
-  {
-    q: "Kenapa tes hanya bisa dilakukan sekali per minggu?",
-    a: "Self-discovery membutuhkan waktu untuk diresapi. Tujuh hari adalah interval ideal — cukup untuk menjalani kehidupan, mengamati pola perilakumu, lalu kembali dengan perspektif yang lebih matang. Kualitas di atas kuantitas.",
-  },
-  {
-    q: "Seberapa aman data pribadi saya?",
-    a: "Keamanan data adalah prioritas utama kami. Seluruh data dienkripsi end-to-end, tidak pernah dijual ke pihak ketiga, dan kamu memiliki hak penuh untuk meminta penghapusan data kapan saja. Kami mengikuti standar perlindungan data GDPR.",
+    q: "Apakah tes SIAPA AKU akurat secara psikologis?",
+    a: "SIAPA AKU dibangun di atas framework MBTI yang telah divalidasi secara ilmiah dan diperkaya dengan 8 dimensi psikologi tambahan. Untuk member, tersedia juga tes Big Five (model kepribadian paling diterima di dunia akademis) dan Enneagram (pemetaan motivasi inti). Hasilnya sangat reliabel sebagai instrumen self-reflection — gunakan sebagai cermin untuk memahami diri lebih dalam, bukan sebagai label permanen.",
   },
   {
     q: "Apa yang membedakan SIAPA AKU dari tes MBTI lainnya?",
-    a: "Tes MBTI konvensional hanya menghasilkan 4 huruf. SIAPA AKU memberikan analisis mendalam melalui 8 dimensi psikologi — termasuk Emotional Intelligence, Shadow Work, Love Language, Career Path, dan Life Purpose. Kamu bukan sekadar label 'INFP' — kamu adalah manusia utuh dengan kompleksitas yang layak dipahami.",
+    a: "Tes MBTI konvensional hanya menghasilkan 4 huruf. SIAPA AKU memberikan analisis mendalam melalui 8 dimensi psikologi — termasuk Emotional Intelligence, Shadow Work, Love Language, Career Path, Romantic Style, dan Social Dynamics. Ditambah lagi, member mendapatkan akses eksklusif ke tes Big Five dan Enneagram. Kamu bukan sekadar label 'INFP' — kamu adalah manusia utuh dengan kompleksitas yang layak dipahami secara menyeluruh.",
+  },
+  {
+    q: "Apa itu Big Five dan Enneagram?",
+    a: "Big Five (OCEAN) adalah model kepribadian berbasis scientific proof yang mengukur 5 trait utama: Openness, Conscientiousness, Extraversion, Agreeableness, dan Neuroticism. Enneagram adalah sistem pemetaan 9 tipe kepribadian berdasarkan motivasi inti dan pola emosional. Keduanya tersedia eksklusif untuk pengguna berstatus Member dan memberikan lapisan pemahaman diri yang lebih komprehensif di luar MBTI.",
+  },
+  {
+    q: "Apa saja keuntungan menjadi Member?",
+    a: "Member mendapatkan akses ke tes Big Five dan Enneagram, sertifikat online PDF dengan verifikasi barcode unik, printout fisik sertifikat resmi yang dikirim ke rumah, report PDF yang personalized dan tailored, serta kesempatan dihubungi oleh Tim SIAPA AKU untuk diskusi hasil tes. Paket Premium dan Ultimate mendapatkan tambahan benefit seperti konsultasi psikolog dan printout fisik report premium.",
+  },
+  {
+    q: "Mengapa saya harus login terlebih dahulu?",
+    a: "Autentikasi memungkinkan kami menyimpan hasil tes secara aman di profil personalmu, melacak perkembangan kepribadian dari waktu ke waktu, menyimpan riwayat tes Big Five dan Enneagram, serta memastikan cooldown 1× per 7 hari berjalan dengan benar agar kamu punya ruang refleksi yang cukup sebelum mengambil tes berikutnya.",
+  },
+  {
+    q: "Kenapa tes hanya bisa dilakukan sekali per minggu?",
+    a: "Self-discovery membutuhkan waktu untuk diresapi. Tujuh hari adalah interval ideal — cukup untuk menjalani kehidupan, mengamati pola perilakumu, lalu kembali dengan perspektif yang lebih matang. Ini berlaku agar kamu bisa benar-benar merenungkan hasilnya sebelum mengambil tes lagi. Kualitas di atas kuantitas.",
+  },
+  {
+    q: "Bagaimana cara kerja konsultasi psikolog?",
+    a: "Konsultasi psikolog tersedia melalui halaman Shop dalam 3 paket: Basic Service (1 sesi, Rp 399K), Premium Service (2 sesi, Rp 549K), dan Ultimate Service (4 sesi, Rp 699K). Semua sesi dilakukan via webcall audio/video dengan psikolog berlisensi. Paket Premium mendapat priority booking, dan paket Ultimate mendapat priority booking + bebas pilih psikolog. Kredit sesi bebas dipakai kapan saja.",
+  },
+  {
+    q: "Seberapa aman data pribadi saya?",
+    a: "Keamanan data adalah prioritas utama kami. Seluruh data dienkripsi end-to-end, tidak pernah dijual ke pihak ketiga, dan kamu memiliki hak penuh untuk meminta penghapusan data kapan saja. Termasuk data hasil tes MBTI, Big Five, Enneagram, dan riwayat konsultasi — semuanya dilindungi dengan standar keamanan tinggi.",
   },
   {
     q: "Bisakah sertifikat digunakan untuk keperluan profesional?",
-    a: "Sertifikat SIAPA AKU adalah bukti perjalanan self-awareness-mu. Ideal untuk personal branding, portofolio kreatif, atau conversation starter tentang kepribadianmu di lingkungan profesional.",
+    a: "Tentu! Sertifikat SIAPA AKU adalah bukti perjalanan self-awareness-mu. Setiap sertifikat dilengkapi barcode unik yang bisa di-scan langsung atau diverifikasi melalui siapaku.id/verify untuk memastikan keasliannya. Ideal untuk personal branding, portofolio kreatif, CV, atau conversation starter tentang kepribadianmu di lingkungan profesional.",
   },
   {
-    q: "Bagaimana cara memverifikasi keaslian sertifikat?",
-    a: "Setiap sertifikat dilengkapi barcode unik yang bisa di-scan langsung atau diverifikasi melalui siapaku.id/verify untuk memastikan keasliannya.",
+    q: "Berapa estimasi pengiriman barang fisik (sertifikat, report, merchandise)?",
+    a: "Untuk barang custom seperti sertifikat fisik, report premium, dan merchandise custom, dibutuhkan waktu produksi sekitar 5 hari kerja. Setelah itu, pengiriman memerlukan estimasi 3–6 hari kerja tergantung lokasi dan kurir. Jadi total estimasi pengiriman adalah sekitar 10–15 hari kerja dari tanggal pemesanan.",
   },
   {
-    q: "Berapa estimasi pengiriman merchandise?",
-    a: "Merchandise custom memerlukan 3–5 hari produksi, ditambah estimasi pengiriman 7–14 hari kerja sesuai lokasi dan kurir yang dipilih.",
+    q: "Apakah ada perbedaan antara paket Member Standar, Premium, dan Ultimate?",
+    a: "Semua paket member mendapat akses tes Big Five & Enneagram, sertifikat online & fisik, report PDF personalized, dan diskusi hasil tes. Paket Premium menambahkan printout fisik report premium dan 1× konsul psikolog gratis. Paket Ultimate mendapat semua benefit Premium ditambah akses full konsul psikolog, prioritas support VIP, dan exclusive merchandise kit. Detail lengkap bisa dilihat di halaman Shop.",
   },
 ];
 
 const DIMENSIONS = [
-  { icon: "🧬", title: "MBTI Foundation", desc: "Pemetaan 4 dimensi kepribadian dasar sebagai fondasi pemahaman diri", accent: "from-violet-500 to-purple-600", bg: "bg-violet-500/10", border: "border-violet-500/20" },
-  { icon: "🧠", title: "Emotional Intelligence", desc: "Mengenali pola emosi, blind spot, dan metode healing personal", accent: "from-blue-500 to-cyan-600", bg: "bg-blue-500/10", border: "border-blue-500/20" },
-  { icon: "💜", title: "Self-Love Guidance", desc: "Panduan mencintai diri yang dirancang khusus sesuai tipe kepribadianmu", accent: "from-fuchsia-500 to-pink-600", bg: "bg-fuchsia-500/10", border: "border-fuchsia-500/20" },
-  { icon: "🌑", title: "Shadow Work", desc: "Mengakui dan mengintegrasikan sisi tersembunyi dalam dirimu", accent: "from-slate-400 to-zinc-600", bg: "bg-slate-500/10", border: "border-slate-500/20" },
-  { icon: "⭐", title: "Core Values", desc: "Mengidentifikasi nilai-nilai fundamental yang mendefinisikan siapa kamu", accent: "from-cyan-500 to-blue-600", bg: "bg-cyan-500/10", border: "border-cyan-500/20" },
-  { icon: "💌", title: "Love Language", desc: "Memahami cara unikmu dalam memberi dan menerima kasih sayang", accent: "from-rose-500 to-pink-600", bg: "bg-rose-500/10", border: "border-rose-500/20" },
-  { icon: "🎯", title: "Career & Romance", desc: "Jalur karir dan dinamika hubungan yang selaras dengan kepribadianmu", accent: "from-amber-500 to-orange-600", bg: "bg-amber-500/10", border: "border-amber-500/20" },
-  { icon: "🌟", title: "Life Purpose", desc: "Mengungkap panggilan hidup yang tersembunyi dalam DNA kepribadianmu", accent: "from-emerald-500 to-teal-600", bg: "bg-emerald-500/10", border: "border-emerald-500/20" },
+  { icon: "🧠", title: "Emotional Intelligence", desc: "Pahami kecerdasan emosionalmu dan cara kamu mengelola perasaan", accent: "from-violet-500 to-purple-600", bg: "bg-violet-500/10", border: "border-violet-500/20" },
+  { icon: "💜", title: "Self-Love Journey", desc: "Temukan cara mencintai diri sendiri yang sesuai dengan kepribadianmu", accent: "from-fuchsia-500 to-pink-600", bg: "bg-fuchsia-500/10", border: "border-fuchsia-500/20" },
+  { icon: "🌑", title: "Shadow Work", desc: "Kenali sisi gelap yang tersembunyi dan transformasikan jadi kekuatan", accent: "from-slate-400 to-zinc-600", bg: "bg-slate-500/10", border: "border-slate-500/20" },
+  { icon: "💎", title: "Core Values", desc: "Temukan nilai-nilai inti yang menjadi fondasi hidupmu", accent: "from-cyan-500 to-blue-600", bg: "bg-cyan-500/10", border: "border-cyan-500/20" },
+  { icon: "💕", title: "Love Language", desc: "Ketahui bahasa cinta utamamu dan cara kamu mengekspresikan kasih sayang", accent: "from-rose-500 to-pink-600", bg: "bg-rose-500/10", border: "border-rose-500/20" },
+  { icon: "🎯", title: "Career Path", desc: "Rekomendasi jalur karir yang selaras dengan kepribadian dan passion kamu", accent: "from-amber-500 to-orange-600", bg: "bg-amber-500/10", border: "border-amber-500/20" },
+  { icon: "💑", title: "Romantic Style", desc: "Pahami pola romantismu dan chemistry dengan tipe kepribadian lain", accent: "from-red-500 to-rose-600", bg: "bg-red-500/10", border: "border-red-500/20" },
+  { icon: "🤝", title: "Social Dynamics", desc: "Kenali cara kamu berinteraksi dan membangun koneksi sosial", accent: "from-emerald-500 to-teal-600", bg: "bg-emerald-500/10", border: "border-emerald-500/20" },
 ];
 
 const VALUES = [
@@ -559,7 +571,7 @@ export default function AboutPage() {
               className="text-white/50 max-w-2xl mx-auto text-base sm:text-lg"
             >
               MBTI tradisional memberimu label. SIAPA AKU memberimu pemahaman.
-              Melalui 8 dimensi psikologi yang saling terhubung, kami memetakan
+              Melalui 8 dimensi psikologi yang saling terhubung, ditambah Big Five dan Enneagram, kami memetakan
               gambaran diri yang utuh dan bermakna.
             </motion.p>
           </motion.div>
@@ -857,35 +869,63 @@ export default function AboutPage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto"
           >
-            {[
-              { icon: "📧", label: "Email", value: "hello@siapaku.id", href: "mailto:hello@siapaku.id", accent: "from-purple-500 to-violet-600", bg: "bg-purple-500/10", border: "border-purple-500/20" },
-              { icon: "📱", label: "WhatsApp", value: "+62 812-3456-7890", href: "https://wa.me/6281234567890", accent: "from-emerald-500 to-teal-600", bg: "bg-emerald-500/10", border: "border-emerald-500/20" },
-              { icon: "📸", label: "Instagram", value: "@siapaku.id", href: "https://instagram.com/siapaku.id", accent: "from-pink-500 to-rose-600", bg: "bg-pink-500/10", border: "border-pink-500/20" },
-            ].map((contact) => (
-              <motion.a
-                key={contact.label}
-                variants={scaleIn}
-                whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                href={contact.href}
-                target="_blank"
-                rel="noreferrer"
-                className={`group relative rounded-2xl border ${contact.border} bg-white/[0.03] backdrop-blur-sm p-8 text-center transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/5`}
-              >
-                {/* Accent line top */}
-                <div
-                  className={`absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r ${contact.accent} opacity-40 group-hover:opacity-80 transition-opacity`}
-                />
-                <div className={`w-14 h-14 rounded-xl ${contact.bg} flex items-center justify-center text-3xl mb-4 mx-auto group-hover:scale-110 transition-transform duration-500`}>
-                  {contact.icon}
-                </div>
-                <p className="text-white/40 text-xs mb-1.5 tracking-[0.15em] uppercase font-semibold">{contact.label}</p>
-                <p className="text-white/75 text-sm font-medium group-hover:text-purple-400 transition-colors duration-300">
-                  {contact.value}
-                </p>
-              </motion.a>
-            ))}
+            {/* Email */}
+            <motion.a
+              variants={scaleIn}
+              whileHover={{ y: -6, transition: { duration: 0.25 } }}
+              href="mailto:idsiapaku@gmail.com"
+              target="_blank"
+              rel="noreferrer"
+              className="group relative rounded-2xl border border-purple-500/20 bg-white/[0.03] backdrop-blur-sm p-8 text-center transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/5"
+            >
+              <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-purple-500 to-violet-600 opacity-40 group-hover:opacity-80 transition-opacity" />
+              <div className="w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-500">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-8 h-8">
+                  <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z" fill="#EA4335"/>
+                  <path d="M22 6l-10 7L2 6" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
+                  <path d="M2 6l7.5 5.25" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1"/>
+                  <path d="M22 6l-7.5 5.25" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1"/>
+                </svg>
+              </div>
+              <p className="text-white/40 text-xs mb-1.5 tracking-[0.15em] uppercase font-semibold">Email</p>
+              <p className="text-white/75 text-sm font-medium group-hover:text-purple-400 transition-colors duration-300">
+                idsiapaku@gmail.com
+              </p>
+            </motion.a>
+
+            {/* Instagram */}
+            <motion.a
+              variants={scaleIn}
+              whileHover={{ y: -6, transition: { duration: 0.25 } }}
+              href="https://instagram.com/siapaku.id"
+              target="_blank"
+              rel="noreferrer"
+              className="group relative rounded-2xl border border-pink-500/20 bg-white/[0.03] backdrop-blur-sm p-8 text-center transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/5"
+            >
+              <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-pink-500 to-rose-600 opacity-40 group-hover:opacity-80 transition-opacity" />
+              <div className="w-14 h-14 rounded-xl bg-pink-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-500">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-8 h-8">
+                  <defs>
+                    <linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#feda75"/>
+                      <stop offset="25%" stopColor="#fa7e1e"/>
+                      <stop offset="50%" stopColor="#d62976"/>
+                      <stop offset="75%" stopColor="#962fbf"/>
+                      <stop offset="100%" stopColor="#4f5bd5"/>
+                    </linearGradient>
+                  </defs>
+                  <rect x="2" y="2" width="20" height="20" rx="5" fill="url(#igGrad)"/>
+                  <circle cx="12" cy="12" r="5" fill="none" stroke="#fff" strokeWidth="1.5"/>
+                  <circle cx="17.5" cy="6.5" r="1.2" fill="#fff"/>
+                </svg>
+              </div>
+              <p className="text-white/40 text-xs mb-1.5 tracking-[0.15em] uppercase font-semibold">Instagram</p>
+              <p className="text-white/75 text-sm font-medium group-hover:text-purple-400 transition-colors duration-300">
+                @siapaku.id
+              </p>
+            </motion.a>
           </motion.div>
         </div>
       </section>
