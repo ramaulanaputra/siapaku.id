@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Question, selectTestQuestions } from "@/lib/questions";
 import { Answer, calculateResult, LIKERT_SCALE, DIMENSION_INFO } from "@/lib/scoring";
 import type { MBTIDimension } from "@/lib/questions";
+import { Navbar } from "@/components/layout/Navbar";
 
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
@@ -569,8 +570,27 @@ export default function TestPage() {
   /* ════════════ MAIN TEST UI ════════════ */
   const dimColor = dimInfo?.color || "#7C3AED";
 
+  // Personality keywords for ambient bottom section
+  const personalityKeywords = [
+    "Empati", "Kreativitas", "Logika", "Intuisi", "Harmoni",
+    "Strategi", "Imajinasi", "Keberanian", "Refleksi", "Adaptasi",
+    "Visi", "Ketenangan", "Ekspresi", "Analisis", "Inspirasi",
+    "Ketegasan", "Fleksibilitas", "Kepekaan", "Kebijaksanaan", "Spontanitas"
+  ];
+
+  // Inspirational quotes that rotate
+  const inspoQuotes = [
+    "Mengenal diri sendiri adalah awal dari kebijaksanaan.",
+    "Setiap jawaban membawa kamu lebih dekat pada dirimu.",
+    "Tidak ada jawaban yang salah — hanya yang jujur.",
+    "Kepribadianmu adalah superpower-mu.",
+    "Semakin dalam kamu mengenal diri, semakin luas duniamu.",
+  ];
+  const currentQuote = inspoQuotes[currentIndex % inspoQuotes.length];
+
   return (
-    <main className="min-h-screen bg-[#101020] relative overflow-hidden">
+    <main className="min-h-screen bg-[#101020] relative overflow-hidden flex flex-col">
+      <Navbar />
       <style dangerouslySetInnerHTML={{ __html: particleStyles }} />
 
       {/* ── Noise texture overlay ── */}
@@ -734,7 +754,7 @@ export default function TestPage() {
       </div>
 
       {/* ── Question area ── */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 pt-28 pb-8">
+      <div className="relative z-10 flex items-center justify-center flex-1 px-4 pt-24 pb-8">
         <div className="max-w-2xl w-full">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
@@ -932,6 +952,135 @@ export default function TestPage() {
               </p>
             </motion.div>
           )}
+        </div>
+      </div>
+
+      {/* ══════════ CREATIVE BOTTOM SECTION — Personality Cosmos ══════════ */}
+      <div className="relative z-10 w-full pb-12 pt-4 hidden md:block">
+        {/* Divider line with glow */}
+        <div className="max-w-4xl mx-auto mb-8 relative">
+          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <motion.div
+            className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-1/3 blur-sm"
+            animate={{ opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            style={{ backgroundColor: dimColor }}
+          />
+        </div>
+
+        {/* Floating personality keywords */}
+        <div className="max-w-5xl mx-auto px-8 relative h-24 overflow-hidden">
+          {personalityKeywords.map((word, i) => {
+            const row = i % 3;
+            const startX = ((i * 37 + 13) % 90) + 2;
+            const topPos = row === 0 ? "5%" : row === 1 ? "40%" : "72%";
+            const delay = i * 0.8;
+            const duration = 18 + (i % 5) * 4;
+            const isHighlight = i % 7 === currentIndex % 7;
+            return (
+              <motion.span
+                key={word}
+                className="absolute text-xs md:text-sm font-medium whitespace-nowrap select-none"
+                initial={{ opacity: 0 }}
+                animate={{
+                  opacity: isHighlight ? [0.15, 0.5, 0.15] : [0.06, 0.15, 0.06],
+                  x: [0, 30, -20, 0],
+                }}
+                transition={{
+                  duration: duration,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: delay,
+                }}
+                style={{
+                  left: `${startX}%`,
+                  top: topPos,
+                  color: isHighlight ? dimColor : "rgba(255,255,255,0.5)",
+                  textShadow: isHighlight ? `0 0 20px ${dimColor}60` : "none",
+                }}
+              >
+                {word}
+              </motion.span>
+            );
+          })}
+        </div>
+
+        {/* Inspirational quote */}
+        <div className="max-w-2xl mx-auto text-center mt-6 px-4">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={currentQuote}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.5 }}
+              className="text-white/20 text-sm italic font-light tracking-wide"
+            >
+              &ldquo;{currentQuote}&rdquo;
+            </motion.p>
+          </AnimatePresence>
+        </div>
+
+        {/* Personality dimension mini-visualizer */}
+        <div className="max-w-lg mx-auto mt-8 px-6">
+          <div className="flex items-center justify-center gap-3">
+            {(["EI", "SN", "TF", "JP"] as const).map((dim) => {
+              const info = DIMENSION_INFO[dim];
+              const isActive = currentQuestion?.dimension === dim;
+              const dimAnswered = questions.filter(
+                (q) => q.dimension === dim && answers[q.id] !== undefined
+              ).length;
+              const dimTotal = questions.filter((q) => q.dimension === dim).length;
+              const pct = dimTotal > 0 ? (dimAnswered / dimTotal) * 100 : 0;
+              return (
+                <motion.div
+                  key={dim}
+                  className="flex flex-col items-center gap-1.5"
+                  animate={{
+                    scale: isActive ? 1.1 : 1,
+                    opacity: isActive ? 1 : 0.4,
+                  }}
+                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                >
+                  <div className="relative w-10 h-10">
+                    {/* Background circle */}
+                    <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                      <circle
+                        cx="18" cy="18" r="14"
+                        fill="none"
+                        stroke={info.color + "20"}
+                        strokeWidth="3"
+                      />
+                      <motion.circle
+                        cx="18" cy="18" r="14"
+                        fill="none"
+                        stroke={info.color}
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeDasharray="87.96"
+                        animate={{ strokeDashoffset: 87.96 - (87.96 * pct) / 100 }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        style={{
+                          filter: isActive ? `drop-shadow(0 0 6px ${info.color}80)` : "none",
+                        }}
+                      />
+                    </svg>
+                    <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-white/60">
+                      {dim}
+                    </span>
+                  </div>
+                  {isActive && (
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: 16 }}
+                      className="h-0.5 rounded-full"
+                      style={{ backgroundColor: info.color }}
+                    />
+                  )}
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </main>
