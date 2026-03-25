@@ -76,7 +76,7 @@ export function Footer() {
             <ul className="space-y-3">
               {[
                 { href: "/", label: "Home" },
-                { href: "/test", label: "Tes MBTI" },
+                { href: "/test", label: "Tes SIAPA AKU" },
                 { href: "/profile", label: "My Profile" },
                 { href: "/shop", label: "Shop" },
                 { href: "/about", label: "About Us" },

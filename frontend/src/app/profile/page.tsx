@@ -47,13 +47,29 @@ interface UserProfile {
   }>;
 }
 
-const fadeUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
+/* ─────────────────────────── Animation Variants ─────────────────────────── */
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+  },
 };
 
-const stagger = {
-  animate: { transition: { staggerChildren: 0.08 } },
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.85 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+  },
 };
 
 // Editable field component
@@ -114,8 +130,8 @@ function EditableField({
 
   return (
     <div className="group">
-      <label className="text-white/40 text-xs font-medium mb-1.5 flex items-center gap-1.5">
-        <span>{icon}</span> {label}
+      <label className="text-xs font-semibold tracking-[0.1em] uppercase text-purple-400/70 mb-2 flex items-center gap-2">
+        <span className="text-sm">{icon}</span> {label}
       </label>
       {editing ? (
         <>
@@ -126,7 +142,7 @@ function EditableField({
                 onChange={(e) => setDraft(e.target.value)}
                 placeholder={placeholder}
                 maxLength={maxLength}
-                className="flex-1 bg-white/[0.06] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 resize-none transition-all"
+                className="flex-1 bg-white/[0.06] border border-purple-500/20 rounded-xl px-4 py-3 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 focus:shadow-[0_0_15px_rgba(168,85,247,0.1)] resize-none transition-all backdrop-blur-sm"
                 rows={3}
                 autoFocus
               />
@@ -137,7 +153,7 @@ function EditableField({
                 onChange={(e) => setDraft(e.target.value)}
                 placeholder={placeholder}
                 maxLength={maxLength}
-                className="flex-1 bg-white/[0.06] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 transition-all"
+                className="flex-1 bg-white/[0.06] border border-purple-500/20 rounded-xl px-4 py-3 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 focus:shadow-[0_0_15px_rgba(168,85,247,0.1)] transition-all backdrop-blur-sm"
                 autoFocus
               />
             )}
@@ -145,37 +161,37 @@ function EditableField({
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 rounded-lg text-white text-xs font-medium transition-colors disabled:opacity-50"
+                className="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] rounded-xl text-white text-xs font-semibold transition-all disabled:opacity-50"
               >
                 {saving ? "..." : "✓"}
               </button>
               <button
                 onClick={() => { setEditing(false); setDraft(value); setValidationError(null); }}
-                className="px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-white/50 text-xs transition-colors"
+                className="px-4 py-2 bg-white/[0.05] hover:bg-white/[0.08] border border-white/10 rounded-xl text-white/50 text-xs transition-all"
               >
                 ✕
               </button>
             </div>
           </div>
           {validationError && (
-            <p className="text-red-400 text-xs mt-1.5">{validationError}</p>
+            <p className="text-red-400 text-xs mt-2 ml-1">{validationError}</p>
           )}
         </>
       ) : (
         <button
           onClick={() => setEditing(true)}
-          className="w-full text-left px-4 py-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-transparent hover:border-white/10 transition-all group"
+          className="w-full text-left px-4 py-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.06] hover:border-purple-500/20 transition-all group/edit backdrop-blur-sm"
         >
           {value ? (
             <span className="text-white/80 text-sm">{value}</span>
           ) : (
             <span className="text-white/20 text-sm italic">{placeholder}</span>
           )}
-          <span className="text-white/0 group-hover:text-white/30 text-xs ml-2 transition-colors">✏️</span>
+          <span className="text-white/0 group-hover/edit:text-white/30 text-xs ml-2 transition-colors">✏️</span>
         </button>
       )}
       {helperText && !editing && (
-        <p className="text-white/20 text-[11px] mt-1 ml-4">{helperText}</p>
+        <p className="text-white/20 text-[11px] mt-1.5 ml-4">{helperText}</p>
       )}
     </div>
   );
@@ -298,21 +314,61 @@ export default function ProfilePage() {
 
   if (status === "unauthenticated") {
     return (
-      <main className="min-h-screen bg-brand-dark flex flex-col">
+      <main className="relative bg-[#0a0a0f] text-white overflow-x-hidden min-h-screen flex flex-col">
         <Navbar />
-        <div className="flex-1 flex items-center justify-center px-6">
+
+        {/* Background effects */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.25, 0.15] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-purple-600/30 to-transparent blur-[120px]"
+          />
+          <motion.div
+            animate={{ scale: [1.1, 1, 1.1], opacity: [0.1, 0.2, 0.1] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            className="absolute top-1/4 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-pink-600/20 to-transparent blur-[100px]"
+          />
+        </div>
+
+        {/* Grid lines */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
+          }}
+        />
+
+        <div className="flex-1 flex items-center justify-center px-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ type: "spring", stiffness: 100 }}
-            className="glass rounded-3xl p-10 max-w-md w-full text-center"
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="relative rounded-2xl border border-purple-500/20 bg-white/[0.03] backdrop-blur-sm p-10 max-w-md w-full text-center overflow-hidden"
           >
-            <div className="text-5xl mb-4">👤</div>
-            <h2 className="font-display text-3xl font-bold text-white mb-3">Login untuk Lihat Profil</h2>
-            <p className="text-white/50 mb-8">Simpan perjalanan self-discovery kamu.</p>
-            <button onClick={() => signIn("google")} className="btn-primary w-full">
-              Login dengan Google
-            </button>
+            {/* Accent line top */}
+            <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-60" />
+
+            {/* Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full bg-purple-600/10 blur-[80px] pointer-events-none" />
+
+            <div className="relative z-10">
+              <div className="text-5xl mb-4">👤</div>
+              <h2 className="font-display text-3xl font-bold mb-3">
+                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                  Login untuk Lihat Profil
+                </span>
+              </h2>
+              <p className="text-white/50 mb-8">Simpan perjalanan self-discovery kamu.</p>
+              <button
+                onClick={() => signIn("google")}
+                className="w-full group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 font-semibold text-white shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_50px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+              >
+                Login dengan Google
+              </button>
+            </div>
           </motion.div>
         </div>
       </main>
@@ -349,42 +405,104 @@ export default function ProfilePage() {
   };
 
   return (
-    <main className="min-h-screen bg-brand-dark">
+    <main className="relative bg-[#0a0a0f] text-white overflow-x-hidden">
       <Navbar />
 
-      <div className="pt-24 pb-16 px-6">
-        <div className="max-w-5xl mx-auto">
-          {/* ═══════════════ PROFILE HEADER ═══════════════ */}
+      {/* ═══════════════ GLOBAL BACKGROUND EFFECTS ═══════════════ */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Animated Orbs */}
+        <motion.div
+          animate={{ scale: [1, 1.2, 1], opacity: [0.12, 0.22, 0.12] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-purple-600/30 to-transparent blur-[120px]"
+        />
+        <motion.div
+          animate={{ scale: [1.1, 1, 1.1], opacity: [0.08, 0.18, 0.08] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute top-1/3 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-pink-600/20 to-transparent blur-[100px]"
+        />
+        <motion.div
+          animate={{ scale: [1, 1.15, 1], opacity: [0.06, 0.15, 0.06] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+          className="absolute bottom-1/4 left-1/3 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-indigo-600/20 to-transparent blur-[100px]"
+        />
+
+        {/* Grid lines */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
+          }}
+        />
+      </div>
+
+      {/* ═══════════════ HERO PROFILE SECTION ═══════════════ */}
+      <section className="relative pt-28 pb-12 sm:pt-32 sm:pb-16 z-10">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          {/* Section Label */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="glass rounded-3xl p-8 mb-6 relative overflow-hidden"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+            className="text-center mb-10"
           >
-            {/* Background glow */}
-            <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full opacity-10 blur-3xl" style={{ background: squadColor }} />
-            <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full opacity-5 blur-3xl" style={{ background: squadColor }} />
+            <motion.span
+              variants={fadeInUp}
+              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+            >
+              Profil Saya
+            </motion.span>
+            <motion.h1
+              variants={fadeInUp}
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display"
+            >
+              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                {profile?.nama || "Atur Nama Kamu"}
+              </span>
+            </motion.h1>
+            {profile?.username && (
+              <motion.p variants={fadeInUp} className="text-white/30 text-sm mt-2">
+                @{profile.username}
+              </motion.p>
+            )}
+          </motion.div>
+
+          {/* ═══════════════ PROFILE HEADER CARD ═══════════════ */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
+            className="relative rounded-2xl border border-purple-500/20 bg-white/[0.03] backdrop-blur-sm p-8 mb-8 overflow-hidden"
+          >
+            {/* Accent line top */}
+            <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 opacity-60" />
+
+            {/* Background glows */}
+            <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full opacity-10 blur-3xl pointer-events-none" style={{ background: squadColor }} />
+            <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full opacity-5 blur-3xl pointer-events-none" style={{ background: squadColor }} />
 
             <div className="flex flex-col md:flex-row items-start gap-6 relative z-10">
               {/* Avatar with upload */}
               <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.15, type: "spring" }}
+                variants={scaleIn}
+                initial="hidden"
+                animate="visible"
                 className="relative group/avatar"
               >
                 {profile?.profile_picture_url && !profile.profile_picture_url.includes("googleusercontent.com") ? (
                   <Image
                     src={profile.profile_picture_url}
                     alt="Profile"
-                    width={88}
-                    height={88}
-                    className="rounded-2xl ring-2 ring-white/10 object-cover w-[88px] h-[88px]"
+                    width={96}
+                    height={96}
+                    className="rounded-2xl ring-2 ring-purple-500/20 object-cover w-[96px] h-[96px] shadow-[0_0_20px_rgba(168,85,247,0.15)]"
                     unoptimized
                   />
                 ) : (
                   <div
-                    className="w-[88px] h-[88px] rounded-2xl flex items-center justify-center text-3xl font-display font-bold text-white"
+                    className="w-[96px] h-[96px] rounded-2xl flex items-center justify-center text-3xl font-display font-bold text-white shadow-[0_0_20px_rgba(168,85,247,0.15)]"
                     style={{ background: `linear-gradient(135deg, ${squadColor}80, ${squadColor}40)` }}
                   >
                     {profile?.nama?.[0]?.toUpperCase() || "?"}
@@ -393,7 +511,7 @@ export default function ProfilePage() {
                 {/* Upload overlay */}
                 <label
                   htmlFor="avatar-upload"
-                  className="absolute inset-0 rounded-2xl bg-black/50 opacity-0 group-hover/avatar:opacity-100 transition-opacity cursor-pointer flex items-center justify-center"
+                  className="absolute inset-0 rounded-2xl bg-black/60 opacity-0 group-hover/avatar:opacity-100 transition-opacity cursor-pointer flex items-center justify-center backdrop-blur-sm"
                 >
                   <span className="text-white text-xs font-medium">📷 Ganti</span>
                 </label>
@@ -406,7 +524,7 @@ export default function ProfilePage() {
                 />
                 {mbtiProfile && (
                   <div
-                    className="absolute -bottom-2 -right-2 w-9 h-9 rounded-lg flex items-center justify-center text-sm shadow-lg ring-2 ring-brand-dark"
+                    className="absolute -bottom-2 -right-2 w-9 h-9 rounded-lg flex items-center justify-center text-sm shadow-lg ring-2 ring-[#0a0a0f]"
                     style={{ background: squadColor }}
                   >
                     {squadEmoji}
@@ -417,38 +535,35 @@ export default function ProfilePage() {
               {/* Info */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3 flex-wrap">
-                  <h1 className="font-display text-3xl font-bold text-white">
+                  <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">
                     {profile?.nama || "Atur Nama Kamu"}
-                  </h1>
+                  </h2>
                   {packageLabel && (
-                    <div className="inline-flex items-center gap-1.5 glass rounded-full px-3 py-1 text-xs font-semibold text-purple-300">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-md text-xs font-semibold text-purple-300 shadow-[0_0_15px_rgba(168,85,247,0.1)]">
                       Paket {packageLabel}
-                    </div>
+                    </span>
                   )}
                 </div>
-                {profile?.username && (
-                  <p className="text-white/30 text-sm mt-0.5">@{profile.username}</p>
-                )}
-                <p className="text-white/40 text-sm mt-1">{profile?.email}</p>
+                <p className="text-white/40 text-sm mt-1.5">{profile?.email}</p>
 
                 {/* Quick stats row */}
-                <div className="flex flex-wrap gap-4 mt-4">
+                <div className="flex flex-wrap gap-6 mt-5">
                   {profile?.testHistory && profile.testHistory.length > 0 && (
                     <div className="text-center">
-                      <div className="text-lg font-bold text-white">{profile.testHistory.length}</div>
-                      <div className="text-white/30 text-xs">Tes Selesai</div>
+                      <div className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">{profile.testHistory.length}</div>
+                      <div className="text-white/30 text-xs mt-0.5">Tes Selesai</div>
                     </div>
                   )}
                   {consultUnlocked && (
                     <div className="text-center">
-                      <div className="text-lg font-bold text-sky-400">{consultCredits}</div>
-                      <div className="text-white/30 text-xs">Kredit Konsul</div>
+                      <div className="text-xl font-bold text-sky-400">{consultCredits}</div>
+                      <div className="text-white/30 text-xs mt-0.5">Kredit Konsul</div>
                     </div>
                   )}
                   {profile?.certificates && profile.certificates.length > 0 && (
                     <div className="text-center">
-                      <div className="text-lg font-bold text-amber-400">{profile.certificates.length}</div>
-                      <div className="text-white/30 text-xs">Sertifikat</div>
+                      <div className="text-xl font-bold text-amber-400">{profile.certificates.length}</div>
+                      <div className="text-white/30 text-xs mt-0.5">Sertifikat</div>
                     </div>
                   )}
                 </div>
@@ -457,10 +572,11 @@ export default function ProfilePage() {
               {/* MBTI Badge */}
               {mbtiProfile && (
                 <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.2, type: "spring" }}
-                  className="rounded-2xl p-5 text-center min-w-32 shrink-0"
+                  variants={scaleIn}
+                  initial="hidden"
+                  animate="visible"
+                  whileHover={{ scale: 1.05, transition: { duration: 0.25 } }}
+                  className="rounded-2xl p-5 text-center min-w-32 shrink-0 backdrop-blur-sm"
                   style={{ background: squadColor + "15", border: `1px solid ${squadColor}30` }}
                 >
                   <div className="text-4xl mb-1">{mbtiProfile.emoji}</div>
@@ -475,22 +591,48 @@ export default function ProfilePage() {
               )}
             </div>
           </motion.div>
+        </div>
+      </section>
 
-          <motion.div variants={stagger} initial="initial" animate="animate" className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Gradient divider */}
+      <div className="relative z-10">
+        <div className="absolute left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+      </div>
+
+      {/* ═══════════════ MAIN CONTENT GRID ═══════════════ */}
+      <section className="relative py-12 sm:py-16 z-10">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          >
             {/* ═══════════════ LEFT COLUMN ═══════════════ */}
             <div className="md:col-span-2 space-y-6">
 
               {/* ═══════════════ PROFIL KAMU — Editable Fields ═══════════════ */}
               <motion.div
-                variants={fadeUp}
-                transition={{ delay: 0.1 }}
-                className="glass rounded-2xl p-6"
+                variants={fadeInUp}
+                whileHover={{ y: -2, transition: { duration: 0.25 } }}
+                className="relative rounded-2xl border border-purple-500/20 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 overflow-hidden"
               >
-                <h2 className="font-semibold text-white mb-5 flex items-center gap-2">
-                  <span className="text-lg">📝</span> Profil Kamu
-                </h2>
+                {/* Accent line top */}
+                <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-40" />
 
-                <div className="space-y-4">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-lg">
+                    📝
+                  </div>
+                  <h2 className="font-display text-xl font-bold">
+                    <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                      Profil Kamu
+                    </span>
+                  </h2>
+                </div>
+
+                <div className="space-y-5">
                   <EditableField
                     label="Username"
                     icon="@"
@@ -578,21 +720,31 @@ export default function ProfilePage() {
               {/* ═══════════════ MBTI Result Card ═══════════════ */}
               {mbtiProfile ? (
                 <motion.div
-                  variants={fadeUp}
-                  transition={{ delay: 0.15 }}
-                  className="glass rounded-2xl p-6"
+                  variants={fadeInUp}
+                  whileHover={{ y: -4, transition: { duration: 0.25 } }}
+                  className="relative rounded-2xl border border-emerald-500/20 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 overflow-hidden"
                 >
-                  <h2 className="font-semibold text-white mb-4 flex items-center gap-2">
-                    <span className="text-lg">🧬</span> Kepribadianmu
-                  </h2>
-                  <p className="text-white/60 text-sm leading-relaxed mb-4">
+                  {/* Accent line top */}
+                  <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 opacity-40" />
+
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-lg">
+                      🧬
+                    </div>
+                    <h2 className="font-display text-xl font-bold">
+                      <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                        Kepribadianmu
+                      </span>
+                    </h2>
+                  </div>
+                  <p className="text-white/60 text-sm leading-relaxed mb-5">
                     {mbtiProfile.description}
                   </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-2 mb-5">
                     {mbtiProfile.coreValues.map((v) => (
                       <span
                         key={v}
-                        className="text-xs px-2.5 py-1 rounded-full"
+                        className="text-xs px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/5"
                         style={{ background: squadColor + "20", color: squadColor }}
                       >
                         {v}
@@ -601,40 +753,62 @@ export default function ProfilePage() {
                   </div>
                   <Link
                     href={`/test/result/${mbtiProfile.type}`}
-                    className="text-sm text-purple-400 hover:text-purple-300 transition-colors"
+                    className="inline-flex items-center gap-1 text-sm text-purple-400 hover:text-purple-300 transition-colors font-medium"
                   >
                     Lihat hasil lengkap →
                   </Link>
                 </motion.div>
               ) : (
                 <motion.div
-                  variants={fadeUp}
-                  transition={{ delay: 0.15 }}
-                  className="glass rounded-2xl p-8 text-center"
+                  variants={fadeInUp}
+                  whileHover={{ y: -4, transition: { duration: 0.25 } }}
+                  className="relative rounded-2xl border border-purple-500/20 bg-white/[0.03] backdrop-blur-sm p-10 text-center overflow-hidden"
                 >
-                  <div className="text-5xl mb-4">🔮</div>
-                  <h3 className="font-display text-xl font-bold text-white mb-2">
-                    Belum Pernah Tes
-                  </h3>
-                  <p className="text-white/40 text-sm mb-6">
-                    Mulai perjalanan self-discovery kamu sekarang!
-                  </p>
-                  <Link href="/test" className="btn-primary">
-                    Mulai Tes MBTI
-                  </Link>
+                  {/* Accent line top */}
+                  <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-40" />
+
+                  {/* Glow */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full bg-purple-600/10 blur-[80px] pointer-events-none" />
+
+                  <div className="relative z-10">
+                    <motion.div
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                      className="text-5xl mb-4 inline-block"
+                    >
+                      🔮
+                    </motion.div>
+                    <h3 className="font-display text-xl font-bold mb-2">
+                      <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                        Belum Pernah Tes
+                      </span>
+                    </h3>
+                    <p className="text-white/40 text-sm mb-6">
+                      Mulai perjalanan self-discovery kamu sekarang!
+                    </p>
+                    <Link
+                      href="/test"
+                      className="group relative inline-flex px-8 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 font-semibold text-white text-sm shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_50px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      Mulai Tes MBTI
+                    </Link>
+                  </div>
                 </motion.div>
               )}
 
               {/* ═══════════════ Kredit Konsul Card ═══════════════ */}
               {consultUnlocked && (
                 <motion.div
-                  variants={fadeUp}
-                  transition={{ delay: 0.18 }}
-                  className="glass rounded-2xl p-6 relative overflow-hidden"
+                  variants={fadeInUp}
+                  whileHover={{ y: -4, transition: { duration: 0.25 } }}
+                  className="relative rounded-2xl border border-sky-500/20 bg-white/[0.03] backdrop-blur-sm p-6 overflow-hidden"
                 >
-                  <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full bg-sky-500 opacity-10 blur-3xl" />
+                  {/* Accent line top */}
+                  <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-sky-500 to-purple-500 opacity-40" />
+
+                  <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full bg-sky-500 opacity-10 blur-3xl pointer-events-none" />
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 relative z-10">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500/20 to-purple-500/20 flex items-center justify-center text-2xl flex-shrink-0">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500/20 to-purple-500/20 flex items-center justify-center text-2xl flex-shrink-0 border border-sky-500/10">
                       🧠
                     </div>
                     <div className="flex-1">
@@ -647,7 +821,7 @@ export default function ProfilePage() {
                     </div>
                     <Link
                       href="/shop"
-                      className="glass rounded-xl px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap"
+                      className="px-5 py-2.5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm text-sm text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all whitespace-nowrap"
                     >
                       {consultCredits > 0 ? "Booking Sesi →" : "Beli Kredit →"}
                     </Link>
@@ -658,13 +832,23 @@ export default function ProfilePage() {
               {/* ═══════════════ Test History ═══════════════ */}
               {profile?.testHistory && profile.testHistory.length > 0 && (
                 <motion.div
-                  variants={fadeUp}
-                  transition={{ delay: 0.2 }}
-                  className="glass rounded-2xl p-6"
+                  variants={fadeInUp}
+                  whileHover={{ y: -2, transition: { duration: 0.25 } }}
+                  className="relative rounded-2xl border border-violet-500/20 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 overflow-hidden"
                 >
-                  <h2 className="font-semibold text-white mb-4 flex items-center gap-2">
-                    <span className="text-lg">📊</span> History Tes
-                  </h2>
+                  {/* Accent line top */}
+                  <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-40" />
+
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="w-10 h-10 rounded-xl bg-violet-500/10 flex items-center justify-center text-lg">
+                      📊
+                    </div>
+                    <h2 className="font-display text-xl font-bold">
+                      <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                        History Tes
+                      </span>
+                    </h2>
+                  </div>
                   <div className="space-y-3">
                     {profile.testHistory.slice(0, 5).map((test, i) => {
                       const p = MBTI_PROFILES[test.mbti_type];
@@ -673,10 +857,12 @@ export default function ProfilePage() {
                       return (
                         <motion.div
                           key={i}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.3 + i * 0.05 }}
-                          className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-colors"
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: i * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                          whileHover={{ x: 4, transition: { duration: 0.2 } }}
+                          className="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.04] hover:border-white/[0.08] transition-all"
                         >
                           <div className="flex items-center gap-3">
                             <span className="text-lg">{p.emoji}</span>
@@ -698,16 +884,33 @@ export default function ProfilePage() {
               {/* ═══════════════ Sertifikat ═══════════════ */}
               {profile?.certificates && profile.certificates.length > 0 && (
                 <motion.div
-                  variants={fadeUp}
-                  transition={{ delay: 0.25 }}
-                  className="glass rounded-2xl p-6"
+                  variants={fadeInUp}
+                  whileHover={{ y: -2, transition: { duration: 0.25 } }}
+                  className="relative rounded-2xl border border-amber-500/20 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 overflow-hidden"
                 >
-                  <h2 className="font-semibold text-white mb-4 flex items-center gap-2">
-                    <span className="text-lg">🏆</span> Sertifikat
-                  </h2>
+                  {/* Accent line top */}
+                  <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-amber-500 to-orange-500 opacity-40" />
+
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-lg">
+                      🏆
+                    </div>
+                    <h2 className="font-display text-xl font-bold">
+                      <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-amber-400 bg-clip-text text-transparent">
+                        Sertifikat
+                      </span>
+                    </h2>
+                  </div>
                   <div className="space-y-3">
                     {profile.certificates.map((cert, i) => (
-                      <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03]">
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                        className="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.04] hover:bg-white/[0.06] hover:border-amber-500/10 transition-all"
+                      >
                         <div className="flex items-center gap-3">
                           <span className="text-lg">🏆</span>
                           <div>
@@ -716,7 +919,7 @@ export default function ProfilePage() {
                           </div>
                         </div>
                         <span className="text-white/40 text-xs font-mono">{cert.mbti_type}</span>
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
                 </motion.div>
@@ -727,50 +930,70 @@ export default function ProfilePage() {
             <div className="space-y-6">
               {/* Next Test */}
               <motion.div
-                variants={fadeUp}
-                transition={{ delay: 0.15 }}
-                className="glass rounded-2xl p-6 text-center"
+                variants={fadeInUp}
+                whileHover={{ y: -4, transition: { duration: 0.25 } }}
+                className="relative rounded-2xl border border-purple-500/20 bg-white/[0.03] backdrop-blur-sm p-6 text-center overflow-hidden"
               >
-                {canTest ? (
-                  <>
-                    <div className="text-3xl mb-3">✅</div>
-                    <h3 className="font-semibold text-white mb-2">Siap Tes!</h3>
-                    <p className="text-white/40 text-xs mb-4">
-                      {profile?.latestTest ? "Soal baru sudah tersedia" : "Mulai tes pertamamu"}
-                    </p>
-                    <Link href="/test" className="btn-primary w-full text-sm block text-center">
-                      Mulai Tes
-                    </Link>
-                  </>
-                ) : (
-                  <>
-                    <div className="text-3xl mb-3">⏳</div>
-                    <h3 className="font-semibold text-white mb-2">Tes Berikutnya</h3>
-                    <p className="text-white/40 text-xs mb-3">
-                      Bisa tes lagi {countdown}
-                    </p>
-                    <p className="text-white/20 text-xs">
-                      Gunakan waktu ini untuk refleksi
-                    </p>
-                  </>
-                )}
+                {/* Accent line top */}
+                <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-40" />
+
+                {/* Glow */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[150px] h-[150px] rounded-full bg-purple-600/10 blur-[60px] pointer-events-none" />
+
+                <div className="relative z-10">
+                  {canTest ? (
+                    <>
+                      <motion.div
+                        animate={{ scale: [1, 1.1, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                        className="text-3xl mb-3 inline-block"
+                      >
+                        ✅
+                      </motion.div>
+                      <h3 className="font-display font-semibold text-white mb-2">Siap Tes!</h3>
+                      <p className="text-white/40 text-xs mb-4">
+                        {profile?.latestTest ? "Soal baru sudah tersedia" : "Mulai tes pertamamu"}
+                      </p>
+                      <Link
+                        href="/test"
+                        className="block w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 font-semibold text-white text-sm shadow-[0_0_20px_rgba(168,85,247,0.2)] hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-center"
+                      >
+                        Mulai Tes
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <div className="text-3xl mb-3">⏳</div>
+                      <h3 className="font-display font-semibold text-white mb-2">Tes Berikutnya</h3>
+                      <p className="text-white/40 text-xs mb-3">
+                        Bisa tes lagi {countdown}
+                      </p>
+                      <p className="text-white/20 text-xs">
+                        Gunakan waktu ini untuk refleksi
+                      </p>
+                    </>
+                  )}
+                </div>
               </motion.div>
 
               {/* Consult Credits Quick Card */}
               {consultUnlocked && (
                 <motion.div
-                  variants={fadeUp}
-                  transition={{ delay: 0.18 }}
-                  className="rounded-2xl p-6 text-center"
+                  variants={fadeInUp}
+                  whileHover={{ y: -4, transition: { duration: 0.25 } }}
+                  className="relative rounded-2xl p-6 text-center overflow-hidden"
                   style={{ background: "rgba(14,165,233,0.08)", border: "1px solid rgba(14,165,233,0.2)" }}
                 >
+                  {/* Accent line top */}
+                  <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-sky-500 to-cyan-500 opacity-40" />
+
                   <div className="text-3xl mb-2">🧠</div>
-                  <h3 className="font-semibold text-white mb-1">Kredit Konsul</h3>
+                  <h3 className="font-display font-semibold text-white mb-1">Kredit Konsul</h3>
                   <div className="text-3xl font-display font-bold text-sky-400 mb-1">{consultCredits}</div>
                   <p className="text-white/30 text-xs mb-3">sesi tersedia</p>
                   <Link
                     href="/shop"
-                    className="text-sm text-sky-400 hover:text-sky-300 transition-colors"
+                    className="text-sm text-sky-400 hover:text-sky-300 transition-colors font-medium"
                   >
                     {consultCredits > 0 ? "Gunakan kredit →" : "Beli kredit →"}
                   </Link>
@@ -779,16 +1002,22 @@ export default function ProfilePage() {
 
               {/* Certificate */}
               <motion.div
-                variants={fadeUp}
-                transition={{ delay: 0.2 }}
-                className="glass rounded-2xl p-6 text-center"
+                variants={fadeInUp}
+                whileHover={{ y: -4, transition: { duration: 0.25 } }}
+                className="relative rounded-2xl border border-amber-500/20 bg-white/[0.03] backdrop-blur-sm p-6 text-center overflow-hidden"
               >
+                {/* Accent line top */}
+                <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-amber-500 to-orange-500 opacity-40" />
+
                 <div className="text-3xl mb-3">🏆</div>
-                <h3 className="font-semibold text-white mb-2">Dapatkan Sertifikat</h3>
+                <h3 className="font-display font-semibold text-white mb-2">Dapatkan Sertifikat</h3>
                 <p className="text-white/40 text-xs mb-4">
                   Buktikan perjalanan self-discovery kamu
                 </p>
-                <Link href="/shop" className="btn-secondary w-full text-sm block text-center">
+                <Link
+                  href="/shop"
+                  className="block w-full py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm font-semibold text-white/80 text-sm hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-center"
+                >
                   Lihat Paket
                 </Link>
               </motion.div>
@@ -796,13 +1025,16 @@ export default function ProfilePage() {
               {/* Squad Info */}
               {mbtiProfile && (
                 <motion.div
-                  variants={fadeUp}
-                  transition={{ delay: 0.25 }}
-                  className="rounded-2xl p-6 text-center"
+                  variants={fadeInUp}
+                  whileHover={{ y: -4, scale: 1.02, transition: { duration: 0.25 } }}
+                  className="relative rounded-2xl p-6 text-center overflow-hidden backdrop-blur-sm"
                   style={{ background: squadColor + "15", border: `1px solid ${squadColor}25` }}
                 >
+                  {/* Accent line top */}
+                  <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full opacity-40" style={{ background: `linear-gradient(to right, ${squadColor}, ${squadColor}80)` }} />
+
                   <div className="text-3xl mb-2">{squadEmoji}</div>
-                  <h3 className="font-semibold text-white mb-1">
+                  <h3 className="font-display font-semibold text-white mb-1">
                     Squad {mbtiProfile.squad}
                   </h3>
                   <p className="text-xs" style={{ color: squadColor }}>
@@ -817,27 +1049,30 @@ export default function ProfilePage() {
               {/* Profile Info Card */}
               {(profile?.pekerjaan || profile?.hobby || profile?.tanggal_lahir) && (
                 <motion.div
-                  variants={fadeUp}
-                  transition={{ delay: 0.28 }}
-                  className="glass rounded-2xl p-6"
+                  variants={fadeInUp}
+                  whileHover={{ y: -4, transition: { duration: 0.25 } }}
+                  className="relative rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-6 overflow-hidden"
                 >
-                  <h3 className="font-semibold text-white text-sm mb-4">Info Singkat</h3>
+                  {/* Accent line top */}
+                  <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-white/20 to-white/5 opacity-40" />
+
+                  <h3 className="font-display font-semibold text-white text-sm mb-4">Info Singkat</h3>
                   <div className="space-y-3">
                     {profile.tanggal_lahir && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <span className="text-white/30">🎂</span>
+                      <div className="flex items-center gap-3 text-sm p-2 rounded-lg hover:bg-white/[0.03] transition-colors">
+                        <span className="text-white/40">🎂</span>
                         <span className="text-white/60">{formatBirthdate(profile.tanggal_lahir)}</span>
                       </div>
                     )}
                     {profile.pekerjaan && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <span className="text-white/30">💼</span>
+                      <div className="flex items-center gap-3 text-sm p-2 rounded-lg hover:bg-white/[0.03] transition-colors">
+                        <span className="text-white/40">💼</span>
                         <span className="text-white/60">{profile.pekerjaan}</span>
                       </div>
                     )}
                     {profile.hobby && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <span className="text-white/30">🎯</span>
+                      <div className="flex items-center gap-3 text-sm p-2 rounded-lg hover:bg-white/[0.03] transition-colors">
+                        <span className="text-white/40">🎯</span>
                         <span className="text-white/60">{profile.hobby}</span>
                       </div>
                     )}
@@ -847,7 +1082,15 @@ export default function ProfilePage() {
             </div>
           </motion.div>
         </div>
+      </section>
+
+      {/* Bottom gradient divider */}
+      <div className="relative z-10">
+        <div className="absolute left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
       </div>
+
+      {/* Spacer before footer */}
+      <div className="relative z-10 pb-8" />
 
       <Footer />
     </main>

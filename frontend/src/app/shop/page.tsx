@@ -146,24 +146,30 @@ const MERCHANDISE = [
 ];
 
 /* ─────────────────────────────────────────────
-   Stagger animation variants
+   Animation variants (Homepage DNA)
    ───────────────────────────────────────────── */
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-};
-const cardVariants = {
-  hidden: { opacity: 0, y: 50, scale: 0.95 },
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
   visible: {
-    opacity: 1, y: 0, scale: 1,
-    transition: { type: "spring", stiffness: 80, damping: 18 },
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
   },
 };
-const fadeUpVariants = {
-  offscreen: { opacity: 0, y: 30 },
-  onscreen: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
 };
-const fadeUp = { variants: fadeUpVariants, initial: "offscreen" as const, whileInView: "onscreen" as const, viewport: { once: true } };
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.85 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+  },
+};
 
 export default function ShopPage() {
   const { data: session } = useSession();
@@ -228,35 +234,111 @@ export default function ShopPage() {
   };
 
   return (
-    <main className="min-h-screen bg-brand-dark">
+    <main className="relative bg-[#0a0a0f] text-white overflow-x-hidden">
       <Navbar />
 
-      {/* ═══════════════ HERO ═══════════════ */}
-      <section ref={heroRef} className="pt-32 pb-16 px-6 relative overflow-hidden">
-        <div className="orb w-96 h-96 bg-purple-600 top-0 right-0 animate-pulse-slow" />
-        <div className="orb w-72 h-72 bg-pink-600 bottom-0 left-0 animate-pulse-slow" style={{ animationDelay: "1s" }} />
+      {/* ══════════════════ HERO ══════════════════ */}
+      <section
+        ref={heroRef}
+        className="relative min-h-[50vh] sm:min-h-[55vh] flex items-center justify-center overflow-hidden py-16 sm:py-20"
+      >
+        {/* Grid lines */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
+          }}
+        />
+
+        {/* Animated Orbs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.15, 0.25, 0.15],
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-purple-600/30 to-transparent blur-[120px]"
+          />
+          <motion.div
+            animate={{
+              scale: [1.1, 1, 1.1],
+              opacity: [0.1, 0.2, 0.1],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
+            }}
+            className="absolute top-1/4 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-pink-600/20 to-transparent blur-[100px]"
+          />
+          <motion.div
+            animate={{
+              scale: [1, 1.15, 1],
+              opacity: [0.08, 0.18, 0.08],
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 4,
+            }}
+            className="absolute bottom-0 left-1/3 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-indigo-600/20 to-transparent blur-[100px]"
+          />
+        </div>
+
+        {/* Hero Content */}
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
-          className="max-w-4xl mx-auto text-center relative z-10"
+          className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 max-w-4xl mx-auto"
         >
-          <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}>
-            <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-6 text-sm text-white/60">
-              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-8"
+          >
+            <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-md text-xs sm:text-sm text-purple-300 shadow-[0_0_20px_rgba(168,85,247,0.15)]">
+              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse shrink-0" />
               Pembayaran Aman via Midtrans
-            </div>
-            <h1 className="font-display text-5xl md:text-6xl font-bold text-white mb-4">
-              Wujudkan <span className="gradient-text">Identity Kamu</span>
-            </h1>
-            <p className="text-white/50 text-lg max-w-xl mx-auto">
-              Tes MBTI gratis untuk semua. Upgrade ke Member untuk sertifikat resmi, report personal, merchandise, dan konsultasi psikolog.
-            </p>
+            </span>
           </motion.div>
+
+          {/* Heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6"
+          >
+            <span className="text-white">Wujudkan</span>{" "}
+            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+              Identity Kamu
+            </span>
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="text-base sm:text-lg text-white/50 max-w-2xl leading-relaxed"
+          >
+            Tes MBTI gratis untuk semua. Upgrade ke Member untuk sertifikat resmi, report personal, merchandise, dan konsultasi psikolog.
+          </motion.p>
         </motion.div>
+
+        {/* Bottom fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0f] to-transparent" />
       </section>
 
-      {/* ═══════════════ TAB BAR ═══════════════ */}
-      <div className="sticky top-16 z-40 px-6 py-4 bg-brand-dark/80 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-4xl mx-auto flex gap-2 flex-wrap">
+      {/* ══════════════════ TAB BAR ══════════════════ */}
+      <div className="sticky top-16 z-40 px-6 py-4 bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5">
+        <div className="max-w-5xl mx-auto flex gap-2 flex-wrap justify-center">
           {[
             { id: "certificate", label: "🏆 Paket Member" },
             { id: "psikolog", label: "🧠 Konsul Psikolog" },
@@ -267,10 +349,10 @@ export default function ShopPage() {
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
+              className={`px-6 py-2.5 rounded-2xl text-sm font-medium transition-all duration-300 ${
                 activeTab === tab.id
-                  ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/25"
-                  : "glass text-white/50 hover:text-white"
+                  ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.3)]"
+                  : "border border-white/10 bg-white/5 backdrop-blur-sm text-white/50 hover:text-white hover:bg-white/10 hover:border-white/20"
               }`}
             >
               {tab.label}
@@ -279,13 +361,52 @@ export default function ShopPage() {
         </div>
       </div>
 
-      {/* ═══════════════ PAKET TES MBTI ═══════════════ */}
+      {/* ══════════════════ PAKET MEMBER ══════════════════ */}
       {activeTab === "certificate" && (
-        <section className="py-16 px-6">
-          <div className="max-w-5xl mx-auto">
+        <section className="relative py-24 sm:py-32">
+          {/* Top gradient divider */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            {/* Section header */}
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              className="text-center mb-16"
+            >
+              <motion.span
+                variants={fadeInUp}
+                className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+              >
+                Paket Member
+              </motion.span>
+              <motion.h2
+                variants={fadeInUp}
+                className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
+              >
+                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                  Pilih Paketmu
+                </span>
+              </motion.h2>
+              <motion.p
+                variants={fadeInUp}
+                className="text-white/50 max-w-lg mx-auto text-base sm:text-lg"
+              >
+                Tes MBTI gratis untuk semua. Upgrade untuk benefit eksklusif.
+              </motion.p>
+            </motion.div>
+
             {/* Free test info */}
-            <motion.div {...fadeUp} className="mb-8 glass rounded-2xl p-5 border border-emerald-500/20 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-green-500/20 flex items-center justify-center text-2xl shrink-0">🆓</div>
+            <motion.div
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="mb-8 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 backdrop-blur-sm p-5 flex items-center gap-4"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-2xl shrink-0">🆓</div>
               <div>
                 <p className="text-emerald-400 font-semibold text-sm">Tes MBTI & Report Digital Dasar — Gratis!</p>
                 <p className="text-white/40 text-xs">Semua orang bisa ikut tes dan lihat hasil dasar tanpa bayar. Paket Member memberikan benefit eksklusif tambahan.</p>
@@ -294,7 +415,13 @@ export default function ShopPage() {
 
             {/* Consult credits banner */}
             {consultCredits > 0 && (
-              <motion.div {...fadeUp} className="mb-8 glass rounded-2xl p-5 border border-green-500/30 flex items-center gap-4">
+              <motion.div
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="mb-8 rounded-2xl border border-green-500/20 bg-green-500/5 backdrop-blur-sm p-5 flex items-center gap-4"
+              >
                 <div className="text-3xl">🎁</div>
                 <div>
                   <p className="text-green-400 font-semibold text-sm">Kamu punya {consultCredits}× kredit konsul psikolog!</p>
@@ -303,8 +430,9 @@ export default function ShopPage() {
               </motion.div>
             )}
 
+            {/* Package cards */}
             <motion.div
-              variants={containerVariants}
+              variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
@@ -313,112 +441,169 @@ export default function ShopPage() {
               {PACKAGES.map((pkg) => (
                 <motion.div
                   key={pkg.id}
-                  variants={cardVariants}
-                  whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                  className={`glass rounded-3xl p-7 flex flex-col relative overflow-hidden card-shine ${
-                    pkg.popular ? "ring-2 ring-purple-500/60" : ""
-                  }`}
+                  variants={scaleIn}
+                  whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                  className={`group relative rounded-2xl border ${
+                    pkg.popular
+                      ? "border-purple-500/40 bg-white/[0.06] ring-2 ring-purple-500/30"
+                      : "border-white/10 bg-white/[0.03]"
+                  } backdrop-blur-sm p-6 sm:p-8 flex flex-col transition-shadow duration-300 hover:shadow-xl hover:shadow-purple-500/5 overflow-hidden`}
                 >
+                  {/* Accent line top */}
+                  <div
+                    className="absolute top-0 left-6 right-6 h-[2px] rounded-full opacity-40 group-hover:opacity-80 transition-opacity"
+                    style={{ background: `linear-gradient(to right, ${pkg.color}, ${pkg.accent})` }}
+                  />
+
+                  {/* Popular badge */}
                   {pkg.badge && (
                     <motion.div
                       initial={{ scale: 0, rotate: -10 }}
                       animate={{ scale: 1, rotate: 0 }}
                       transition={{ delay: 0.4, type: "spring" }}
-                      className="absolute top-4 right-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"
+                      className="absolute -top-0 right-4 translate-y-3"
                     >
-                      {pkg.badge}
+                      <span className="inline-flex px-4 py-1 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-xs font-bold text-white shadow-lg shadow-purple-500/30">
+                        {pkg.badge}
+                      </span>
                     </motion.div>
+                  )}
+
+                  {/* Animated gradient border for popular */}
+                  {pkg.popular && (
+                    <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{
+                          duration: 8,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
+                        className="absolute -inset-[1px] bg-[conic-gradient(from_0deg,transparent,rgba(168,85,247,0.3),transparent,rgba(236,72,153,0.3),transparent)] rounded-2xl"
+                        style={{ padding: "1px" }}
+                      />
+                    </div>
                   )}
 
                   {/* Glow orb */}
                   <div
-                    className="absolute -top-10 -right-10 w-32 h-32 rounded-full opacity-20 blur-2xl transition-all duration-500"
+                    className="absolute -top-10 -right-10 w-32 h-32 rounded-full opacity-10 blur-2xl transition-all duration-500 group-hover:opacity-20"
                     style={{ background: pkg.color }}
                   />
 
-                  <div className="text-4xl mb-4">{pkg.emoji}</div>
-                  <h3 className="font-display text-2xl font-bold text-white mb-1">Member {pkg.name}</h3>
-                  <p className="text-white/40 text-xs mb-4">{pkg.tagline}</p>
-                  <div className="font-display text-3xl font-bold mb-2" style={{ color: pkg.color }}>
-                    {pkg.priceLabel}
-                  </div>
-                  <div className="text-white/30 text-xs mb-6">sekali bayar</div>
-
-                  <ul className="space-y-2.5 mb-6 flex-1">
-                    {pkg.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2.5 text-sm text-white/70">
-                        <span className="text-green-400 shrink-0 mt-0.5">✓</span>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {pkg.consultCredits > 0 && (
-                    <div
-                      className="rounded-xl p-3 mb-4 text-center text-sm font-semibold"
-                      style={{ background: `${pkg.color}15`, border: `1px solid ${pkg.color}30`, color: pkg.accent }}
-                    >
-                      🎁 {pkg.consultCredits}× kredit konsul psikolog gratis
-                    </div>
-                  )}
-
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() =>
-                      pkg.id === "ultimate"
-                        ? handleUltimateOrder()
-                        : handleOrder(pkg.id, pkg.price)
-                    }
-                    disabled={ordering === pkg.id}
-                    className={`w-full py-3.5 rounded-xl font-semibold text-sm transition-all ${
-                      pkg.popular
-                        ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-500 hover:to-pink-500 shadow-lg shadow-purple-500/20"
-                        : "glass border border-white/20 text-white hover:bg-white/10"
-                    } disabled:opacity-60`}
-                  >
-                    {ordering === pkg.id ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Memproses...
+                  <div className="relative z-10 flex flex-col flex-1">
+                    <div className="text-4xl mb-4">{pkg.emoji}</div>
+                    <h3 className="font-display text-2xl font-bold text-white mb-1">Member {pkg.name}</h3>
+                    <p className="text-white/45 text-xs mb-4">{pkg.tagline}</p>
+                    <div className="mb-1">
+                      <span className="font-display text-3xl sm:text-4xl font-bold" style={{ color: pkg.accent }}>
+                        {pkg.priceLabel}
                       </span>
-                    ) : (
-                      `Gabung Member ${pkg.name} →`
+                    </div>
+                    <div className="text-white/30 text-xs mb-6">sekali bayar</div>
+
+                    <ul className="space-y-3 mb-6 flex-1">
+                      {pkg.features.map((f) => (
+                        <li key={f} className="flex items-start gap-2.5 text-sm text-white/60">
+                          <span className="text-purple-400 shrink-0 mt-0.5">✓</span>
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+
+                    {pkg.consultCredits > 0 && (
+                      <div
+                        className="rounded-xl p-3 mb-4 text-center text-sm font-semibold"
+                        style={{ background: `${pkg.color}15`, border: `1px solid ${pkg.color}30`, color: pkg.accent }}
+                      >
+                        🎁 {pkg.consultCredits}× kredit konsul psikolog gratis
+                      </div>
                     )}
-                  </motion.button>
+
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() =>
+                        pkg.id === "ultimate"
+                          ? handleUltimateOrder()
+                          : handleOrder(pkg.id, pkg.price)
+                      }
+                      disabled={ordering === pkg.id}
+                      className={`w-full py-3.5 rounded-2xl font-semibold text-sm transition-all duration-300 ${
+                        pkg.popular
+                          ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_50px_rgba(168,85,247,0.5)]"
+                          : "border border-white/10 bg-white/5 backdrop-blur-sm text-white/80 hover:bg-white/10 hover:border-white/20"
+                      } disabled:opacity-60`}
+                    >
+                      {ordering === pkg.id ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          Memproses...
+                        </span>
+                      ) : (
+                        `Gabung Member ${pkg.name} →`
+                      )}
+                    </motion.button>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
 
             {/* Payment methods */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="mt-10 glass rounded-2xl p-6"
+              className="mt-12 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8"
             >
               <h3 className="font-semibold text-white mb-4 text-center">Metode Pembayaran</h3>
               <div className="flex flex-wrap justify-center gap-3 text-white/50 text-sm">
                 {["GoPay", "OVO", "Dana", "ShopeePay", "BCA", "Mandiri", "BNI", "BRI", "Permata"].map((method) => (
-                  <span key={method} className="glass rounded-lg px-3 py-1.5 text-xs hover:bg-white/10 transition-colors">{method}</span>
+                  <span key={method} className="rounded-xl px-4 py-2 text-xs border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/20 transition-all duration-300">{method}</span>
                 ))}
               </div>
               <p className="text-center text-white/30 text-xs mt-4">Pembayaran aman via Midtrans · SSL Encrypted</p>
             </motion.div>
           </div>
+
+          {/* Bottom gradient divider */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
         </section>
       )}
 
-      {/* ═══════════════ KONSULTASI PSIKOLOG (KREDIT) ═══════════════ */}
+      {/* ══════════════════ KONSULTASI PSIKOLOG ══════════════════ */}
       {activeTab === "psikolog" && (
-        <section className="py-16 px-6">
-          <div className="max-w-5xl mx-auto">
+        <section className="relative py-24 sm:py-32">
+          {/* Top gradient divider */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+
+          {/* Background orbs */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <motion.div
+              animate={{ scale: [1, 1.15, 1], opacity: [0.08, 0.15, 0.08] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-1/4 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-sky-600/20 to-transparent blur-[100px]"
+            />
+            <motion.div
+              animate={{ scale: [1, 1.2, 1], opacity: [0.06, 0.12, 0.06] }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+              className="absolute bottom-0 left-1/4 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-purple-600/20 to-transparent blur-[100px]"
+            />
+          </div>
+
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
 
             {/* Credits banner */}
             {consultCredits > 0 && (
-              <motion.div {...fadeUp} className="mb-8 glass rounded-2xl p-5 border border-green-500/30 flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center text-2xl">
+              <motion.div
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="mb-8 rounded-2xl border border-green-500/20 bg-green-500/5 backdrop-blur-sm p-5 flex items-center gap-4"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-green-500/10 flex items-center justify-center text-2xl">
                   🎯
                 </div>
                 <div className="flex-1">
@@ -431,7 +616,13 @@ export default function ShopPage() {
 
             {/* Lock notice if consult not unlocked */}
             {!consultUnlocked && (
-              <motion.div {...fadeUp} className="mb-10 glass rounded-2xl p-6 border border-purple-500/30 text-center">
+              <motion.div
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="mb-12 rounded-2xl border border-purple-500/20 bg-white/[0.03] backdrop-blur-sm p-8 text-center"
+              >
                 <div className="text-4xl mb-3">🔒</div>
                 <h3 className="font-display text-xl font-bold text-white mb-2">Fitur Eksklusif Paket Premium & Ultimate</h3>
                 <p className="text-white/50 text-sm max-w-md mx-auto mb-4">
@@ -444,7 +635,7 @@ export default function ShopPage() {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => setActiveTab("certificate")}
-                  className="bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold px-6 py-2.5 rounded-xl text-sm hover:from-purple-500 hover:to-pink-500 transition-all shadow-lg shadow-purple-500/20"
+                  className="group relative inline-flex px-8 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 font-semibold text-white text-sm shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_50px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-[1.02]"
                 >
                   Lihat Paket Premium →
                 </motion.button>
@@ -452,19 +643,39 @@ export default function ShopPage() {
             )}
 
             {/* Section header */}
-            <motion.div {...fadeUp} className="text-center mb-10">
-              <div className="text-xs text-sky-400 font-bold tracking-[4px] mb-3">KONSULTASI PSIKOLOG</div>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-3">
-                Tambah Kredit Konsultasi
-              </h2>
-              <p className="text-white/50 text-sm max-w-lg mx-auto">
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              className="text-center mb-16"
+            >
+              <motion.span
+                variants={fadeInUp}
+                className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+              >
+                Konsultasi Psikolog
+              </motion.span>
+              <motion.h2
+                variants={fadeInUp}
+                className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
+              >
+                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                  Tambah Kredit Konsultasi
+                </span>
+              </motion.h2>
+              <motion.p
+                variants={fadeInUp}
+                className="text-white/50 max-w-lg mx-auto text-base sm:text-lg"
+              >
                 Beli kredit konsultasi dan gunakan kapan saja sesuai kebutuhanmu.
                 Kredit masuk otomatis ke profil setelah pembayaran berhasil.
-              </p>
+              </motion.p>
             </motion.div>
 
+            {/* Consult package cards */}
             <motion.div
-              variants={containerVariants}
+              variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
@@ -473,143 +684,219 @@ export default function ShopPage() {
               {CONSULT_PACKAGES.map((plan) => (
                 <motion.div
                   key={plan.id}
-                  variants={cardVariants}
-                  whileHover={{ y: -6, transition: { duration: 0.3 } }}
-                  className={`glass rounded-3xl p-7 flex flex-col relative overflow-hidden card-shine ${
+                  variants={scaleIn}
+                  whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                  className={`group relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 flex flex-col transition-shadow duration-300 hover:shadow-xl hover:shadow-purple-500/5 overflow-hidden ${
                     !consultUnlocked ? "opacity-50 pointer-events-none select-none" : ""
                   }`}
                 >
+                  {/* Accent line top */}
+                  <div
+                    className="absolute top-0 left-6 right-6 h-[2px] rounded-full opacity-40 group-hover:opacity-80 transition-opacity"
+                    style={{ background: `linear-gradient(to right, ${plan.color}, transparent)` }}
+                  />
+
                   {/* Glow */}
                   <div
-                    className="absolute -top-10 -right-10 w-32 h-32 rounded-full opacity-15 blur-2xl"
+                    className="absolute -top-10 -right-10 w-32 h-32 rounded-full opacity-10 blur-2xl group-hover:opacity-20 transition-all duration-500"
                     style={{ background: plan.color }}
                   />
 
-                  <div className="text-4xl mb-3">{plan.emoji}</div>
-                  <h3 className="font-display text-xl font-bold text-white mb-1">{plan.name}</h3>
-                  <p className="text-white/40 text-xs mb-3">{plan.desc}</p>
-                  <div className="font-display text-2xl font-bold mb-1" style={{ color: plan.color }}>
-                    {plan.priceLabel}
-                  </div>
-                  <div className="text-white/30 text-xs mb-5">sekali bayar · kredit tidak hangus</div>
-
-                  <ul className="space-y-2 mb-6 flex-1">
-                    {plan.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2.5 text-sm text-white/70">
-                        <span className="text-green-400 shrink-0 mt-0.5">✓</span>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div
-                    className="rounded-xl p-3 mb-4 text-center font-bold text-lg"
-                    style={{ background: `${plan.color}15`, color: plan.color }}
-                  >
-                    {plan.sessions}× sesi konsultasi
-                  </div>
-
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => handleOrder(plan.id, plan.price)}
-                    disabled={ordering === plan.id || !consultUnlocked}
-                    className="w-full py-3 rounded-xl font-semibold text-sm glass border border-white/20 text-white hover:bg-white/10 transition-all disabled:opacity-60"
-                  >
-                    {ordering === plan.id ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Memproses...
+                  <div className="relative z-10 flex flex-col flex-1">
+                    <div className="text-4xl mb-3">{plan.emoji}</div>
+                    <h3 className="font-display text-xl font-bold text-white mb-1">{plan.name}</h3>
+                    <p className="text-white/45 text-xs mb-3">{plan.desc}</p>
+                    <div className="mb-1">
+                      <span className="font-display text-2xl sm:text-3xl font-bold" style={{ color: plan.color }}>
+                        {plan.priceLabel}
                       </span>
-                    ) : (
-                      `Beli ${plan.sessions}× Kredit Konsul →`
-                    )}
-                  </motion.button>
+                    </div>
+                    <div className="text-white/30 text-xs mb-5">sekali bayar · kredit tidak hangus</div>
+
+                    <ul className="space-y-2.5 mb-6 flex-1">
+                      {plan.features.map((f) => (
+                        <li key={f} className="flex items-start gap-2.5 text-sm text-white/60">
+                          <span className="text-purple-400 shrink-0 mt-0.5">✓</span>
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div
+                      className="rounded-xl p-3 mb-4 text-center font-bold text-lg"
+                      style={{ background: `${plan.color}15`, color: plan.color }}
+                    >
+                      {plan.sessions}× sesi konsultasi
+                    </div>
+
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => handleOrder(plan.id, plan.price)}
+                      disabled={ordering === plan.id || !consultUnlocked}
+                      className="w-full py-3.5 rounded-2xl font-semibold text-sm border border-white/10 bg-white/5 backdrop-blur-sm text-white/80 hover:bg-white/10 hover:border-white/20 transition-all duration-300 disabled:opacity-60"
+                    >
+                      {ordering === plan.id ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          Memproses...
+                        </span>
+                      ) : (
+                        `Beli ${plan.sessions}× Kredit Konsul →`
+                      )}
+                    </motion.button>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
 
+            {/* Gradient divider */}
+            <div className="my-12 h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
+
             {/* How credits work */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="mt-12 glass rounded-2xl p-6 border border-sky-500/20"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
             >
-              <div className="text-center mb-6">
+              <motion.div variants={fadeInUp} className="text-center mb-8">
                 <span className="text-2xl">ℹ️</span>
-                <h3 className="font-semibold text-white mt-2">Cara Kerja Kredit Konsultasi</h3>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <h3 className="font-display text-xl font-semibold text-white mt-2">Cara Kerja Kredit Konsultasi</h3>
+              </motion.div>
+              <motion.div
+                variants={staggerContainer}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+              >
                 {[
                   { step: "1", icon: "💳", text: "Pilih paket kredit & bayar" },
                   { step: "2", icon: "⚡", text: "Kredit otomatis masuk ke profil" },
                   { step: "3", icon: "📅", text: "Booking sesi kapan saja" },
                   { step: "4", icon: "🧠", text: "Konsultasi via webcall" },
                 ].map(({ step, icon, text }) => (
-                  <div key={step} className="flex items-center gap-3 glass rounded-xl p-4">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500/20 to-purple-500/20 flex items-center justify-center text-lg flex-shrink-0">
+                  <motion.div
+                    key={step}
+                    variants={fadeInUp}
+                    whileHover={{ y: -4, transition: { duration: 0.25 } }}
+                    className="group relative rounded-2xl border border-sky-500/20 bg-white/[0.03] backdrop-blur-sm p-5 flex items-center gap-3 transition-shadow duration-300 hover:shadow-xl hover:shadow-sky-500/5"
+                  >
+                    {/* Accent line */}
+                    <div className="absolute top-0 left-4 right-4 h-[2px] rounded-full bg-gradient-to-r from-sky-500/40 to-purple-500/40 opacity-40 group-hover:opacity-80 transition-opacity" />
+                    <div className="w-11 h-11 rounded-xl bg-sky-500/10 flex items-center justify-center text-lg flex-shrink-0">
                       {icon}
                     </div>
                     <div>
                       <div className="text-xs text-white/30 font-bold">STEP {step}</div>
-                      <p className="text-sm text-white/70">{text}</p>
+                      <p className="text-sm text-white/60">{text}</p>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
 
             {/* Psikolog info */}
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="mt-8 glass rounded-2xl p-6 text-center"
+              className="mt-10 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 text-center"
             >
               <p className="text-2xl mb-2">🧠</p>
-              <h3 className="font-semibold text-white mb-2">Psikolog Berlisensi & Berpengalaman</h3>
-              <p className="text-white/40 text-sm leading-relaxed max-w-md mx-auto">
+              <h3 className="font-display text-lg font-semibold text-white mb-2">Psikolog Berlisensi & Berpengalaman</h3>
+              <p className="text-white/45 text-sm leading-relaxed max-w-md mx-auto">
                 Semua sesi dilakukan via webcall (audio/video) dengan psikolog yang telah tersertifikasi.
                 Jadwal fleksibel, privasi terjaga, dan kredit tidak pernah hangus.
               </p>
             </motion.div>
           </div>
+
+          {/* Bottom gradient divider */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
         </section>
       )}
 
-      {/* ═══════════════ MERCHANDISE ═══════════════ */}
+      {/* ══════════════════ MERCHANDISE ══════════════════ */}
       {activeTab === "merch" && (
-        <section className="py-16 px-6">
-          <div className="max-w-5xl mx-auto">
+        <section className="relative py-24 sm:py-32">
+          {/* Top gradient divider */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+
+          {/* Background orbs */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <motion.div
-              variants={containerVariants}
+              animate={{ scale: [1, 1.2, 1], opacity: [0.08, 0.15, 0.08] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-20 -left-20 w-[400px] h-[400px] rounded-full bg-gradient-to-br from-pink-600/20 to-transparent blur-[100px]"
+            />
+            <motion.div
+              animate={{ scale: [1.1, 1, 1.1], opacity: [0.06, 0.12, 0.06] }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+              className="absolute bottom-0 right-1/4 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-purple-600/20 to-transparent blur-[100px]"
+            />
+          </div>
+
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+            {/* Section header */}
+            <motion.div
+              variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-50px" }}
+              className="text-center mb-16"
+            >
+              <motion.span
+                variants={fadeInUp}
+                className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+              >
+                Merchandise
+              </motion.span>
+              <motion.h2
+                variants={fadeInUp}
+                className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
+              >
+                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                  Ekspresikan Identitasmu
+                </span>
+              </motion.h2>
+              <motion.p
+                variants={fadeInUp}
+                className="text-white/50 max-w-lg mx-auto text-base sm:text-lg"
+              >
+                Merchandise custom dengan nama, MBTI type, dan squad color kamu.
+              </motion.p>
+            </motion.div>
+
+            {/* Merch grid */}
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
             >
               {MERCHANDISE.map((item) => (
                 <motion.div
                   key={item.slug}
-                  variants={cardVariants}
+                  variants={fadeInUp}
                   whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                  className="glass rounded-2xl overflow-hidden card-shine group cursor-pointer"
+                  className="group relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm overflow-hidden transition-shadow duration-300 hover:shadow-xl hover:shadow-purple-500/5 cursor-pointer"
                 >
-                  <div className="h-40 bg-gradient-to-br from-purple-900/40 to-pink-900/30 flex items-center justify-center relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/50 to-transparent" />
+                  {/* Accent line top */}
+                  <div className="absolute top-0 left-4 right-4 h-[2px] rounded-full bg-gradient-to-r from-purple-500/40 via-pink-500/40 to-purple-500/40 opacity-40 group-hover:opacity-80 transition-opacity z-10" />
+
+                  <div className="h-40 bg-gradient-to-br from-purple-900/30 to-pink-900/20 flex items-center justify-center relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f]/60 to-transparent" />
                     <span className="text-6xl group-hover:scale-110 transition-transform duration-500 relative z-10">{item.emoji}</span>
                   </div>
-                  <div className="p-4">
+                  <div className="p-5">
                     <h3 className="font-semibold text-white text-sm mb-1">{item.name}</h3>
                     <p className="text-white/40 text-xs mb-3">{item.desc}</p>
                     <div className="flex items-center justify-between">
-                      <span className="font-display font-bold gradient-text text-sm">{item.price}</span>
+                      <span className="font-display font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent text-sm">{item.price}</span>
                       <button
                         onClick={() => handleOrder("merchandise", 0)}
-                        className="text-xs glass px-3 py-1.5 rounded-full text-white/70 hover:text-white hover:bg-white/10 transition-all"
+                        className="text-xs px-4 py-2 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300"
                       >
                         Pesan →
                       </button>
@@ -619,25 +906,32 @@ export default function ShopPage() {
               ))}
             </motion.div>
 
+            {/* Gradient divider */}
+            <div className="my-12 h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
+
+            {/* Merch info */}
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="mt-10 glass rounded-2xl p-6 text-center"
+              className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 text-center"
             >
               <p className="text-2xl mb-2">🎨</p>
-              <h3 className="font-semibold text-white mb-2">Merchandise Custom</h3>
-              <p className="text-white/40 text-sm leading-relaxed max-w-md mx-auto">
+              <h3 className="font-display text-lg font-semibold text-white mb-2">Merchandise Custom</h3>
+              <p className="text-white/45 text-sm leading-relaxed max-w-md mx-auto">
                 Semua merchandise bisa di-customize dengan nama, MBTI type, dan squad color kamu.
                 Produksi 3-5 hari kerja, pengiriman ke seluruh Indonesia.
               </p>
             </motion.div>
           </div>
+
+          {/* Bottom gradient divider */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
         </section>
       )}
 
-      {/* ═══════════════ ULTIMATE CHOICE MODAL ═══════════════ */}
+      {/* ══════════════════ ULTIMATE CHOICE MODAL ══════════════════ */}
       <AnimatePresence>
         {showUltimateModal && (
           <motion.div
@@ -652,43 +946,48 @@ export default function ShopPage() {
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.9, y: 20, opacity: 0 }}
               transition={{ type: "spring", stiffness: 200, damping: 22 }}
-              className="glass rounded-3xl p-8 max-w-md w-full"
+              className="relative rounded-3xl border border-white/10 bg-white/[0.06] backdrop-blur-xl p-8 max-w-md w-full overflow-hidden"
             >
-              <h3 className="font-display text-2xl font-bold text-white mb-2 text-center">Pilih Bonus Kamu 🎁</h3>
-              <p className="text-white/50 text-sm text-center mb-6">Paket Ultimate termasuk 1 pilihan item berikut:</p>
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                {[
-                  { id: "tumbler", emoji: "🥤", label: "Tumbler Custom", desc: "Dengan nama & MBTI identity" },
-                  { id: "totebag", emoji: "👜", label: "Tote Bag Premium", desc: "Tote bag premium eksklusif" },
-                ].map((opt) => (
+              {/* Modal orb */}
+              <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-amber-600/20 blur-[80px] pointer-events-none" />
+
+              <div className="relative z-10">
+                <h3 className="font-display text-2xl font-bold text-white mb-2 text-center">Pilih Bonus Kamu 🎁</h3>
+                <p className="text-white/50 text-sm text-center mb-6">Paket Ultimate termasuk 1 pilihan item berikut:</p>
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  {[
+                    { id: "tumbler", emoji: "🥤", label: "Tumbler Custom", desc: "Dengan nama & MBTI identity" },
+                    { id: "totebag", emoji: "👜", label: "Tote Bag Premium", desc: "Tote bag premium eksklusif" },
+                  ].map((opt) => (
+                    <motion.button
+                      key={opt.id}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => setUltimateChoice(opt.id as any)}
+                      className={`rounded-2xl p-5 text-center transition-all duration-300 border-2 bg-white/[0.03] backdrop-blur-sm ${
+                        ultimateChoice === opt.id ? "border-amber-500 bg-amber-500/10 shadow-[0_0_20px_rgba(217,119,6,0.15)]" : "border-white/10 hover:border-white/30"
+                      }`}
+                    >
+                      <div className="text-4xl mb-2">{opt.emoji}</div>
+                      <p className="text-white font-semibold text-sm">{opt.label}</p>
+                      <p className="text-white/40 text-xs mt-1">{opt.desc}</p>
+                    </motion.button>
+                  ))}
+                </div>
+                <div className="flex gap-3">
+                  <button onClick={() => setShowUltimateModal(false)} className="flex-1 py-3 rounded-2xl border border-white/10 bg-white/5 text-white/60 hover:text-white hover:bg-white/10 text-sm transition-all duration-300">
+                    Batal
+                  </button>
                   <motion.button
-                    key={opt.id}
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    onClick={() => setUltimateChoice(opt.id as any)}
-                    className={`glass rounded-2xl p-5 text-center transition-all border-2 ${
-                      ultimateChoice === opt.id ? "border-amber-500 bg-amber-500/10" : "border-white/10 hover:border-white/30"
-                    }`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={confirmUltimateOrder}
+                    disabled={!ultimateChoice || ordering === "ultimate"}
+                    className="flex-1 py-3 bg-gradient-to-r from-amber-600 to-yellow-600 rounded-2xl text-white font-semibold text-sm shadow-[0_0_30px_rgba(217,119,6,0.3)] hover:shadow-[0_0_50px_rgba(217,119,6,0.5)] transition-all duration-300 disabled:opacity-50"
                   >
-                    <div className="text-4xl mb-2">{opt.emoji}</div>
-                    <p className="text-white font-semibold text-sm">{opt.label}</p>
-                    <p className="text-white/40 text-xs mt-1">{opt.desc}</p>
+                    {ordering === "ultimate" ? "Memproses..." : "Konfirmasi & Bayar →"}
                   </motion.button>
-                ))}
-              </div>
-              <div className="flex gap-3">
-                <button onClick={() => setShowUltimateModal(false)} className="flex-1 py-3 glass rounded-xl text-white/60 hover:text-white text-sm transition-all">
-                  Batal
-                </button>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={confirmUltimateOrder}
-                  disabled={!ultimateChoice || ordering === "ultimate"}
-                  className="flex-1 py-3 bg-gradient-to-r from-amber-600 to-yellow-600 rounded-xl text-white font-semibold text-sm hover:from-amber-500 hover:to-yellow-500 transition-all disabled:opacity-50 shadow-lg shadow-amber-500/20"
-                >
-                  {ordering === "ultimate" ? "Memproses..." : "Konfirmasi & Bayar →"}
-                </motion.button>
+                </div>
               </div>
             </motion.div>
           </motion.div>
