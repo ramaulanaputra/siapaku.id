@@ -266,7 +266,7 @@ export default function TestPage() {
   if (isSubmitting) {
     const dims: MBTIDimension[] = ["EI", "SN", "TF", "JP", "AT"];
     return (
-      <main className="min-h-screen bg-[#0a0a14] flex items-center justify-center p-4 relative overflow-hidden">
+      <main className="min-h-screen bg-[#101020] flex items-center justify-center p-4 relative overflow-hidden">
         <style dangerouslySetInnerHTML={{ __html: particleStyles }} />
         <FloatingParticles count={20} />
 
@@ -554,7 +554,7 @@ export default function TestPage() {
   /* ════════════ LOADING STATE ════════════ */
   if (questions.length === 0) {
     return (
-      <main className="min-h-screen bg-[#0a0a14] flex items-center justify-center">
+      <main className="min-h-screen bg-[#101020] flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -570,12 +570,12 @@ export default function TestPage() {
   const dimColor = dimInfo?.color || "#7C3AED";
 
   return (
-    <main className="min-h-screen bg-[#0a0a14] relative overflow-hidden">
+    <main className="min-h-screen bg-[#101020] relative overflow-hidden">
       <style dangerouslySetInnerHTML={{ __html: particleStyles }} />
 
       {/* ── Noise texture overlay ── */}
       <div
-        className="absolute inset-0 opacity-[0.02] pointer-events-none z-[1]"
+        className="absolute inset-0 opacity-[0.03] pointer-events-none z-[1]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
         }}
@@ -592,7 +592,7 @@ export default function TestPage() {
             scale: [1, 1.2, 0.9, 1],
           }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          style={{ backgroundColor: dimColor + "20", top: "-15%", left: "-10%" }}
+          style={{ backgroundColor: dimColor + "28", top: "-15%", left: "-10%" }}
         />
         {/* Secondary floating orb */}
         <motion.div
@@ -603,13 +603,13 @@ export default function TestPage() {
             scale: [1, 0.85, 1.15, 1],
           }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          style={{ backgroundColor: dimColor + "15", bottom: "-10%", right: "-10%" }}
+          style={{ backgroundColor: dimColor + "22", bottom: "-10%", right: "-10%" }}
         />
         {/* Center ambient glow */}
         <motion.div
           className="absolute w-[350px] h-[350px] rounded-full blur-[100px]"
           animate={{
-            opacity: [0.08, 0.18, 0.08],
+            opacity: [0.12, 0.25, 0.12],
             scale: [0.9, 1.1, 0.9],
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
@@ -629,7 +629,7 @@ export default function TestPage() {
               opacity: 0,
             }}
             animate={{
-              opacity: [0, 0.4, 0],
+              opacity: [0, 0.5, 0],
               y: [0, -(Math.random() * 200 + 80)],
               x: [0, (Math.random() - 0.5) * 100],
             }}
@@ -806,18 +806,18 @@ export default function TestPage() {
                           ${
                             isSelected
                               ? "shadow-xl"
-                              : "opacity-60 hover:opacity-100"
+                              : ""
                           }
                         `}
                         style={{
                           backgroundColor: isSelected
                             ? option.color
-                            : option.color + "18",
+                            : option.color + "38",
                           borderColor: isSelected
-                            ? "rgba(255,255,255,0.3)"
-                            : option.color + "25",
+                            ? "rgba(255,255,255,0.5)"
+                            : option.color + "50",
                           boxShadow: isSelected
-                            ? `0 0 24px ${option.color}50, 0 4px 20px rgba(0,0,0,0.3)`
+                            ? `0 0 30px ${option.color}80, 0 0 60px ${option.color}40, 0 4px 20px rgba(0,0,0,0.3)`
                             : "none",
                         }}
                         title={option.label}
