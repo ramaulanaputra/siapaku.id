@@ -317,7 +317,7 @@ export default function ShopPage() {
           >
             <span className="text-white">Wujudkan</span>{" "}
             <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
-              Identity Kamu
+              Identitas Personal dan Profesional Kamu!
             </span>
           </motion.h1>
 
@@ -328,7 +328,7 @@ export default function ShopPage() {
             transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="text-base sm:text-lg text-white/50 max-w-2xl leading-relaxed"
           >
-            Tes MBTI gratis untuk semua. Upgrade ke Member untuk sertifikat resmi, report personal, merchandise, dan konsultasi psikolog.
+            Tes MBTI gratis untuk semua. Upgrade ke Member untuk Big Five + Enneagram, sertifikat resmi, report personal, merchandise, dan konsultasi psikolog.
           </motion.p>
         </motion.div>
 
@@ -558,9 +558,19 @@ export default function ShopPage() {
               className="mt-12 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8"
             >
               <h3 className="font-semibold text-white mb-4 text-center">Metode Pembayaran</h3>
-              <div className="flex flex-wrap justify-center gap-3 text-white/50 text-sm">
-                {["GoPay", "OVO", "Dana", "ShopeePay", "BCA", "Mandiri", "BNI", "BRI", "Permata"].map((method) => (
-                  <span key={method} className="rounded-xl px-4 py-2 text-xs border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/20 transition-all duration-300">{method}</span>
+              <div className="flex flex-wrap justify-center gap-3 text-sm">
+                {[
+                  { name: "GoPay", bg: "bg-[#00AED6]/15", border: "border-[#00AED6]/30", text: "text-[#00AED6]", hoverBg: "hover:bg-[#00AED6]/25" },
+                  { name: "OVO", bg: "bg-[#4C3494]/15", border: "border-[#4C3494]/30", text: "text-[#9B7FD4]", hoverBg: "hover:bg-[#4C3494]/25" },
+                  { name: "Dana", bg: "bg-[#108EE9]/15", border: "border-[#108EE9]/30", text: "text-[#108EE9]", hoverBg: "hover:bg-[#108EE9]/25" },
+                  { name: "ShopeePay", bg: "bg-[#EE4D2D]/15", border: "border-[#EE4D2D]/30", text: "text-[#EE4D2D]", hoverBg: "hover:bg-[#EE4D2D]/25" },
+                  { name: "BCA", bg: "bg-[#003D79]/20", border: "border-[#1A6CB5]/30", text: "text-[#5BA3E0]", hoverBg: "hover:bg-[#003D79]/30" },
+                  { name: "Mandiri", bg: "bg-[#003B71]/20", border: "border-[#003B71]/30", text: "text-[#F5A623]", hoverBg: "hover:bg-[#003B71]/30" },
+                  { name: "BNI", bg: "bg-[#005F3D]/15", border: "border-[#F26722]/30", text: "text-[#F26722]", hoverBg: "hover:bg-[#005F3D]/25" },
+                  { name: "BRI", bg: "bg-[#00529C]/15", border: "border-[#00529C]/30", text: "text-[#4DA3FF]", hoverBg: "hover:bg-[#00529C]/25" },
+                  { name: "Permata", bg: "bg-[#006837]/15", border: "border-[#006837]/30", text: "text-[#4CAF50]", hoverBg: "hover:bg-[#006837]/25" },
+                ].map((m) => (
+                  <span key={m.name} className={`rounded-xl px-4 py-2 text-xs font-semibold border backdrop-blur-sm transition-all duration-300 ${m.bg} ${m.border} ${m.text} ${m.hoverBg}`}>{m.name}</span>
                 ))}
               </div>
               <p className="text-center text-white/30 text-xs mt-4">Pembayaran aman via Midtrans · SSL Encrypted</p>

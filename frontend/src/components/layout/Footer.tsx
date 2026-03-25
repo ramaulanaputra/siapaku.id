@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FooterTestMenu } from "./FooterTestMenu";
 import Image from "next/image";
 
 /* ─── Instagram SVG Icon ─── */
@@ -52,7 +53,7 @@ export function Footer() {
             {/* Social links - IG and Email only */}
             <div className="flex gap-3">
               <a
-                href="https://instagram.com/siapaku.id"
+                href="https://www.instagram.com/siapaku.id/"
                 target="_blank"
                 rel="noreferrer"
                 className="w-10 h-10 glass rounded-xl flex items-center justify-center hover:bg-white/10 transition-all duration-300 text-white/50 hover:text-pink-400 hover:border-pink-400/30 group"
@@ -74,19 +75,27 @@ export function Footer() {
           <div>
             <h4 className="text-white/80 font-semibold text-sm mb-4">Navigasi</h4>
             <ul className="space-y-3">
-              {[
-                { href: "/", label: "Home" },
-                { href: "/test", label: "Tes SIAPA AKU" },
-                { href: "/profile", label: "My Profile" },
-                { href: "/shop", label: "Shop" },
-                { href: "/about", label: "About Us" },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-white/40 hover:text-white/70 text-sm transition-colors duration-200">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link href="/" className="text-white/40 hover:text-white/70 text-sm transition-colors duration-200">
+                  Home
+                </Link>
+              </li>
+              <FooterTestMenu />
+              <li>
+                <Link href="/profile" className="text-white/40 hover:text-white/70 text-sm transition-colors duration-200">
+                  My Profile
+                </Link>
+              </li>
+              <li>
+                <Link href="/shop" className="text-white/40 hover:text-white/70 text-sm transition-colors duration-200">
+                  Shop
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="text-white/40 hover:text-white/70 text-sm transition-colors duration-200">
+                  About Us
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -96,7 +105,7 @@ export function Footer() {
             <ul className="space-y-4">
               <li>
                 <a
-                  href="https://instagram.com/siapaku.id"
+                  href="https://www.instagram.com/siapaku.id/"
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-3 text-white/40 hover:text-pink-400 text-sm transition-colors duration-200 group"

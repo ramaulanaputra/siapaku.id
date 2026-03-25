@@ -899,7 +899,7 @@ export default function AboutPage() {
             <motion.a
               variants={scaleIn}
               whileHover={{ y: -6, transition: { duration: 0.25 } }}
-              href="https://instagram.com/siapaku.id"
+              href="https://www.instagram.com/siapaku.id/"
               target="_blank"
               rel="noreferrer"
               className="group relative rounded-2xl border border-pink-500/20 bg-white/[0.03] backdrop-blur-sm p-8 text-center transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/5"
