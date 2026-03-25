@@ -25,10 +25,10 @@ const PACKAGES = [
     tagline: "Sertifikat resmi & report personalized",
     features: [
       "Unlock Tes Big Five dan Enneagram",
+      "Dihubungi Tim SIAPA AKU untuk diskusi hasil tes",
       "Sertifikat Online PDF (verifikasi via kode unik/barcode)",
       "Printout Fisik Sertifikat Resmi (dikirim ke rumah)",
       "Report PDF Personalized & Tailored",
-      "Dihubungi Tim Siapa Aku untuk diskusi hasil tes",
     ],
     popular: false,
     badge: null,

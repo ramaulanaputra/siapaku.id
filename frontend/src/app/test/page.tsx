@@ -47,6 +47,12 @@ const particleStyles = `
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+@keyframes ambient-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.1); }
+  50% { transform: translate(-20px, 15px) scale(0.95); }
+  75% { transform: translate(15px, 25px) scale(1.05); }
+}
 @keyframes noise-shift {
   0% { transform: translate(0, 0); }
   10% { transform: translate(-5%, -5%); }
@@ -575,18 +581,77 @@ export default function TestPage() {
         }}
       />
 
-      {/* ── Background gradient orbs ── */}
-      <div
-        className="fixed w-[500px] h-[500px] rounded-full blur-[120px] top-[-10%] left-[-15%] pointer-events-none transition-colors duration-1000"
-        style={{ backgroundColor: dimColor + "25" }}
-      />
-      <div
-        className="fixed w-[400px] h-[400px] rounded-full blur-[100px] bottom-[-10%] right-[-15%] pointer-events-none transition-colors duration-1000"
-        style={{
-          backgroundColor: dimColor + "18",
-          animationDelay: "2s",
-        }}
-      />
+      {/* ── Immersive animated background that reflects dimension ── */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {/* Primary breathing orb */}
+        <motion.div
+          className="absolute w-[600px] h-[600px] rounded-full blur-[150px]"
+          animate={{
+            x: ["-10%", "5%", "-15%", "0%"],
+            y: ["-5%", "10%", "-8%", "0%"],
+            scale: [1, 1.2, 0.9, 1],
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          style={{ backgroundColor: dimColor + "20", top: "-15%", left: "-10%" }}
+        />
+        {/* Secondary floating orb */}
+        <motion.div
+          className="absolute w-[500px] h-[500px] rounded-full blur-[130px]"
+          animate={{
+            x: ["0%", "-10%", "8%", "0%"],
+            y: ["0%", "-8%", "5%", "0%"],
+            scale: [1, 0.85, 1.15, 1],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          style={{ backgroundColor: dimColor + "15", bottom: "-10%", right: "-10%" }}
+        />
+        {/* Center ambient glow */}
+        <motion.div
+          className="absolute w-[350px] h-[350px] rounded-full blur-[100px]"
+          animate={{
+            opacity: [0.08, 0.18, 0.08],
+            scale: [0.9, 1.1, 0.9],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          style={{ backgroundColor: dimColor, top: "30%", left: "35%" }}
+        />
+        {/* Floating accent particles that match dimension color */}
+        {Array.from({ length: 15 }).map((_, i) => (
+          <motion.div
+            key={`accent-${i}`}
+            className="absolute rounded-full"
+            style={{
+              width: Math.random() * 6 + 2,
+              height: Math.random() * 6 + 2,
+              backgroundColor: dimColor,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              opacity: 0,
+            }}
+            animate={{
+              opacity: [0, 0.4, 0],
+              y: [0, -(Math.random() * 200 + 80)],
+              x: [0, (Math.random() - 0.5) * 100],
+            }}
+            transition={{
+              duration: Math.random() * 6 + 6,
+              repeat: Infinity,
+              delay: Math.random() * 8,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+        {/* Horizontal light streak */}
+        <motion.div
+          className="absolute h-[1px] w-[40%] left-[30%]"
+          style={{
+            background: `linear-gradient(90deg, transparent, ${dimColor}30, transparent)`,
+            top: "50%",
+          }}
+          animate={{ opacity: [0, 0.5, 0], scaleX: [0.5, 1.2, 0.5] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
 
       {/* ── Top bar (glassmorphism) ── */}
       <div
@@ -637,21 +702,30 @@ export default function TestPage() {
             </motion.div>
           </div>
 
-          {/* 5 mini dimension progress bars */}
-          <div className="flex gap-1.5 mt-2">
+          {/* 5 mini dimension progress bars - color hints at current dimension */}
+          <div className="flex gap-1 mt-2">
             {dimensionProgress.map((dp) => {
               const dInfo = DIMENSION_INFO[dp.dim];
               const pct = dp.total > 0 ? (dp.answered / dp.total) * 100 : 0;
+              const isActive = dp.dim === currentDimension;
               return (
                 <div key={dp.dim} className="flex-1">
-                  <div className="h-[3px] bg-white/[0.04] rounded-full overflow-hidden">
+                  <motion.div
+                    className="h-[3px] rounded-full overflow-hidden"
+                    style={{ backgroundColor: "rgba(255,255,255,0.04)" }}
+                    animate={{ opacity: isActive ? 1 : 0.5 }}
+                    transition={{ duration: 0.5 }}
+                  >
                     <motion.div
                       className="h-full rounded-full"
-                      style={{ backgroundColor: dInfo.color }}
+                      style={{
+                        backgroundColor: dInfo.color,
+                        boxShadow: isActive ? `0 0 6px ${dInfo.color}60` : "none",
+                      }}
                       animate={{ width: `${pct}%` }}
                       transition={{ duration: 0.3 }}
                     />
-                  </div>
+                  </motion.div>
                 </div>
               );
             })}
@@ -672,42 +746,14 @@ export default function TestPage() {
               transition={{ duration: 0.25, ease: "easeOut" }}
               className="text-center"
             >
-              {/* Dimension badge */}
-              <motion.div
-                className="mb-7"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.05, duration: 0.3 }}
-              >
-                <span
-                  className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold tracking-wide"
-                  style={{
-                    backgroundColor: dimColor + "15",
-                    color: dimColor,
-                    border: `1px solid ${dimColor}20`,
-                  }}
-                >
-                  {/* Pulsing dot */}
-                  <span
-                    className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                    style={{
-                      backgroundColor: dimColor,
-                      boxShadow: `0 0 6px ${dimColor}80`,
-                      animation: "dot-pulse 2s ease-in-out infinite",
-                    }}
-                  />
-                  {currentDimension === "AT"
-                    ? "Assertive / Turbulent"
-                    : `${dimInfo?.poleALabel} / ${dimInfo?.poleBLabel}`}
-                </span>
-              </motion.div>
+
 
               {/* Question text */}
               <motion.h2
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.08, duration: 0.35 }}
-                className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-14 leading-relaxed px-2 md:px-4"
+                className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-16 leading-relaxed px-2 md:px-6"
                 style={{ fontFamily: "var(--font-display, system-ui)" }}
               >
                 {currentQuestion?.text}
