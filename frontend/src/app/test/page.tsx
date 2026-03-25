@@ -1028,7 +1028,7 @@ export default function TestPage() {
               const info = DIMENSION_INFO[dim];
               const isActive = currentQuestion?.dimension === dim;
               const dimAnswered = questions.filter(
-                (q) => q.dimension === dim && answers[q.id] !== undefined
+                (q) => q.dimension === dim && answers.has(q.id)
               ).length;
               const dimTotal = questions.filter((q) => q.dimension === dim).length;
               const pct = dimTotal > 0 ? (dimAnswered / dimTotal) * 100 : 0;
