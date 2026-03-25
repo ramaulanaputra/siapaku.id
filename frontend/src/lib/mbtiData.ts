@@ -413,7 +413,7 @@ export const getSquadEmoji = (squad: Squad): string => {
   const emojis: Record<Squad, string> = {
     Explorer: "🚀",
     Guardian: "🛡️",
-    Visionary: "⚡",
+    Visionary: "🎓",
     Harmonizer: "🌟",
   };
   return emojis[squad];

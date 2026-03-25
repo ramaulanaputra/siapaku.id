@@ -174,7 +174,7 @@ POST /api/shop/midtrans/webhook    Payment notification
 |-------|-------|-------|
 | 🚀 Explorer | Biru Elektrik | ESTP, ESFP, ISTP, ISFP |
 | 🛡️ Guardian | Kuning Hangat | ESTJ, ESFJ, ISTJ, ISFJ |
-| ⚡ Visionary | Ungu Dalam | ENTJ, ENTP, INTJ, INTP |
+| 🎓 Visionary | Ungu Dalam | ENTJ, ENTP, INTJ, INTP |
 | 🌟 Harmonizer | Rose Gold | ENFJ, ENFP, INFJ, INFP |
 
 ---

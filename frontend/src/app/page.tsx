@@ -62,8 +62,8 @@ const scaleIn = {
 
 const SQUADS = [
   {
-    name: "Analyst",
-    emoji: "🧠",
+    name: "Visionary",
+    emoji: "🎓",
     color: "from-purple-500 to-indigo-600",
     ring: "ring-purple-500/30",
     glow: "hover:shadow-purple-500/20",
@@ -71,7 +71,7 @@ const SQUADS = [
     types: ["INTJ", "INTP", "ENTJ", "ENTP"],
   },
   {
-    name: "Diplomat",
+    name: "Harmonizer",
     emoji: "💚",
     color: "from-emerald-500 to-teal-600",
     ring: "ring-emerald-500/30",
@@ -80,7 +80,7 @@ const SQUADS = [
     types: ["INFJ", "INFP", "ENFJ", "ENFP"],
   },
   {
-    name: "Sentinel",
+    name: "Guardian",
     emoji: "🛡️",
     color: "from-blue-500 to-cyan-600",
     ring: "ring-blue-500/30",
@@ -178,21 +178,21 @@ const TESTIMONIALS = [
     text: "Gila sih ini tes MBTI paling detail yang pernah gue coba. Shadow work-nya bener-bener bikin gue introspeksi.",
     name: "Ayu Pratiwi",
     type: "INFJ",
-    squad: "Diplomat",
+    squad: "Harmonizer",
     accent: "border-emerald-500/30",
   },
   {
     text: "Love language analysis-nya akurat banget! Akhirnya ngerti kenapa gue selalu butuh quality time.",
     name: "Reza Mahendra",
     type: "ENFP",
-    squad: "Diplomat",
+    squad: "Harmonizer",
     accent: "border-emerald-500/30",
   },
   {
     text: "Career path recommendation-nya literally nge-describe passion gue yang selama ini gue raguin. Thank you SIAPA AKU!",
     name: "Sinta Dewi",
     type: "ENTJ",
-    squad: "Analyst",
+    squad: "Visionary",
     accent: "border-purple-500/30",
   },
 ];
