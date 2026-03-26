@@ -17,18 +17,15 @@ const PACKAGES = [
   {
     id: "standard",
     name: "Standar",
-    price: 99000,
-    priceLabel: "Rp 99.000",
+    price: 30000,
+    priceLabel: "Rp 30.000",
     emoji: "📚",
     color: "#6366F1",
     accent: "#818CF8",
-    tagline: "Sertifikat resmi & report personalized",
+    tagline: "Akses tes lanjutan & report eksklusif member",
     features: [
-      "Unlock Tes Big Five dan Enneagram",
-      "Dihubungi Tim SIAPA AKU untuk diskusi hasil tes",
-      "Sertifikat Online PDF (verifikasi via kode unik/barcode)",
-      "Printout Fisik Sertifikat Resmi (dikirim ke rumah)",
-      "Report PDF Personalized & Tailored",
+      "Unlock tes Big Five (OCEAN) dan Enneagram",
+      "Report umum lengkap & mendalam MBTI + OCEAN + Enneagram, khusus member",
     ],
     popular: false,
     badge: null,
@@ -37,41 +34,43 @@ const PACKAGES = [
   {
     id: "premium",
     name: "Premium",
-    price: 299000,
-    priceLabel: "Rp 299.000",
+    price: 100000,
+    priceLabel: "Rp 100.000",
     emoji: "👑",
     color: "#7C3AED",
     accent: "#A78BFA",
-    tagline: "Semua di Standar + bonus konsul psikolog",
+    tagline: "Semua di Standar + diskusi eksklusif & guide personal",
     features: [
       "Semua benefit Member Standar",
-      "Printout Fisik Report Premium (dikirim ke rumah)",
-      "Unlock Fitur Konsultasi Psikolog",
-      "1× Konsul Psikolog Gratis",
+      "Dihubungi Tim SIAPA AKU secara eksklusif untuk diskusi hasil tes MBTI, Big Five (OCEAN), dan Enneagram",
+      "Digital Personalised Guide: Cermin Diri",
+      "Digital Personalised Guide: Pijar Kiprah",
+      "Digital Personalised Guide: Tatap Romansa",
     ],
     popular: true,
     badge: "Terpopuler",
-    consultCredits: 1,
+    consultCredits: 0,
   },
   {
     id: "ultimate",
     name: "Ultimate",
-    price: 549000,
-    priceLabel: "Rp 549.000",
+    price: 300000,
+    priceLabel: "Rp 300.000",
     emoji: "💎",
     color: "#D97706",
     accent: "#FCD34D",
-    tagline: "Full experience + merchandise eksklusif",
+    tagline: "Full experience + sertifikat, merchandise & konsul psikolog",
     features: [
       "Semua benefit Member Premium",
-      "T-Shirt MBTI Personalized",
-      "Notebook Eksklusif",
-      "Pilih: Tumbler atau Tote Bag Premium",
-      "2× Konsul Psikolog Gratis",
+      "Digital & Print-out Fisik Sertifikat resmi SIAPA AKU",
+      "Print-out Fisik Guide: Cermin Diri, Pijar Kiprah & Tatap Romansa",
+      "T-Shirt SIAPA AKU (Customizable)",
+      "Merchandise Premium SIAPA AKU (Tote Bag, Notebook, Pen, Tumbler)",
+      "Unlock Fitur Konsul Psikolog",
     ],
     popular: false,
     badge: "Best Value",
-    consultCredits: 2,
+    consultCredits: 0,
   },
 ];
 
@@ -81,55 +80,56 @@ const PACKAGES = [
 const CONSULT_PACKAGES = [
   {
     id: "consult-basic",
-    name: "Basic Service",
-    price: 399000,
-    priceLabel: "Rp 399.000",
+    name: "Paket 2 Sesi",
+    price: 299000,
+    priceLabel: "Rp 299.000",
     emoji: "💬",
     color: "#0EA5E9",
     sessions: 2,
-    desc: "2× sesi konsultasi dengan psikolog berpengalaman",
+    desc: "2× kredit sesi konsultasi psikolog",
     features: [
-      "2× sesi konsultasi",
+      "2× kredit sesi konsultasi",
       "Durasi 1 jam per sesi",
-      "Psikolog berlisensi",
+      "Psikolog berlisensi & berpengalaman",
       "Via webcall (audio/video)",
       "Kredit bebas dipakai kapan saja",
+      "Kredit tidak pernah hangus",
     ],
   },
   {
     id: "consult-premium",
-    name: "Premium Service",
+    name: "Paket 4 Sesi",
     price: 549000,
     priceLabel: "Rp 549.000",
     emoji: "🧠",
     color: "#8B5CF6",
-    sessions: 3,
-    desc: "3× sesi konsultasi mendalam & personal",
+    sessions: 4,
+    desc: "4× kredit sesi konsultasi psikolog",
     features: [
-      "3× sesi konsultasi",
+      "4× kredit sesi konsultasi",
       "Durasi 1 jam per sesi",
-      "Psikolog berlisensi",
+      "Psikolog berlisensi & berpengalaman",
       "Via webcall (audio/video)",
-      "Priority booking",
       "Kredit bebas dipakai kapan saja",
+      "Kredit tidak pernah hangus",
     ],
   },
   {
     id: "consult-ultimate",
-    name: "Ultimate Service",
-    price: 699000,
-    priceLabel: "Rp 699.000",
+    name: "Paket 7 Sesi",
+    price: 899000,
+    priceLabel: "Rp 899.000",
     emoji: "⭐",
     color: "#F59E0B",
-    sessions: 4,
-    desc: "4× sesi konsultasi prioritas & komprehensif",
+    sessions: 7,
+    desc: "7× kredit sesi konsultasi psikolog",
     features: [
-      "4× sesi konsultasi",
+      "7× kredit sesi konsultasi",
       "Durasi 1 jam per sesi",
-      "Psikolog berlisensi",
+      "Psikolog berlisensi & berpengalaman",
       "Via webcall (audio/video)",
-      "Priority booking + Bebas Pilih Psikolog",
       "Kredit bebas dipakai kapan saja",
+      "Kredit tidak pernah hangus",
     ],
   },
 ];
@@ -328,7 +328,7 @@ export default function ShopPage() {
             transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="text-base sm:text-lg text-white/50 max-w-2xl leading-relaxed"
           >
-            Tes MBTI gratis untuk semua. Upgrade ke Member untuk Big Five + Enneagram, sertifikat resmi, report personal, merchandise, dan konsultasi psikolog.
+            Tes MBTI gratis untuk semua. Upgrade ke Member untuk Big Five + Enneagram, report eksklusif, guide personal, sertifikat, merchandise, dan konsultasi psikolog.
           </motion.p>
         </motion.div>
 
@@ -524,9 +524,7 @@ export default function ShopPage() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() =>
-                        pkg.id === "ultimate"
-                          ? handleUltimateOrder()
-                          : handleOrder(pkg.id, pkg.price)
+                        handleOrder(pkg.id, pkg.price)
                       }
                       disabled={ordering === pkg.id}
                       className={`w-full py-3.5 rounded-2xl font-semibold text-sm transition-all duration-300 ${
@@ -634,12 +632,11 @@ export default function ShopPage() {
                 className="mb-12 rounded-2xl border border-purple-500/20 bg-white/[0.03] backdrop-blur-sm p-8 text-center"
               >
                 <div className="text-4xl mb-3">🔒</div>
-                <h3 className="font-display text-xl font-bold text-white mb-2">Fitur Eksklusif Paket Premium & Ultimate</h3>
+                <h3 className="font-display text-xl font-bold text-white mb-2">Fitur Eksklusif Paket Ultimate</h3>
                 <p className="text-white/50 text-sm max-w-md mx-auto mb-4">
                   Fitur konsultasi psikolog hanya tersedia untuk pengguna yang telah membeli{" "}
-                  <strong className="text-purple-400">Paket Premium</strong> atau{" "}
                   <strong className="text-amber-400">Paket Ultimate</strong>.
-                  Kamu juga langsung mendapatkan kredit konsul gratis sebagai bonus!
+                  Upgrade ke Member Ultimate untuk membuka akses fitur ini.
                 </p>
                 <motion.button
                   whileHover={{ scale: 1.03 }}

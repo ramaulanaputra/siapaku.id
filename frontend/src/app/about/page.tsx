@@ -130,15 +130,19 @@ const FAQS = [
   },
   {
     q: "Apa yang membedakan SIAPA AKU dari tes MBTI lainnya?",
-    a: "Tes MBTI konvensional hanya menghasilkan 4 huruf. SIAPA AKU memberikan analisis mendalam melalui 8 dimensi psikologi — termasuk Emotional Intelligence, Shadow Work, Love Language, Career Path, Romantic Style, dan Social Dynamics. Ditambah lagi, member mendapatkan akses eksklusif ke tes Big Five dan Enneagram. Kamu bukan sekadar label 'INFP' — kamu adalah manusia utuh dengan kompleksitas yang layak dipahami secara menyeluruh.",
+    a: "Tes MBTI konvensional hanya menghasilkan 4 huruf. SIAPA AKU memberikan analisis mendalam melalui 8 dimensi psikologi — termasuk Emotional Intelligence, Shadow Work, Love Language, Career Path, Romantic Style, dan Social Dynamics. Member juga mendapat akses eksklusif ke Big Five dan Enneagram. Kamu bukan sekadar label — kamu adalah manusia utuh dengan kompleksitas yang layak dipahami secara menyeluruh.",
   },
   {
     q: "Apa itu Big Five dan Enneagram?",
-    a: "Big Five (OCEAN) adalah model kepribadian berbasis scientific proof yang mengukur 5 trait utama: Openness, Conscientiousness, Extraversion, Agreeableness, dan Neuroticism. Enneagram adalah sistem pemetaan 9 tipe kepribadian berdasarkan motivasi inti dan pola emosional. Keduanya tersedia eksklusif untuk pengguna berstatus Member dan memberikan lapisan pemahaman diri yang lebih komprehensif di luar MBTI.",
+    a: "Big Five (OCEAN) adalah model kepribadian berbasis riset ilmiah yang mengukur 5 trait utama: Openness, Conscientiousness, Extraversion, Agreeableness, dan Neuroticism. Enneagram adalah sistem pemetaan 9 tipe kepribadian berdasarkan motivasi inti dan pola emosional. Keduanya tersedia eksklusif untuk Member dan memberikan pemahaman diri yang lebih komprehensif di luar MBTI.",
   },
   {
-    q: "Apa saja keuntungan menjadi Member?",
-    a: "Member mendapatkan akses ke tes Big Five dan Enneagram, sertifikat online PDF dengan verifikasi barcode unik, printout fisik sertifikat resmi yang dikirim ke rumah, report PDF yang personalized dan tailored, serta kesempatan dihubungi oleh Tim SIAPA AKU untuk diskusi hasil tes. Paket Premium dan Ultimate mendapatkan tambahan benefit seperti konsultasi psikolog dan printout fisik report premium.",
+    q: "Apa saja perbedaan paket Member Standar, Premium, dan Ultimate?",
+    a: "Member Standar (Rp 30K) membuka akses tes Big Five & Enneagram serta report umum lengkap MBTI + OCEAN + Enneagram. Member Premium (Rp 100K) menambahkan diskusi eksklusif dengan Tim SIAPA AKU serta tiga Digital Personalised Guide: Cermin Diri, Pijar Kiprah, dan Tatap Romansa. Member Ultimate (Rp 300K) mencakup semua benefit Premium ditambah sertifikat resmi digital & fisik, print-out fisik ketiga guide, T-Shirt customizable, merchandise premium, dan akses fitur konsul psikolog.",
+  },
+  {
+    q: "Apa itu Digital Personalised Guide?",
+    a: "Digital Personalised Guide adalah panduan personal yang dibuat khusus berdasarkan hasil tes kepribadianmu. Ada tiga jenis: Cermin Diri (memahami siapa kamu secara mendalam), Pijar Kiprah (menemukan arah karir dan potensi terbaikmu), dan Tatap Romansa (memahami pola cinta dan hubungan romantismu). Ketiga guide ini tersedia untuk Member Premium dan Ultimate.",
   },
   {
     q: "Mengapa saya harus login terlebih dahulu?",
@@ -146,27 +150,19 @@ const FAQS = [
   },
   {
     q: "Kenapa tes hanya bisa dilakukan sekali per minggu?",
-    a: "Self-discovery membutuhkan waktu untuk diresapi. Tujuh hari adalah interval ideal — cukup untuk menjalani kehidupan, mengamati pola perilakumu, lalu kembali dengan perspektif yang lebih matang. Ini berlaku agar kamu bisa benar-benar merenungkan hasilnya sebelum mengambil tes lagi. Kualitas di atas kuantitas.",
+    a: "Self-discovery membutuhkan waktu untuk diresapi. Tujuh hari adalah interval ideal — cukup untuk menjalani kehidupan, mengamati pola perilakumu, lalu kembali dengan perspektif yang lebih matang. Kualitas di atas kuantitas.",
   },
   {
     q: "Bagaimana cara kerja konsultasi psikolog?",
-    a: "Konsultasi psikolog tersedia melalui halaman Shop dalam 3 paket: Basic Service (1 sesi, Rp 399K), Premium Service (2 sesi, Rp 549K), dan Ultimate Service (4 sesi, Rp 699K). Semua sesi dilakukan via webcall audio/video dengan psikolog berlisensi. Paket Premium mendapat priority booking, dan paket Ultimate mendapat priority booking + bebas pilih psikolog. Kredit sesi bebas dipakai kapan saja.",
+    a: "Konsultasi psikolog tersedia eksklusif untuk Member Ultimate. Setelah fitur terbuka, kamu bisa membeli kredit konsultasi tambahan melalui halaman Shop dalam beberapa pilihan paket yang hanya berbeda dari jumlah sesi yang didapat. Semua sesi dilakukan via webcall audio/video dengan psikolog berlisensi. Kredit konsultasi bebas dipakai kapan saja dan tidak pernah hangus.",
   },
   {
     q: "Seberapa aman data pribadi saya?",
-    a: "Keamanan data adalah prioritas utama kami. Seluruh data dienkripsi end-to-end, tidak pernah dijual ke pihak ketiga, dan kamu memiliki hak penuh untuk meminta penghapusan data kapan saja. Termasuk data hasil tes MBTI, Big Five, Enneagram, dan riwayat konsultasi — semuanya dilindungi dengan standar keamanan tinggi.",
+    a: "Keamanan data adalah prioritas utama kami. Seluruh data dienkripsi end-to-end, tidak pernah dijual ke pihak ketiga, dan kamu memiliki hak penuh untuk meminta penghapusan data kapan saja — termasuk data hasil tes MBTI, Big Five, Enneagram, dan riwayat konsultasi.",
   },
   {
-    q: "Bisakah sertifikat digunakan untuk keperluan profesional?",
-    a: "Tentu! Sertifikat SIAPA AKU adalah bukti perjalanan self-awareness-mu. Setiap sertifikat dilengkapi barcode unik yang bisa di-scan langsung atau diverifikasi melalui siapaku.id/verify untuk memastikan keasliannya. Ideal untuk personal branding, portofolio kreatif, CV, atau conversation starter tentang kepribadianmu di lingkungan profesional.",
-  },
-  {
-    q: "Berapa estimasi pengiriman barang fisik (sertifikat, report, merchandise)?",
-    a: "Untuk barang custom seperti sertifikat fisik, report premium, dan merchandise custom, dibutuhkan waktu produksi sekitar 5 hari kerja. Setelah itu, pengiriman memerlukan estimasi 3–6 hari kerja tergantung lokasi dan kurir. Jadi total estimasi pengiriman adalah sekitar 10–15 hari kerja dari tanggal pemesanan.",
-  },
-  {
-    q: "Apakah ada perbedaan antara paket Member Standar, Premium, dan Ultimate?",
-    a: "Semua paket member mendapat akses tes Big Five & Enneagram, sertifikat online & fisik, report PDF personalized, dan diskusi hasil tes. Paket Premium menambahkan printout fisik report premium dan 1× konsul psikolog gratis. Paket Ultimate mendapat semua benefit Premium ditambah akses full konsul psikolog, prioritas support VIP, dan exclusive merchandise kit. Detail lengkap bisa dilihat di halaman Shop.",
+    q: "Berapa estimasi pengiriman barang fisik?",
+    a: "Untuk barang fisik seperti sertifikat, print-out guide, T-Shirt, dan merchandise premium (khusus Member Ultimate), dibutuhkan waktu produksi sekitar 5 hari kerja. Pengiriman memerlukan estimasi 3–6 hari kerja tergantung lokasi dan kurir. Total estimasi sekitar 10–15 hari kerja dari tanggal pemesanan.",
   },
 ];
 
@@ -371,7 +367,7 @@ export default function AboutPage() {
                 </span>
               </motion.h2>
 
-              <motion.div variants={staggerContainer} className="space-y-5 text-white/50 leading-relaxed text-[15px]">
+              <motion.div variants={staggerContainer} className="space-y-5 text-white/50 leading-relaxed text-[15px] text-justify">
                 <motion.p variants={fadeInUp}>
                   Pepatah lama yang menyimpan kebenaran universal. Kita menghafal nama teman-teman kita,
                   mengetahui makanan favorit mereka, memahami cara mereka berpikir. Namun ketika seseorang bertanya —

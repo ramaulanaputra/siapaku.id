@@ -5,15 +5,13 @@ const packages = [
   {
     id: "standar",
     name: "Standar",
-    price: 99000,
+    price: 30000,
     color: "#6366F1",
     accent: "#818CF8",
     gradient: "from-indigo-600 to-indigo-900",
     features: [
-      "✓ Sertifikat Online PDF (verifikasi kode unik/barcode)",
-      "✓ Printout Fisik Sertifikat Resmi dikirim ke rumah",
-      "✓ Report PDF Personalized & Tailored",
-      "✓ Dihubungi Tim Siapa Aku untuk diskusi hasil tes",
+      "✓ Unlock tes Big Five (OCEAN) dan Enneagram",
+      "✓ Report umum lengkap & mendalam MBTI + OCEAN + Enneagram, khusus member",
     ],
     cta: "Gabung Member",
     popular: false,
@@ -22,67 +20,69 @@ const packages = [
   {
     id: "premium",
     name: "Premium",
-    price: 199000,
+    price: 100000,
     color: "#7C3AED",
     accent: "#A78BFA",
     gradient: "from-violet-600 to-purple-900",
     features: [
       "✓ Semua benefit Member Standar",
-      "✓ Printout Fisik Report Premium (dikirim ke rumah)",
-      "✓ 1× Konsul Psikolog Gratis",
-      "✓ Unlock Fitur Konsultasi Psikolog",
+      "✓ Dihubungi Tim SIAPA AKU untuk diskusi hasil tes MBTI, Big Five & Enneagram",
+      "✓ Digital Personalised Guide: Cermin Diri",
+      "✓ Digital Personalised Guide: Pijar Kiprah",
+      "✓ Digital Personalised Guide: Tatap Romansa",
     ],
     cta: "Gabung Premium",
     popular: true,
-    consultCredits: 1,
+    consultCredits: 0,
   },
   {
     id: "ultimate",
     name: "Ultimate",
-    price: 399000,
+    price: 300000,
     color: "#D97706",
     accent: "#FCD34D",
     gradient: "from-amber-600 to-yellow-900",
     features: [
       "✓ Semua benefit Member Premium",
-      "✓ T-Shirt MBTI Personalized",
-      "✓ Notebook Eksklusif",
-      "✓ Tumbler atau Tote Bag Premium",
-      "✓ 2× Konsul Psikolog Gratis",
+      "✓ Digital & Print-out Fisik Sertifikat resmi SIAPA AKU",
+      "✓ Print-out Fisik Guide: Cermin Diri, Pijar Kiprah & Tatap Romansa",
+      "✓ T-Shirt SIAPA AKU (Customizable)",
+      "✓ Merchandise Premium (Tote Bag, Notebook, Pen, Tumbler)",
+      "✓ Unlock Fitur Konsul Psikolog",
     ],
     cta: "Gabung Ultimate",
     popular: false,
-    consultCredits: 2,
+    consultCredits: 0,
   },
 ];
 
 const consultPackages = [
   {
     id: "basic",
-    name: "Basic Service",
+    name: "Paket 2 Sesi",
     price: 299000,
     sessions: 2,
     color: "#0EA5E9",
     icon: "💬",
-    desc: "2 sesi konsultasi dengan psikolog berpengalaman",
+    desc: "2× kredit sesi konsultasi psikolog",
   },
   {
     id: "premium_consult",
-    name: "Premium Service",
-    price: 399000,
-    sessions: 3,
+    name: "Paket 4 Sesi",
+    price: 549000,
+    sessions: 4,
     color: "#8B5CF6",
     icon: "🧠",
-    desc: "3 sesi konsultasi mendalam & personal",
+    desc: "4× kredit sesi konsultasi psikolog",
   },
   {
     id: "ultimate_consult",
-    name: "Ultimate Service",
-    price: 499000,
-    sessions: 4,
+    name: "Paket 7 Sesi",
+    price: 899000,
+    sessions: 7,
     color: "#F59E0B",
     icon: "⭐",
-    desc: "4 sesi konsultasi prioritas & komprehensif",
+    desc: "7× kredit sesi konsultasi psikolog",
   },
 ];
 
@@ -351,7 +351,7 @@ export default function PricingSection({ user, onPayment }) {
             Pilih Paket Member
           </h2>
           <p style={{ color: "#6B7280", fontSize: 16, marginTop: 16, maxWidth: 480, margin: "16px auto 0" }}>
-            Tes MBTI gratis untuk semua. Upgrade ke Member untuk sertifikat resmi, report personal, dan konsultasi psikolog.
+            Tes MBTI gratis untuk semua. Upgrade ke Member untuk tes lanjutan, report eksklusif, guide personal, dan lebih banyak lagi.
           </p>
         </div>
 

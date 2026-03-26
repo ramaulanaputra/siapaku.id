@@ -202,15 +202,12 @@ const TESTIMONIALS = [
 const PRICING = [
   {
     name: "Standar",
-    price: "Rp 99K",
+    price: "Rp 30K",
     period: "sekali bayar",
-    desc: "Sertifikat resmi & report personalized.",
+    desc: "Akses tes lanjutan & report eksklusif member.",
     features: [
-      "Unlock Tes Big Five dan Enneagram",
-      "Dihubungi Tim SIAPA AKU untuk diskusi hasil tes",
-      "Sertifikat Online PDF (verifikasi via kode unik/barcode)",
-      "Printout Fisik Sertifikat Resmi (dikirim ke rumah)",
-      "Report PDF Personalized & Tailored",
+      "Unlock tes Big Five (OCEAN) dan Enneagram",
+      "Report umum lengkap & mendalam MBTI + OCEAN + Enneagram, khusus member",
     ],
     cta: "Gabung Member Standar →",
     popular: false,
@@ -220,14 +217,15 @@ const PRICING = [
   },
   {
     name: "Premium",
-    price: "Rp 299K",
+    price: "Rp 100K",
     period: "sekali bayar",
-    desc: "Semua di Standar + bonus konsul psikolog.",
+    desc: "Semua di Standar + diskusi eksklusif & guide personal.",
     features: [
       "Semua benefit Member Standar",
-      "Printout Fisik Report Premium (dikirim ke rumah)",
-      "Unlock Fitur Konsultasi Psikolog",
-      "1× Konsul Psikolog Gratis",
+      "Dihubungi Tim SIAPA AKU untuk diskusi hasil tes MBTI, Big Five & Enneagram",
+      "Digital Personalised Guide: Cermin Diri",
+      "Digital Personalised Guide: Pijar Kiprah",
+      "Digital Personalised Guide: Tatap Romansa",
     ],
     cta: "Gabung Member Premium →",
     popular: true,
@@ -237,15 +235,16 @@ const PRICING = [
   },
   {
     name: "Ultimate",
-    price: "Rp 549K",
+    price: "Rp 300K",
     period: "sekali bayar",
-    desc: "Full experience + merchandise eksklusif.",
+    desc: "Full experience + sertifikat, merchandise & konsul psikolog.",
     features: [
       "Semua benefit Member Premium",
-      "T-Shirt MBTI Personalized",
-      "Notebook Eksklusif",
-      "Pilih: Tumbler atau Tote Bag Premium",
-      "2× Konsul Psikolog Gratis",
+      "Digital & Print-out Fisik Sertifikat resmi SIAPA AKU",
+      "Print-out Fisik Guide: Cermin Diri, Pijar Kiprah & Tatap Romansa",
+      "T-Shirt SIAPA AKU (Customizable)",
+      "Merchandise Premium (Tote Bag, Notebook, Pen, Tumbler)",
+      "Unlock Fitur Konsul Psikolog",
     ],
     cta: "Gabung Member Ultimate →",
     popular: false,
@@ -565,9 +564,9 @@ export default function HomePage() {
             }}
             className="text-base sm:text-lg text-white/50 max-w-2xl leading-relaxed mb-4"
           >
-            SIAPA AKU membantu kamu mengenali 16 tipe MBTI dan 8 dimensi
-            kepribadianmu — dari cara berpikir, emosi, shadow, hingga love
-            language. Gratis, personal, dan mendalam.
+            Temukan siapa kamu sebenarnya — melalui 16 tipe MBTI dan 8 dimensi
+            psikologi yang mengupas cara kamu berpikir, merasakan, mencintai,
+            hingga sisi diri yang jarang kamu temui. Gratis, personal, dan bermakna.
           </motion.p>
 
           <motion.p
@@ -580,7 +579,7 @@ export default function HomePage() {
             }}
             className="text-sm sm:text-base text-white/40 max-w-2xl leading-relaxed mb-10"
           >
-            Mendapatkan akses ke tes kepribadian tingkat lanjutan berbasis scientific proof, yaitu Big Five dan Enneagram, yang dirancang khusus secara eksklusif untuk pengguna yang berstatus Member.
+            Sebagai Member, kamu juga mendapat akses eksklusif ke Big Five (OCEAN) dan Enneagram — dua pendekatan psikologi berbasis sains untuk memahami dirimu lebih utuh.
           </motion.p>
 
           {/* Buttons */}
@@ -964,7 +963,7 @@ export default function HomePage() {
               variants={fadeInUp}
               className="text-white/50 max-w-lg mx-auto"
             >
-              Tes MBTI gratis untuk semua. Upgrade ke Member untuk sertifikat resmi, report personal, dan konsultasi psikolog.
+              Tes MBTI gratis untuk semua. Upgrade ke Member untuk tes lanjutan, report eksklusif, guide personal, dan lebih banyak lagi.
             </motion.p>
           </motion.div>
 
