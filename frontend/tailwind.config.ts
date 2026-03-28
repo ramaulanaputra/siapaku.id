@@ -16,14 +16,14 @@ const config: Config = {
         brand: {
           purple: "#6B21A8",
           "purple-light": "#A855F7",
-          "purple-dark": "#3B0764",
-          rose: "#BE185D",
-          "rose-light": "#FB7185",
+          "purple-dark": "#4A0E3E",
+          rose: "#6B1D5E",
+          "rose-light": "#8B3D7E",
           blue: "#1D4ED8",
           "blue-electric": "#3B82F6",
           yellow: "#D97706",
           "yellow-warm": "#FCD34D",
-          cream: "#FDF6EC",
+          cream: "#F3E8FF",
           dark: "#0F0A1E",
         },
         squad: {

@@ -41,18 +41,18 @@ export default function RootLayout({
             position="top-center"
             toastOptions={{
               style: {
-                background: "rgba(15, 10, 30, 0.95)",
+                background: "rgba(243, 232, 255, 0.95)",
                 color: "#F8F4FF",
-                border: "1px solid rgba(168, 85, 247, 0.3)",
+                border: "1px solid rgba(107, 29, 94, 0.3)",
                 borderRadius: "12px",
                 backdropFilter: "blur(20px)",
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
               },
               success: {
-                iconTheme: { primary: "#A855F7", secondary: "#0F0A1E" },
+                iconTheme: { primary: "#8B3D7E", secondary: "#F3E8FF" },
               },
               error: {
-                iconTheme: { primary: "#EC4899", secondary: "#0F0A1E" },
+                iconTheme: { primary: "#8B3D7E", secondary: "#F3E8FF" },
               },
             }}
           />

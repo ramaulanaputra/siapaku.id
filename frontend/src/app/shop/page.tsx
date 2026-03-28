@@ -234,7 +234,7 @@ export default function ShopPage() {
   };
 
   return (
-    <main className="relative bg-[#0a0a0f] text-white overflow-x-hidden">
+    <main className="relative bg-[#F3E8FF] text-[#1A1025] overflow-x-hidden">
       <Navbar />
 
       {/* ══════════════════ HERO ══════════════════ */}
@@ -260,7 +260,7 @@ export default function ShopPage() {
               opacity: [0.15, 0.25, 0.15],
             }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-purple-600/30 to-transparent blur-[120px]"
+            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#6B1D5E]/15 to-transparent blur-[120px]"
           />
           <motion.div
             animate={{
@@ -273,7 +273,7 @@ export default function ShopPage() {
               ease: "easeInOut",
               delay: 2,
             }}
-            className="absolute top-1/4 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-pink-600/20 to-transparent blur-[100px]"
+            className="absolute top-1/4 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-[#8B3D7E]/10 to-transparent blur-[100px]"
           />
           <motion.div
             animate={{
@@ -286,7 +286,7 @@ export default function ShopPage() {
               ease: "easeInOut",
               delay: 4,
             }}
-            className="absolute bottom-0 left-1/3 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-indigo-600/20 to-transparent blur-[100px]"
+            className="absolute bottom-0 left-1/3 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-[#6B1D5E]/10 to-transparent blur-[100px]"
           />
         </div>
 
@@ -302,7 +302,7 @@ export default function ShopPage() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="mb-8"
           >
-            <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-md text-xs sm:text-sm text-purple-300 shadow-[0_0_20px_rgba(168,85,247,0.15)]">
+            <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full border border-[#6B1D5E]/30 bg-[#6B1D5E]/10 backdrop-blur-md text-xs sm:text-sm text-[#6B1D5E] shadow-[0_0_20px_rgba(107,29,94,0.15)]">
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse shrink-0" />
               Pembayaran Aman via Midtrans
             </span>
@@ -315,8 +315,8 @@ export default function ShopPage() {
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6"
           >
-            <span className="text-white">Wujudkan</span>{" "}
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+            <span className="text-[#1A1025]">Wujudkan</span>{" "}
+            <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
               Identitas Personal dan Profesional Kamu!
             </span>
           </motion.h1>
@@ -326,18 +326,18 @@ export default function ShopPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="text-base sm:text-lg text-white/50 max-w-2xl leading-relaxed"
+            className="text-base sm:text-lg text-[#1A1025]/60 max-w-2xl leading-relaxed"
           >
             Tes MBTI gratis untuk semua. Upgrade ke Member untuk Big Five + Enneagram, report eksklusif, guide personal, sertifikat, merchandise, dan konsultasi psikolog.
           </motion.p>
         </motion.div>
 
         {/* Bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0f] to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F3E8FF] to-transparent" />
       </section>
 
       {/* ══════════════════ TAB BAR ══════════════════ */}
-      <div className="sticky top-16 z-40 px-6 py-4 bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5">
+      <div className="sticky top-16 z-40 px-6 py-4 bg-[#F3E8FF]/90 backdrop-blur-xl border-b border-[#6B1D5E]/10">
         <div className="max-w-5xl mx-auto flex gap-2 flex-wrap justify-center">
           {[
             { id: "certificate", label: "🏆 Paket Member" },
@@ -351,8 +351,8 @@ export default function ShopPage() {
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-6 py-2.5 rounded-2xl text-sm font-medium transition-all duration-300 ${
                 activeTab === tab.id
-                  ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.3)]"
-                  : "border border-white/10 bg-white/5 backdrop-blur-sm text-white/50 hover:text-white hover:bg-white/10 hover:border-white/20"
+                  ? "bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] text-white shadow-[0_0_20px_rgba(107,29,94,0.3)]"
+                  : "border border-[#6B1D5E]/15 bg-white/60 backdrop-blur-sm text-[#1A1025]/60 hover:text-[#6B1D5E] hover:bg-white/90 hover:border-[#6B1D5E]/20"
               }`}
             >
               {tab.label}
@@ -365,7 +365,7 @@ export default function ShopPage() {
       {activeTab === "certificate" && (
         <section className="relative py-24 sm:py-32">
           {/* Top gradient divider */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
 
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             {/* Section header */}
@@ -378,7 +378,7 @@ export default function ShopPage() {
             >
               <motion.span
                 variants={fadeInUp}
-                className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+                className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#6B1D5E] mb-4"
               >
                 Paket Member
               </motion.span>
@@ -386,13 +386,13 @@ export default function ShopPage() {
                 variants={fadeInUp}
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
               >
-                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                   Pilih Paketmu
                 </span>
               </motion.h2>
               <motion.p
                 variants={fadeInUp}
-                className="text-white/50 max-w-lg mx-auto text-base sm:text-lg"
+                className="text-[#1A1025]/60 max-w-lg mx-auto text-base sm:text-lg"
               >
                 Tes MBTI gratis untuk semua. Upgrade untuk benefit eksklusif.
               </motion.p>
@@ -404,12 +404,12 @@ export default function ShopPage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="mb-8 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 backdrop-blur-sm p-5 flex items-center gap-4"
+              className="mb-8 rounded-2xl border border-[#6B1D5E]/20 bg-[#6B1D5E]/5 backdrop-blur-sm p-5 flex items-center gap-4"
             >
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-2xl shrink-0">🆓</div>
+              <div className="w-12 h-12 rounded-2xl bg-[#6B1D5E]/10 flex items-center justify-center text-2xl shrink-0">🆓</div>
               <div>
-                <p className="text-emerald-400 font-semibold text-sm">Tes MBTI & Report Digital Dasar — Gratis!</p>
-                <p className="text-white/40 text-xs">Semua orang bisa ikut tes dan lihat hasil dasar tanpa bayar. Paket Member memberikan benefit eksklusif tambahan.</p>
+                <p className="text-[#6B1D5E] font-semibold text-sm">Tes MBTI & Report Digital Dasar — Gratis!</p>
+                <p className="text-[#1A1025]/50 text-xs">Semua orang bisa ikut tes dan lihat hasil dasar tanpa bayar. Paket Member memberikan benefit eksklusif tambahan.</p>
               </div>
             </motion.div>
 
@@ -425,7 +425,7 @@ export default function ShopPage() {
                 <div className="text-3xl">🎁</div>
                 <div>
                   <p className="text-green-400 font-semibold text-sm">Kamu punya {consultCredits}× kredit konsul psikolog!</p>
-                  <p className="text-white/50 text-xs">Gunakan kapan saja dari tab Konsul Psikolog.</p>
+                  <p className="text-[#1A1025]/60 text-xs">Gunakan kapan saja dari tab Konsul Psikolog.</p>
                 </div>
               </motion.div>
             )}
@@ -445,9 +445,9 @@ export default function ShopPage() {
                   whileHover={{ y: -6, transition: { duration: 0.25 } }}
                   className={`group relative rounded-2xl border ${
                     pkg.popular
-                      ? "border-purple-500/40 bg-white/[0.06] ring-2 ring-purple-500/30"
-                      : "border-white/10 bg-white/[0.03]"
-                  } backdrop-blur-sm p-6 sm:p-8 flex flex-col transition-shadow duration-300 hover:shadow-xl hover:shadow-purple-500/5 overflow-hidden`}
+                      ? "border-[#6B1D5E]/40 bg-white/80 ring-2 ring-[#6B1D5E]/30"
+                      : "border-[#6B1D5E]/15 bg-white/80"
+                  } backdrop-blur-sm p-6 sm:p-8 flex flex-col transition-shadow duration-300 hover:shadow-xl hover:shadow-[#6B1D5E]/10 overflow-hidden`}
                 >
                   {/* Accent line top */}
                   <div
@@ -463,7 +463,7 @@ export default function ShopPage() {
                       transition={{ delay: 0.4, type: "spring" }}
                       className="absolute -top-0 right-4 translate-y-3"
                     >
-                      <span className="inline-flex px-4 py-1 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-xs font-bold text-white shadow-lg shadow-purple-500/30">
+                      <span className="inline-flex px-4 py-1 rounded-full bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] text-xs font-bold text-white shadow-lg shadow-[#6B1D5E]/30">
                         {pkg.badge}
                       </span>
                     </motion.div>
@@ -479,7 +479,7 @@ export default function ShopPage() {
                           repeat: Infinity,
                           ease: "linear",
                         }}
-                        className="absolute -inset-[1px] bg-[conic-gradient(from_0deg,transparent,rgba(168,85,247,0.3),transparent,rgba(236,72,153,0.3),transparent)] rounded-2xl"
+                        className="absolute -inset-[1px] bg-[conic-gradient(from_0deg,transparent,rgba(107,29,94,0.3),transparent,rgba(107,29,94,0.3),transparent)] rounded-2xl"
                         style={{ padding: "1px" }}
                       />
                     </div>
@@ -494,18 +494,18 @@ export default function ShopPage() {
                   <div className="relative z-10 flex flex-col flex-1">
                     <div className="text-4xl mb-4">{pkg.emoji}</div>
                     <h3 className="font-display text-2xl font-bold text-white mb-1">Member {pkg.name}</h3>
-                    <p className="text-white/45 text-xs mb-4">{pkg.tagline}</p>
+                    <p className="text-[#1A1025]/55 text-xs mb-4">{pkg.tagline}</p>
                     <div className="mb-1">
                       <span className="font-display text-3xl sm:text-4xl font-bold" style={{ color: pkg.accent }}>
                         {pkg.priceLabel}
                       </span>
                     </div>
-                    <div className="text-white/30 text-xs mb-6">sekali bayar</div>
+                    <div className="text-[#1A1025]/40 text-xs mb-6">sekali bayar</div>
 
                     <ul className="space-y-3 mb-6 flex-1">
                       {pkg.features.map((f) => (
-                        <li key={f} className="flex items-start gap-2.5 text-sm text-white/60">
-                          <span className="text-purple-400 shrink-0 mt-0.5">✓</span>
+                        <li key={f} className="flex items-start gap-2.5 text-sm text-[#1A1025]/70">
+                          <span className="text-[#6B1D5E] shrink-0 mt-0.5">✓</span>
                           {f}
                         </li>
                       ))}
@@ -529,8 +529,8 @@ export default function ShopPage() {
                       disabled={ordering === pkg.id}
                       className={`w-full py-3.5 rounded-2xl font-semibold text-sm transition-all duration-300 ${
                         pkg.popular
-                          ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_50px_rgba(168,85,247,0.5)]"
-                          : "border border-white/10 bg-white/5 backdrop-blur-sm text-white/80 hover:bg-white/10 hover:border-white/20"
+                          ? "bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] text-white shadow-[0_0_30px_rgba(107,29,94,0.3)] hover:shadow-[0_0_50px_rgba(107,29,94,0.5)]"
+                          : "border border-[#6B1D5E]/15 bg-white/60 backdrop-blur-sm text-[#1A1025]/90 hover:bg-white/90 hover:border-[#6B1D5E]/20"
                       } disabled:opacity-60`}
                     >
                       {ordering === pkg.id ? (
@@ -553,7 +553,7 @@ export default function ShopPage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="mt-12 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8"
+              className="mt-12 rounded-2xl border border-[#6B1D5E]/15 bg-white/80 backdrop-blur-sm p-6 sm:p-8"
             >
               <h3 className="font-semibold text-white mb-4 text-center">Metode Pembayaran</h3>
               <div className="flex flex-wrap justify-center gap-3 text-sm">
@@ -571,12 +571,12 @@ export default function ShopPage() {
                   <span key={m.name} className={`rounded-xl px-4 py-2 text-xs font-semibold border backdrop-blur-sm transition-all duration-300 ${m.bg} ${m.border} ${m.text} ${m.hoverBg}`}>{m.name}</span>
                 ))}
               </div>
-              <p className="text-center text-white/30 text-xs mt-4">Pembayaran aman via Midtrans · SSL Encrypted</p>
+              <p className="text-center text-[#1A1025]/40 text-xs mt-4">Pembayaran aman via Midtrans · SSL Encrypted</p>
             </motion.div>
           </div>
 
           {/* Bottom gradient divider */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
         </section>
       )}
 
@@ -584,7 +584,7 @@ export default function ShopPage() {
       {activeTab === "psikolog" && (
         <section className="relative py-24 sm:py-32">
           {/* Top gradient divider */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
 
           {/* Background orbs */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -596,7 +596,7 @@ export default function ShopPage() {
             <motion.div
               animate={{ scale: [1, 1.2, 1], opacity: [0.06, 0.12, 0.06] }}
               transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-              className="absolute bottom-0 left-1/4 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-purple-600/20 to-transparent blur-[100px]"
+              className="absolute bottom-0 left-1/4 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-[#6B1D5E]/10 to-transparent blur-[100px]"
             />
           </div>
 
@@ -616,8 +616,8 @@ export default function ShopPage() {
                 </div>
                 <div className="flex-1">
                   <p className="text-green-400 font-semibold text-sm">Saldo Kredit Konsultasi</p>
-                  <p className="text-white text-2xl font-bold">{consultCredits}× sesi tersedia</p>
-                  <p className="text-white/40 text-xs">Gunakan kapan saja tanpa batas waktu</p>
+                  <p className="text-[#1A1025] text-2xl font-bold">{consultCredits}× sesi tersedia</p>
+                  <p className="text-[#1A1025]/50 text-xs">Gunakan kapan saja tanpa batas waktu</p>
                 </div>
               </motion.div>
             )}
@@ -629,11 +629,11 @@ export default function ShopPage() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="mb-12 rounded-2xl border border-purple-500/20 bg-white/[0.03] backdrop-blur-sm p-8 text-center"
+                className="mb-12 rounded-2xl border border-[#6B1D5E]/20 bg-white/80 backdrop-blur-sm p-8 text-center"
               >
                 <div className="text-4xl mb-3">🔒</div>
                 <h3 className="font-display text-xl font-bold text-white mb-2">Fitur Eksklusif Paket Ultimate</h3>
-                <p className="text-white/50 text-sm max-w-md mx-auto mb-4">
+                <p className="text-[#1A1025]/60 text-sm max-w-md mx-auto mb-4">
                   Fitur konsultasi psikolog hanya tersedia untuk pengguna yang telah membeli{" "}
                   <strong className="text-amber-400">Paket Ultimate</strong>.
                   Upgrade ke Member Ultimate untuk membuka akses fitur ini.
@@ -642,7 +642,7 @@ export default function ShopPage() {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => setActiveTab("certificate")}
-                  className="group relative inline-flex px-8 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 font-semibold text-white text-sm shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_50px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-[1.02]"
+                  className="group relative inline-flex px-8 py-3 rounded-2xl bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] font-semibold text-white text-sm shadow-[0_0_30px_rgba(107,29,94,0.3)] hover:shadow-[0_0_50px_rgba(107,29,94,0.5)] transition-all duration-300 hover:scale-[1.02]"
                 >
                   Lihat Paket Premium →
                 </motion.button>
@@ -659,7 +659,7 @@ export default function ShopPage() {
             >
               <motion.span
                 variants={fadeInUp}
-                className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+                className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#6B1D5E] mb-4"
               >
                 Konsultasi Psikolog
               </motion.span>
@@ -667,13 +667,13 @@ export default function ShopPage() {
                 variants={fadeInUp}
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
               >
-                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                   Tambah Kredit Konsultasi
                 </span>
               </motion.h2>
               <motion.p
                 variants={fadeInUp}
-                className="text-white/50 max-w-lg mx-auto text-base sm:text-lg"
+                className="text-[#1A1025]/60 max-w-lg mx-auto text-base sm:text-lg"
               >
                 Beli kredit konsultasi dan gunakan kapan saja sesuai kebutuhanmu.
                 Kredit masuk otomatis ke profil setelah pembayaran berhasil.
@@ -693,7 +693,7 @@ export default function ShopPage() {
                   key={plan.id}
                   variants={scaleIn}
                   whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                  className={`group relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 flex flex-col transition-shadow duration-300 hover:shadow-xl hover:shadow-purple-500/5 overflow-hidden ${
+                  className={`group relative rounded-2xl border border-[#6B1D5E]/15 bg-white/80 backdrop-blur-sm p-6 sm:p-8 flex flex-col transition-shadow duration-300 hover:shadow-xl hover:shadow-[#6B1D5E]/10 overflow-hidden ${
                     !consultUnlocked ? "opacity-50 pointer-events-none select-none" : ""
                   }`}
                 >
@@ -712,18 +712,18 @@ export default function ShopPage() {
                   <div className="relative z-10 flex flex-col flex-1">
                     <div className="text-4xl mb-3">{plan.emoji}</div>
                     <h3 className="font-display text-xl font-bold text-white mb-1">{plan.name}</h3>
-                    <p className="text-white/45 text-xs mb-3">{plan.desc}</p>
+                    <p className="text-[#1A1025]/55 text-xs mb-3">{plan.desc}</p>
                     <div className="mb-1">
                       <span className="font-display text-2xl sm:text-3xl font-bold" style={{ color: plan.color }}>
                         {plan.priceLabel}
                       </span>
                     </div>
-                    <div className="text-white/30 text-xs mb-5">sekali bayar · kredit tidak hangus</div>
+                    <div className="text-[#1A1025]/40 text-xs mb-5">sekali bayar · kredit tidak hangus</div>
 
                     <ul className="space-y-2.5 mb-6 flex-1">
                       {plan.features.map((f) => (
-                        <li key={f} className="flex items-start gap-2.5 text-sm text-white/60">
-                          <span className="text-purple-400 shrink-0 mt-0.5">✓</span>
+                        <li key={f} className="flex items-start gap-2.5 text-sm text-[#1A1025]/70">
+                          <span className="text-[#6B1D5E] shrink-0 mt-0.5">✓</span>
                           {f}
                         </li>
                       ))}
@@ -741,7 +741,7 @@ export default function ShopPage() {
                       whileTap={{ scale: 0.98 }}
                       onClick={() => handleOrder(plan.id, plan.price)}
                       disabled={ordering === plan.id || !consultUnlocked}
-                      className="w-full py-3.5 rounded-2xl font-semibold text-sm border border-white/10 bg-white/5 backdrop-blur-sm text-white/80 hover:bg-white/10 hover:border-white/20 transition-all duration-300 disabled:opacity-60"
+                      className="w-full py-3.5 rounded-2xl font-semibold text-sm border border-[#6B1D5E]/15 bg-white/60 backdrop-blur-sm text-[#1A1025]/90 hover:bg-white/90 hover:border-[#6B1D5E]/20 transition-all duration-300 disabled:opacity-60"
                     >
                       {ordering === plan.id ? (
                         <span className="flex items-center justify-center gap-2">
@@ -785,7 +785,7 @@ export default function ShopPage() {
                     key={step}
                     variants={fadeInUp}
                     whileHover={{ y: -4, transition: { duration: 0.25 } }}
-                    className="group relative rounded-2xl border border-sky-500/20 bg-white/[0.03] backdrop-blur-sm p-5 flex items-center gap-3 transition-shadow duration-300 hover:shadow-xl hover:shadow-sky-500/5"
+                    className="group relative rounded-2xl border border-sky-500/20 bg-white/80 backdrop-blur-sm p-5 flex items-center gap-3 transition-shadow duration-300 hover:shadow-xl hover:shadow-sky-500/5"
                   >
                     {/* Accent line */}
                     <div className="absolute top-0 left-4 right-4 h-[2px] rounded-full bg-gradient-to-r from-sky-500/40 to-purple-500/40 opacity-40 group-hover:opacity-80 transition-opacity" />
@@ -793,8 +793,8 @@ export default function ShopPage() {
                       {icon}
                     </div>
                     <div>
-                      <div className="text-xs text-white/30 font-bold">STEP {step}</div>
-                      <p className="text-sm text-white/60">{text}</p>
+                      <div className="text-xs text-[#1A1025]/40 font-bold">STEP {step}</div>
+                      <p className="text-sm text-[#1A1025]/70">{text}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -807,11 +807,11 @@ export default function ShopPage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="mt-10 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 text-center"
+              className="mt-10 rounded-2xl border border-[#6B1D5E]/15 bg-white/80 backdrop-blur-sm p-8 text-center"
             >
               <p className="text-2xl mb-2">🧠</p>
               <h3 className="font-display text-lg font-semibold text-white mb-2">Psikolog Berlisensi & Berpengalaman</h3>
-              <p className="text-white/45 text-sm leading-relaxed max-w-md mx-auto">
+              <p className="text-[#1A1025]/55 text-sm leading-relaxed max-w-md mx-auto">
                 Semua sesi dilakukan via webcall (audio/video) dengan psikolog yang telah tersertifikasi.
                 Jadwal fleksibel, privasi terjaga, dan kredit tidak pernah hangus.
               </p>
@@ -819,7 +819,7 @@ export default function ShopPage() {
           </div>
 
           {/* Bottom gradient divider */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
         </section>
       )}
 
@@ -827,19 +827,19 @@ export default function ShopPage() {
       {activeTab === "merch" && (
         <section className="relative py-24 sm:py-32">
           {/* Top gradient divider */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
 
           {/* Background orbs */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <motion.div
               animate={{ scale: [1, 1.2, 1], opacity: [0.08, 0.15, 0.08] }}
               transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-20 -left-20 w-[400px] h-[400px] rounded-full bg-gradient-to-br from-pink-600/20 to-transparent blur-[100px]"
+              className="absolute -top-20 -left-20 w-[400px] h-[400px] rounded-full bg-gradient-to-br from-[#8B3D7E]/10 to-transparent blur-[100px]"
             />
             <motion.div
               animate={{ scale: [1.1, 1, 1.1], opacity: [0.06, 0.12, 0.06] }}
               transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-              className="absolute bottom-0 right-1/4 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-purple-600/20 to-transparent blur-[100px]"
+              className="absolute bottom-0 right-1/4 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-[#6B1D5E]/10 to-transparent blur-[100px]"
             />
           </div>
 
@@ -854,7 +854,7 @@ export default function ShopPage() {
             >
               <motion.span
                 variants={fadeInUp}
-                className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+                className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#6B1D5E] mb-4"
               >
                 Merchandise
               </motion.span>
@@ -862,13 +862,13 @@ export default function ShopPage() {
                 variants={fadeInUp}
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
               >
-                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                   Ekspresikan Identitasmu
                 </span>
               </motion.h2>
               <motion.p
                 variants={fadeInUp}
-                className="text-white/50 max-w-lg mx-auto text-base sm:text-lg"
+                className="text-[#1A1025]/60 max-w-lg mx-auto text-base sm:text-lg"
               >
                 Merchandise custom dengan nama, MBTI type, dan squad color kamu.
               </motion.p>
@@ -887,23 +887,23 @@ export default function ShopPage() {
                   key={item.slug}
                   variants={fadeInUp}
                   whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                  className="group relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm overflow-hidden transition-shadow duration-300 hover:shadow-xl hover:shadow-purple-500/5 cursor-pointer"
+                  className="group relative rounded-2xl border border-[#6B1D5E]/15 bg-white/80 backdrop-blur-sm overflow-hidden transition-shadow duration-300 hover:shadow-xl hover:shadow-[#6B1D5E]/10 cursor-pointer"
                 >
                   {/* Accent line top */}
-                  <div className="absolute top-0 left-4 right-4 h-[2px] rounded-full bg-gradient-to-r from-purple-500/40 via-pink-500/40 to-purple-500/40 opacity-40 group-hover:opacity-80 transition-opacity z-10" />
+                  <div className="absolute top-0 left-4 right-4 h-[2px] rounded-full bg-gradient-to-r from-purple-500/40 via-[#6B1D5E]/40 to-purple-500/40 opacity-40 group-hover:opacity-80 transition-opacity z-10" />
 
                   <div className="h-40 bg-gradient-to-br from-purple-900/30 to-pink-900/20 flex items-center justify-center relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f]/60 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#F3E8FF]/60 to-transparent" />
                     <span className="text-6xl group-hover:scale-110 transition-transform duration-500 relative z-10">{item.emoji}</span>
                   </div>
                   <div className="p-5">
                     <h3 className="font-semibold text-white text-sm mb-1">{item.name}</h3>
-                    <p className="text-white/40 text-xs mb-3">{item.desc}</p>
+                    <p className="text-[#1A1025]/50 text-xs mb-3">{item.desc}</p>
                     <div className="flex items-center justify-between">
-                      <span className="font-display font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent text-sm">{item.price}</span>
+                      <span className="font-display font-bold bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent text-sm">{item.price}</span>
                       <button
                         onClick={() => handleOrder("merchandise", 0)}
-                        className="text-xs px-4 py-2 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+                        className="text-xs px-4 py-2 rounded-2xl border border-[#6B1D5E]/15 bg-white/60 backdrop-blur-sm text-[#1A1025]/80 hover:text-[#6B1D5E] hover:bg-white/90 hover:border-[#6B1D5E]/20 transition-all duration-300"
                       >
                         Pesan →
                       </button>
@@ -922,11 +922,11 @@ export default function ShopPage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 text-center"
+              className="rounded-2xl border border-[#6B1D5E]/15 bg-white/80 backdrop-blur-sm p-8 text-center"
             >
               <p className="text-2xl mb-2">🎨</p>
               <h3 className="font-display text-lg font-semibold text-white mb-2">Merchandise Custom</h3>
-              <p className="text-white/45 text-sm leading-relaxed max-w-md mx-auto">
+              <p className="text-[#1A1025]/55 text-sm leading-relaxed max-w-md mx-auto">
                 Semua merchandise bisa di-customize dengan nama, MBTI type, dan squad color kamu.
                 Produksi 3-5 hari kerja, pengiriman ke seluruh Indonesia.
               </p>
@@ -934,7 +934,7 @@ export default function ShopPage() {
           </div>
 
           {/* Bottom gradient divider */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
         </section>
       )}
 
@@ -953,14 +953,14 @@ export default function ShopPage() {
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.9, y: 20, opacity: 0 }}
               transition={{ type: "spring", stiffness: 200, damping: 22 }}
-              className="relative rounded-3xl border border-white/10 bg-white/[0.06] backdrop-blur-xl p-8 max-w-md w-full overflow-hidden"
+              className="relative rounded-3xl border border-[#6B1D5E]/15 bg-white/80 backdrop-blur-xl p-8 max-w-md w-full overflow-hidden"
             >
               {/* Modal orb */}
               <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-amber-600/20 blur-[80px] pointer-events-none" />
 
               <div className="relative z-10">
                 <h3 className="font-display text-2xl font-bold text-white mb-2 text-center">Pilih Bonus Kamu 🎁</h3>
-                <p className="text-white/50 text-sm text-center mb-6">Paket Ultimate termasuk 1 pilihan item berikut:</p>
+                <p className="text-[#1A1025]/60 text-sm text-center mb-6">Paket Ultimate termasuk 1 pilihan item berikut:</p>
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   {[
                     { id: "tumbler", emoji: "🥤", label: "Tumbler Custom", desc: "Dengan nama & MBTI identity" },
@@ -971,18 +971,18 @@ export default function ShopPage() {
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
                       onClick={() => setUltimateChoice(opt.id as any)}
-                      className={`rounded-2xl p-5 text-center transition-all duration-300 border-2 bg-white/[0.03] backdrop-blur-sm ${
-                        ultimateChoice === opt.id ? "border-amber-500 bg-amber-500/10 shadow-[0_0_20px_rgba(217,119,6,0.15)]" : "border-white/10 hover:border-white/30"
+                      className={`rounded-2xl p-5 text-center transition-all duration-300 border-2 bg-white/80 backdrop-blur-sm ${
+                        ultimateChoice === opt.id ? "border-amber-500 bg-amber-500/10 shadow-[0_0_20px_rgba(217,119,6,0.15)]" : "border-[#6B1D5E]/15 hover:border-[#6B1D5E]/30"
                       }`}
                     >
                       <div className="text-4xl mb-2">{opt.emoji}</div>
-                      <p className="text-white font-semibold text-sm">{opt.label}</p>
-                      <p className="text-white/40 text-xs mt-1">{opt.desc}</p>
+                      <p className="text-[#1A1025] font-semibold text-sm">{opt.label}</p>
+                      <p className="text-[#1A1025]/50 text-xs mt-1">{opt.desc}</p>
                     </motion.button>
                   ))}
                 </div>
                 <div className="flex gap-3">
-                  <button onClick={() => setShowUltimateModal(false)} className="flex-1 py-3 rounded-2xl border border-white/10 bg-white/5 text-white/60 hover:text-white hover:bg-white/10 text-sm transition-all duration-300">
+                  <button onClick={() => setShowUltimateModal(false)} className="flex-1 py-3 rounded-2xl border border-[#6B1D5E]/15 bg-white/60 text-[#1A1025]/70 hover:text-[#6B1D5E] hover:bg-white/90 text-sm transition-all duration-300">
                     Batal
                   </button>
                   <motion.button

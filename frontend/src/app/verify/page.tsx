@@ -62,7 +62,7 @@ export default function VerifyPage() {
             <h1 className="font-display text-4xl font-bold text-white mb-2">
               Verifikasi <span className="gradient-text">Sertifikat</span>
             </h1>
-            <p className="text-white/50">Masukkan kode untuk memverifikasi keaslian sertifikat</p>
+            <p className="text-[#1A1025]/60">Masukkan kode untuk memverifikasi keaslian sertifikat</p>
           </motion.div>
 
           <div className="glass rounded-2xl p-6 mb-6">
@@ -94,7 +94,7 @@ export default function VerifyPage() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="rounded-2xl p-5 bg-red-500/10 border border-red-500/20 text-red-400 text-center text-sm"
+                className="rounded-2xl p-5 bg-red-500/10 border border-red-500/20 text-red-500 text-center text-sm"
               >
                 ❌ {error}
               </motion.div>
@@ -117,25 +117,25 @@ export default function VerifyPage() {
                     ✅ Sertifikat Valid
                   </div>
                   <h2 className="font-display text-2xl font-bold text-white mb-1">{cert.owner}</h2>
-                  <p className="text-white/40 text-sm mb-4">
+                  <p className="text-[#1A1025]/50 text-sm mb-4">
                     Tipe Kepribadian: <span className="font-bold" style={{ color: squadColor }}>{cert.mbti_type}</span>
                     {" · "}{profile.nickname}
                   </p>
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div className="glass rounded-xl p-3">
-                      <p className="text-white/30 text-xs mb-1">Paket</p>
-                      <p className="text-white capitalize font-medium">{cert.type}</p>
+                      <p className="text-[#1A1025]/40 text-xs mb-1">Paket</p>
+                      <p className="text-[#1A1025] capitalize font-medium">{cert.type}</p>
                     </div>
                     <div className="glass rounded-xl p-3">
-                      <p className="text-white/30 text-xs mb-1">Diterbitkan</p>
-                      <p className="text-white font-medium">
+                      <p className="text-[#1A1025]/40 text-xs mb-1">Diterbitkan</p>
+                      <p className="text-[#1A1025] font-medium">
                         {new Date(cert.issued_date).toLocaleDateString("id-ID", {
                           day: "numeric", month: "long", year: "numeric",
                         })}
                       </p>
                     </div>
                   </div>
-                  <p className="text-white/20 text-xs mt-4 font-mono">{cert.code}</p>
+                  <p className="text-[#1A1025]/30 text-xs mt-4 font-mono">{cert.code}</p>
                 </div>
               </motion.div>
             )}

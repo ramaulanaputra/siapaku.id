@@ -30,7 +30,7 @@ function AuthErrorContent() {
         <h1 className="font-display text-3xl font-bold text-white mb-3">
           Login Gagal
         </h1>
-        <p className="text-white/50 mb-8 leading-relaxed">{message}</p>
+        <p className="text-[#1A1025]/60 mb-8 leading-relaxed">{message}</p>
         <div className="flex flex-col gap-3">
           <Link href="/auth/signin" className="btn-primary">
             Coba Lagi
@@ -48,7 +48,7 @@ export default function AuthErrorPage() {
   return (
     <Suspense fallback={
       <main className="min-h-screen bg-brand-dark flex items-center justify-center px-6">
-        <div className="text-white/50">Loading...</div>
+        <div className="text-[#1A1025]/60">Loading...</div>
       </main>
     }>
       <AuthErrorContent />

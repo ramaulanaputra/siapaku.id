@@ -130,7 +130,7 @@ function EditableField({
 
   return (
     <div className="group">
-      <label className="text-xs font-semibold tracking-[0.1em] uppercase text-purple-400/70 mb-2 flex items-center gap-2">
+      <label className="text-xs font-semibold tracking-[0.1em] uppercase text-[#6B1D5E]/70 mb-2 flex items-center gap-2">
         <span className="text-sm">{icon}</span> {label}
       </label>
       {editing ? (
@@ -142,7 +142,7 @@ function EditableField({
                 onChange={(e) => setDraft(e.target.value)}
                 placeholder={placeholder}
                 maxLength={maxLength}
-                className="flex-1 bg-white/[0.06] border border-purple-500/20 rounded-xl px-4 py-3 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 focus:shadow-[0_0_15px_rgba(168,85,247,0.1)] resize-none transition-all backdrop-blur-sm"
+                className="flex-1 bg-white/80 border border-[#6B1D5E]/20 rounded-xl px-4 py-3 text-white text-sm placeholder:text-[#1A1025]/30 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-[#6B1D5E]/30 focus:shadow-[0_0_15px_rgba(107,29,94,0.1)] resize-none transition-all backdrop-blur-sm"
                 rows={3}
                 autoFocus
               />
@@ -153,7 +153,7 @@ function EditableField({
                 onChange={(e) => setDraft(e.target.value)}
                 placeholder={placeholder}
                 maxLength={maxLength}
-                className="flex-1 bg-white/[0.06] border border-purple-500/20 rounded-xl px-4 py-3 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 focus:shadow-[0_0_15px_rgba(168,85,247,0.1)] transition-all backdrop-blur-sm"
+                className="flex-1 bg-white/80 border border-[#6B1D5E]/20 rounded-xl px-4 py-3 text-white text-sm placeholder:text-[#1A1025]/30 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-[#6B1D5E]/30 focus:shadow-[0_0_15px_rgba(107,29,94,0.1)] transition-all backdrop-blur-sm"
                 autoFocus
               />
             )}
@@ -161,37 +161,37 @@ function EditableField({
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] rounded-xl text-white text-xs font-semibold transition-all disabled:opacity-50"
+                className="px-4 py-2 bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] hover:shadow-[0_0_20px_rgba(107,29,94,0.3)] rounded-xl text-white text-xs font-semibold transition-all disabled:opacity-50"
               >
                 {saving ? "..." : "✓"}
               </button>
               <button
                 onClick={() => { setEditing(false); setDraft(value); setValidationError(null); }}
-                className="px-4 py-2 bg-white/[0.05] hover:bg-white/[0.08] border border-white/10 rounded-xl text-white/50 text-xs transition-all"
+                className="px-4 py-2 bg-white/70 hover:bg-white/[0.08] border border-[#6B1D5E]/15 rounded-xl text-[#1A1025]/60 text-xs transition-all"
               >
                 ✕
               </button>
             </div>
           </div>
           {validationError && (
-            <p className="text-red-400 text-xs mt-2 ml-1">{validationError}</p>
+            <p className="text-red-500 text-xs mt-2 ml-1">{validationError}</p>
           )}
         </>
       ) : (
         <button
           onClick={() => setEditing(true)}
-          className="w-full text-left px-4 py-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.06] hover:border-purple-500/20 transition-all group/edit backdrop-blur-sm"
+          className="w-full text-left px-4 py-3 rounded-xl bg-white/80 hover:bg-white/80 border border-[#6B1D5E]/10 hover:border-[#6B1D5E]/20 transition-all group/edit backdrop-blur-sm"
         >
           {value ? (
-            <span className="text-white/80 text-sm">{value}</span>
+            <span className="text-[#1A1025]/90 text-sm">{value}</span>
           ) : (
-            <span className="text-white/20 text-sm italic">{placeholder}</span>
+            <span className="text-[#1A1025]/30 text-sm italic">{placeholder}</span>
           )}
-          <span className="text-white/0 group-hover/edit:text-white/30 text-xs ml-2 transition-colors">✏️</span>
+          <span className="text-white/0 group-hover/edit:text-[#1A1025]/40 text-xs ml-2 transition-colors">✏️</span>
         </button>
       )}
       {helperText && !editing && (
-        <p className="text-white/20 text-[11px] mt-1.5 ml-4">{helperText}</p>
+        <p className="text-[#1A1025]/30 text-[11px] mt-1.5 ml-4">{helperText}</p>
       )}
     </div>
   );
@@ -314,7 +314,7 @@ export default function ProfilePage() {
 
   if (status === "unauthenticated") {
     return (
-      <main className="relative bg-[#0a0a0f] text-white overflow-x-hidden min-h-screen flex flex-col">
+      <main className="relative bg-[#F3E8FF] text-[#1A1025] overflow-x-hidden min-h-screen flex flex-col">
         <Navbar />
 
         {/* Background effects */}
@@ -322,12 +322,12 @@ export default function ProfilePage() {
           <motion.div
             animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.25, 0.15] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-purple-600/30 to-transparent blur-[120px]"
+            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#6B1D5E]/15 to-transparent blur-[120px]"
           />
           <motion.div
             animate={{ scale: [1.1, 1, 1.1], opacity: [0.1, 0.2, 0.1] }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            className="absolute top-1/4 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-pink-600/20 to-transparent blur-[100px]"
+            className="absolute top-1/4 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-[#8B3D7E]/10 to-transparent blur-[100px]"
           />
         </div>
 
@@ -346,10 +346,10 @@ export default function ProfilePage() {
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="relative rounded-2xl border border-purple-500/20 bg-white/[0.03] backdrop-blur-sm p-10 max-w-md w-full text-center overflow-hidden"
+            className="relative rounded-2xl border border-[#6B1D5E]/20 bg-white/80 backdrop-blur-sm p-10 max-w-md w-full text-center overflow-hidden"
           >
             {/* Accent line top */}
-            <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-60" />
+            <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] opacity-60" />
 
             {/* Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full bg-purple-600/10 blur-[80px] pointer-events-none" />
@@ -357,14 +357,14 @@ export default function ProfilePage() {
             <div className="relative z-10">
               <div className="text-5xl mb-4">👤</div>
               <h2 className="font-display text-3xl font-bold mb-3">
-                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                   Login untuk Lihat Profil
                 </span>
               </h2>
-              <p className="text-white/50 mb-8">Simpan perjalanan self-discovery kamu.</p>
+              <p className="text-[#1A1025]/60 mb-8">Simpan perjalanan self-discovery kamu.</p>
               <button
                 onClick={() => signIn("google")}
-                className="w-full group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 font-semibold text-white shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_50px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] font-semibold text-white shadow-[0_0_30px_rgba(107,29,94,0.3)] hover:shadow-[0_0_50px_rgba(107,29,94,0.5)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
               >
                 Login dengan Google
               </button>
@@ -405,7 +405,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <main className="relative bg-[#0a0a0f] text-white overflow-x-hidden">
+    <main className="relative bg-[#F3E8FF] text-[#1A1025] overflow-x-hidden">
       <Navbar />
 
       {/* ═══════════════ GLOBAL BACKGROUND EFFECTS ═══════════════ */}
@@ -414,17 +414,17 @@ export default function ProfilePage() {
         <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.12, 0.22, 0.12] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-purple-600/30 to-transparent blur-[120px]"
+          className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#6B1D5E]/15 to-transparent blur-[120px]"
         />
         <motion.div
           animate={{ scale: [1.1, 1, 1.1], opacity: [0.08, 0.18, 0.08] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute top-1/3 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-pink-600/20 to-transparent blur-[100px]"
+          className="absolute top-1/3 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-[#8B3D7E]/10 to-transparent blur-[100px]"
         />
         <motion.div
           animate={{ scale: [1, 1.15, 1], opacity: [0.06, 0.15, 0.06] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-          className="absolute bottom-1/4 left-1/3 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-indigo-600/20 to-transparent blur-[100px]"
+          className="absolute bottom-1/4 left-1/3 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-[#6B1D5E]/10 to-transparent blur-[100px]"
         />
 
         {/* Grid lines */}
@@ -450,7 +450,7 @@ export default function ProfilePage() {
           >
             <motion.span
               variants={fadeInUp}
-              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#6B1D5E] mb-4"
             >
               Profil Saya
             </motion.span>
@@ -458,12 +458,12 @@ export default function ProfilePage() {
               variants={fadeInUp}
               className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display"
             >
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                 {profile?.nama || "Atur Nama Kamu"}
               </span>
             </motion.h1>
             {profile?.username && (
-              <motion.p variants={fadeInUp} className="text-white/30 text-sm mt-2">
+              <motion.p variants={fadeInUp} className="text-[#1A1025]/40 text-sm mt-2">
                 @{profile.username}
               </motion.p>
             )}
@@ -474,10 +474,10 @@ export default function ProfilePage() {
             initial="hidden"
             animate="visible"
             variants={fadeInUp}
-            className="relative rounded-2xl border border-purple-500/20 bg-white/[0.03] backdrop-blur-sm p-8 mb-8 overflow-hidden"
+            className="relative rounded-2xl border border-[#6B1D5E]/20 bg-white/80 backdrop-blur-sm p-8 mb-8 overflow-hidden"
           >
             {/* Accent line top */}
-            <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 opacity-60" />
+            <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-purple-500 via-[#6B1D5E] to-purple-500 opacity-60" />
 
             {/* Background glows */}
             <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full opacity-10 blur-3xl pointer-events-none" style={{ background: squadColor }} />
@@ -497,12 +497,12 @@ export default function ProfilePage() {
                     alt="Profile"
                     width={96}
                     height={96}
-                    className="rounded-2xl ring-2 ring-purple-500/20 object-cover w-[96px] h-[96px] shadow-[0_0_20px_rgba(168,85,247,0.15)]"
+                    className="rounded-2xl ring-2 ring-purple-500/20 object-cover w-[96px] h-[96px] shadow-[0_0_20px_rgba(107,29,94,0.15)]"
                     unoptimized
                   />
                 ) : (
                   <div
-                    className="w-[96px] h-[96px] rounded-2xl flex items-center justify-center text-3xl font-display font-bold text-white shadow-[0_0_20px_rgba(168,85,247,0.15)]"
+                    className="w-[96px] h-[96px] rounded-2xl flex items-center justify-center text-3xl font-display font-bold text-white shadow-[0_0_20px_rgba(107,29,94,0.15)]"
                     style={{ background: `linear-gradient(135deg, ${squadColor}80, ${squadColor}40)` }}
                   >
                     {profile?.nama?.[0]?.toUpperCase() || "?"}
@@ -513,7 +513,7 @@ export default function ProfilePage() {
                   htmlFor="avatar-upload"
                   className="absolute inset-0 rounded-2xl bg-black/60 opacity-0 group-hover/avatar:opacity-100 transition-opacity cursor-pointer flex items-center justify-center backdrop-blur-sm"
                 >
-                  <span className="text-white text-xs font-medium">📷 Ganti</span>
+                  <span className="text-[#1A1025] text-xs font-medium">📷 Ganti</span>
                 </label>
                 <input
                   id="avatar-upload"
@@ -524,7 +524,7 @@ export default function ProfilePage() {
                 />
                 {mbtiProfile && (
                   <div
-                    className="absolute -bottom-2 -right-2 w-9 h-9 rounded-lg flex items-center justify-center text-sm shadow-lg ring-2 ring-[#0a0a0f]"
+                    className="absolute -bottom-2 -right-2 w-9 h-9 rounded-lg flex items-center justify-center text-sm shadow-lg ring-2 ring-[#F3E8FF]"
                     style={{ background: squadColor }}
                   >
                     {squadEmoji}
@@ -539,31 +539,31 @@ export default function ProfilePage() {
                     {profile?.nama || "Atur Nama Kamu"}
                   </h2>
                   {packageLabel && (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-md text-xs font-semibold text-purple-300 shadow-[0_0_15px_rgba(168,85,247,0.1)]">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#6B1D5E]/30 bg-[#6B1D5E]/10 backdrop-blur-md text-xs font-semibold text-[#6B1D5E] shadow-[0_0_15px_rgba(107,29,94,0.1)]">
                       Paket {packageLabel}
                     </span>
                   )}
                 </div>
-                <p className="text-white/40 text-sm mt-1.5">{profile?.email}</p>
+                <p className="text-[#1A1025]/50 text-sm mt-1.5">{profile?.email}</p>
 
                 {/* Quick stats row */}
                 <div className="flex flex-wrap gap-6 mt-5">
                   {profile?.testHistory && profile.testHistory.length > 0 && (
                     <div className="text-center">
                       <div className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">{profile.testHistory.length}</div>
-                      <div className="text-white/30 text-xs mt-0.5">Tes Selesai</div>
+                      <div className="text-[#1A1025]/40 text-xs mt-0.5">Tes Selesai</div>
                     </div>
                   )}
                   {consultUnlocked && (
                     <div className="text-center">
                       <div className="text-xl font-bold text-sky-400">{consultCredits}</div>
-                      <div className="text-white/30 text-xs mt-0.5">Kredit Konsul</div>
+                      <div className="text-[#1A1025]/40 text-xs mt-0.5">Kredit Konsul</div>
                     </div>
                   )}
                   {profile?.certificates && profile.certificates.length > 0 && (
                     <div className="text-center">
                       <div className="text-xl font-bold text-amber-400">{profile.certificates.length}</div>
-                      <div className="text-white/30 text-xs mt-0.5">Sertifikat</div>
+                      <div className="text-[#1A1025]/40 text-xs mt-0.5">Sertifikat</div>
                     </div>
                   )}
                 </div>
@@ -583,7 +583,7 @@ export default function ProfilePage() {
                   <div className="font-display font-bold text-2xl" style={{ color: squadColor }}>
                     {mbtiProfile.type}
                   </div>
-                  <div className="text-white/40 text-xs mt-0.5">{mbtiProfile.nickname}</div>
+                  <div className="text-[#1A1025]/50 text-xs mt-0.5">{mbtiProfile.nickname}</div>
                   <div className="text-xs mt-2 px-2 py-0.5 rounded-full" style={{ background: squadColor + "20", color: squadColor }}>
                     Squad {mbtiProfile.squad}
                   </div>
@@ -596,7 +596,7 @@ export default function ProfilePage() {
 
       {/* Gradient divider */}
       <div className="relative z-10">
-        <div className="absolute left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+        <div className="absolute left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
       </div>
 
       {/* ═══════════════ MAIN CONTENT GRID ═══════════════ */}
@@ -616,17 +616,17 @@ export default function ProfilePage() {
               <motion.div
                 variants={fadeInUp}
                 whileHover={{ y: -2, transition: { duration: 0.25 } }}
-                className="relative rounded-2xl border border-purple-500/20 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 overflow-hidden"
+                className="relative rounded-2xl border border-[#6B1D5E]/20 bg-white/80 backdrop-blur-sm p-6 sm:p-8 overflow-hidden"
               >
                 {/* Accent line top */}
-                <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-40" />
+                <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] opacity-40" />
 
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-lg">
+                  <div className="w-10 h-10 rounded-xl bg-[#6B1D5E]/10 flex items-center justify-center text-lg">
                     📝
                   </div>
                   <h2 className="font-display text-xl font-bold">
-                    <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                       Profil Kamu
                     </span>
                   </h2>
@@ -722,29 +722,29 @@ export default function ProfilePage() {
                 <motion.div
                   variants={fadeInUp}
                   whileHover={{ y: -4, transition: { duration: 0.25 } }}
-                  className="relative rounded-2xl border border-emerald-500/20 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 overflow-hidden"
+                  className="relative rounded-2xl border border-[#6B1D5E]/20 bg-white/80 backdrop-blur-sm p-6 sm:p-8 overflow-hidden"
                 >
                   {/* Accent line top */}
                   <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 opacity-40" />
 
                   <div className="flex items-center gap-3 mb-5">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-lg">
+                    <div className="w-10 h-10 rounded-xl bg-[#6B1D5E]/10 flex items-center justify-center text-lg">
                       🧬
                     </div>
                     <h2 className="font-display text-xl font-bold">
-                      <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                      <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                         Kepribadianmu
                       </span>
                     </h2>
                   </div>
-                  <p className="text-white/60 text-sm leading-relaxed mb-5">
+                  <p className="text-[#1A1025]/70 text-sm leading-relaxed mb-5">
                     {mbtiProfile.description}
                   </p>
                   <div className="flex flex-wrap gap-2 mb-5">
                     {mbtiProfile.coreValues.map((v) => (
                       <span
                         key={v}
-                        className="text-xs px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/5"
+                        className="text-xs px-3 py-1.5 rounded-full backdrop-blur-sm border border-[#6B1D5E]/10"
                         style={{ background: squadColor + "20", color: squadColor }}
                       >
                         {v}
@@ -753,7 +753,7 @@ export default function ProfilePage() {
                   </div>
                   <Link
                     href={`/test/result/${mbtiProfile.type}`}
-                    className="inline-flex items-center gap-1 text-sm text-purple-400 hover:text-purple-300 transition-colors font-medium"
+                    className="inline-flex items-center gap-1 text-sm text-[#6B1D5E] hover:text-[#6B1D5E] transition-colors font-medium"
                   >
                     Lihat hasil lengkap →
                   </Link>
@@ -762,10 +762,10 @@ export default function ProfilePage() {
                 <motion.div
                   variants={fadeInUp}
                   whileHover={{ y: -4, transition: { duration: 0.25 } }}
-                  className="relative rounded-2xl border border-purple-500/20 bg-white/[0.03] backdrop-blur-sm p-10 text-center overflow-hidden"
+                  className="relative rounded-2xl border border-[#6B1D5E]/20 bg-white/80 backdrop-blur-sm p-10 text-center overflow-hidden"
                 >
                   {/* Accent line top */}
-                  <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-40" />
+                  <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] opacity-40" />
 
                   {/* Glow */}
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full bg-purple-600/10 blur-[80px] pointer-events-none" />
@@ -779,16 +779,16 @@ export default function ProfilePage() {
                       🔮
                     </motion.div>
                     <h3 className="font-display text-xl font-bold mb-2">
-                      <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                      <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                         Belum Pernah Tes
                       </span>
                     </h3>
-                    <p className="text-white/40 text-sm mb-6">
+                    <p className="text-[#1A1025]/50 text-sm mb-6">
                       Mulai perjalanan self-discovery kamu sekarang!
                     </p>
                     <Link
                       href="/test"
-                      className="group relative inline-flex px-8 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 font-semibold text-white text-sm shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_50px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                      className="group relative inline-flex px-8 py-3 rounded-2xl bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] font-semibold text-white text-sm shadow-[0_0_30px_rgba(107,29,94,0.3)] hover:shadow-[0_0_50px_rgba(107,29,94,0.5)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                     >
                       Mulai Tes MBTI
                     </Link>
@@ -801,7 +801,7 @@ export default function ProfilePage() {
                 <motion.div
                   variants={fadeInUp}
                   whileHover={{ y: -4, transition: { duration: 0.25 } }}
-                  className="relative rounded-2xl border border-sky-500/20 bg-white/[0.03] backdrop-blur-sm p-6 overflow-hidden"
+                  className="relative rounded-2xl border border-sky-500/20 bg-white/80 backdrop-blur-sm p-6 overflow-hidden"
                 >
                   {/* Accent line top */}
                   <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-sky-500 to-purple-500 opacity-40" />
@@ -815,13 +815,13 @@ export default function ProfilePage() {
                       <h3 className="font-semibold text-white text-sm mb-1">Kredit Konsultasi Psikolog</h3>
                       <div className="flex items-baseline gap-2">
                         <span className="text-3xl font-display font-bold text-sky-400">{consultCredits}</span>
-                        <span className="text-white/40 text-sm">sesi tersedia</span>
+                        <span className="text-[#1A1025]/50 text-sm">sesi tersedia</span>
                       </div>
-                      <p className="text-white/30 text-xs mt-1">Kredit tidak hangus · Gunakan kapan saja</p>
+                      <p className="text-[#1A1025]/40 text-xs mt-1">Kredit tidak hangus · Gunakan kapan saja</p>
                     </div>
                     <Link
                       href="/shop"
-                      className="px-5 py-2.5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm text-sm text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all whitespace-nowrap"
+                      className="px-5 py-2.5 rounded-2xl border border-[#6B1D5E]/15 bg-white/60 backdrop-blur-sm text-sm text-[#1A1025]/80 hover:text-[#6B1D5E] hover:bg-white/90 hover:border-[#6B1D5E]/20 transition-all whitespace-nowrap"
                     >
                       {consultCredits > 0 ? "Booking Sesi →" : "Beli Kredit →"}
                     </Link>
@@ -834,7 +834,7 @@ export default function ProfilePage() {
                 <motion.div
                   variants={fadeInUp}
                   whileHover={{ y: -2, transition: { duration: 0.25 } }}
-                  className="relative rounded-2xl border border-violet-500/20 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 overflow-hidden"
+                  className="relative rounded-2xl border border-violet-500/20 bg-white/80 backdrop-blur-sm p-6 sm:p-8 overflow-hidden"
                 >
                   {/* Accent line top */}
                   <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-40" />
@@ -844,7 +844,7 @@ export default function ProfilePage() {
                       📊
                     </div>
                     <h2 className="font-display text-xl font-bold">
-                      <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                      <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                         History Tes
                       </span>
                     </h2>
@@ -862,16 +862,16 @@ export default function ProfilePage() {
                           viewport={{ once: true }}
                           transition={{ delay: i * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                           whileHover={{ x: 4, transition: { duration: 0.2 } }}
-                          className="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.04] hover:border-white/[0.08] transition-all"
+                          className="flex items-center justify-between p-3.5 rounded-xl bg-white/80 hover:bg-white/80 border border-white/[0.04] hover:border-[#6B1D5E]/10 transition-all"
                         >
                           <div className="flex items-center gap-3">
                             <span className="text-lg">{p.emoji}</span>
                             <div>
                               <span className="font-bold text-sm" style={{ color }}>{test.mbti_type}</span>
-                              <p className="text-white/30 text-xs">{p.nickname}</p>
+                              <p className="text-[#1A1025]/40 text-xs">{p.nickname}</p>
                             </div>
                           </div>
-                          <span className="text-white/30 text-xs">
+                          <span className="text-[#1A1025]/40 text-xs">
                             {formatDistanceToNow(new Date(test.test_date), { locale: idLocale, addSuffix: true })}
                           </span>
                         </motion.div>
@@ -886,7 +886,7 @@ export default function ProfilePage() {
                 <motion.div
                   variants={fadeInUp}
                   whileHover={{ y: -2, transition: { duration: 0.25 } }}
-                  className="relative rounded-2xl border border-amber-500/20 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 overflow-hidden"
+                  className="relative rounded-2xl border border-amber-500/20 bg-white/80 backdrop-blur-sm p-6 sm:p-8 overflow-hidden"
                 >
                   {/* Accent line top */}
                   <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-amber-500 to-orange-500 opacity-40" />
@@ -909,16 +909,16 @@ export default function ProfilePage() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: i * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                        className="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.04] hover:bg-white/[0.06] hover:border-amber-500/10 transition-all"
+                        className="flex items-center justify-between p-3.5 rounded-xl bg-white/80 border border-white/[0.04] hover:bg-white/80 hover:border-amber-500/10 transition-all"
                       >
                         <div className="flex items-center gap-3">
                           <span className="text-lg">🏆</span>
                           <div>
                             <span className="font-bold text-sm text-amber-400">{cert.certificate_type === "premium" ? "Premium" : "Standar"}</span>
-                            <p className="text-white/30 text-xs font-mono">{cert.certificate_code}</p>
+                            <p className="text-[#1A1025]/40 text-xs font-mono">{cert.certificate_code}</p>
                           </div>
                         </div>
-                        <span className="text-white/40 text-xs font-mono">{cert.mbti_type}</span>
+                        <span className="text-[#1A1025]/50 text-xs font-mono">{cert.mbti_type}</span>
                       </motion.div>
                     ))}
                   </div>
@@ -932,10 +932,10 @@ export default function ProfilePage() {
               <motion.div
                 variants={fadeInUp}
                 whileHover={{ y: -4, transition: { duration: 0.25 } }}
-                className="relative rounded-2xl border border-purple-500/20 bg-white/[0.03] backdrop-blur-sm p-6 text-center overflow-hidden"
+                className="relative rounded-2xl border border-[#6B1D5E]/20 bg-white/80 backdrop-blur-sm p-6 text-center overflow-hidden"
               >
                 {/* Accent line top */}
-                <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-40" />
+                <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] opacity-40" />
 
                 {/* Glow */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[150px] h-[150px] rounded-full bg-purple-600/10 blur-[60px] pointer-events-none" />
@@ -951,12 +951,12 @@ export default function ProfilePage() {
                         ✅
                       </motion.div>
                       <h3 className="font-display font-semibold text-white mb-2">Siap Tes!</h3>
-                      <p className="text-white/40 text-xs mb-4">
+                      <p className="text-[#1A1025]/50 text-xs mb-4">
                         {profile?.latestTest ? "Soal baru sudah tersedia" : "Mulai tes pertamamu"}
                       </p>
                       <Link
                         href="/test"
-                        className="block w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 font-semibold text-white text-sm shadow-[0_0_20px_rgba(168,85,247,0.2)] hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-center"
+                        className="block w-full py-3 rounded-xl bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] font-semibold text-white text-sm shadow-[0_0_20px_rgba(107,29,94,0.2)] hover:shadow-[0_0_30px_rgba(107,29,94,0.4)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-center"
                       >
                         Mulai Tes
                       </Link>
@@ -965,10 +965,10 @@ export default function ProfilePage() {
                     <>
                       <div className="text-3xl mb-3">⏳</div>
                       <h3 className="font-display font-semibold text-white mb-2">Tes Berikutnya</h3>
-                      <p className="text-white/40 text-xs mb-3">
+                      <p className="text-[#1A1025]/50 text-xs mb-3">
                         Bisa tes lagi {countdown}
                       </p>
-                      <p className="text-white/20 text-xs">
+                      <p className="text-[#1A1025]/30 text-xs">
                         Gunakan waktu ini untuk refleksi
                       </p>
                     </>
@@ -990,7 +990,7 @@ export default function ProfilePage() {
                   <div className="text-3xl mb-2">🧠</div>
                   <h3 className="font-display font-semibold text-white mb-1">Kredit Konsul</h3>
                   <div className="text-3xl font-display font-bold text-sky-400 mb-1">{consultCredits}</div>
-                  <p className="text-white/30 text-xs mb-3">sesi tersedia</p>
+                  <p className="text-[#1A1025]/40 text-xs mb-3">sesi tersedia</p>
                   <Link
                     href="/shop"
                     className="text-sm text-sky-400 hover:text-sky-300 transition-colors font-medium"
@@ -1004,19 +1004,19 @@ export default function ProfilePage() {
               <motion.div
                 variants={fadeInUp}
                 whileHover={{ y: -4, transition: { duration: 0.25 } }}
-                className="relative rounded-2xl border border-amber-500/20 bg-white/[0.03] backdrop-blur-sm p-6 text-center overflow-hidden"
+                className="relative rounded-2xl border border-amber-500/20 bg-white/80 backdrop-blur-sm p-6 text-center overflow-hidden"
               >
                 {/* Accent line top */}
                 <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-amber-500 to-orange-500 opacity-40" />
 
                 <div className="text-3xl mb-3">🏆</div>
                 <h3 className="font-display font-semibold text-white mb-2">Dapatkan Sertifikat</h3>
-                <p className="text-white/40 text-xs mb-4">
+                <p className="text-[#1A1025]/50 text-xs mb-4">
                   Buktikan perjalanan self-discovery kamu
                 </p>
                 <Link
                   href="/shop"
-                  className="block w-full py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm font-semibold text-white/80 text-sm hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-center"
+                  className="block w-full py-3 rounded-xl border border-[#6B1D5E]/15 bg-white/60 backdrop-blur-sm font-semibold text-[#1A1025]/90 text-sm hover:bg-white/90 hover:border-[#6B1D5E]/20 transition-all duration-300 text-center"
                 >
                   Lihat Paket
                 </Link>
@@ -1051,7 +1051,7 @@ export default function ProfilePage() {
                 <motion.div
                   variants={fadeInUp}
                   whileHover={{ y: -4, transition: { duration: 0.25 } }}
-                  className="relative rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-6 overflow-hidden"
+                  className="relative rounded-2xl border border-[#6B1D5E]/10 bg-white/80 backdrop-blur-sm p-6 overflow-hidden"
                 >
                   {/* Accent line top */}
                   <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-white/20 to-white/5 opacity-40" />
@@ -1059,21 +1059,21 @@ export default function ProfilePage() {
                   <h3 className="font-display font-semibold text-white text-sm mb-4">Info Singkat</h3>
                   <div className="space-y-3">
                     {profile.tanggal_lahir && (
-                      <div className="flex items-center gap-3 text-sm p-2 rounded-lg hover:bg-white/[0.03] transition-colors">
-                        <span className="text-white/40">🎂</span>
-                        <span className="text-white/60">{formatBirthdate(profile.tanggal_lahir)}</span>
+                      <div className="flex items-center gap-3 text-sm p-2 rounded-lg hover:bg-white/80 transition-colors">
+                        <span className="text-[#1A1025]/50">🎂</span>
+                        <span className="text-[#1A1025]/70">{formatBirthdate(profile.tanggal_lahir)}</span>
                       </div>
                     )}
                     {profile.pekerjaan && (
-                      <div className="flex items-center gap-3 text-sm p-2 rounded-lg hover:bg-white/[0.03] transition-colors">
-                        <span className="text-white/40">💼</span>
-                        <span className="text-white/60">{profile.pekerjaan}</span>
+                      <div className="flex items-center gap-3 text-sm p-2 rounded-lg hover:bg-white/80 transition-colors">
+                        <span className="text-[#1A1025]/50">💼</span>
+                        <span className="text-[#1A1025]/70">{profile.pekerjaan}</span>
                       </div>
                     )}
                     {profile.hobby && (
-                      <div className="flex items-center gap-3 text-sm p-2 rounded-lg hover:bg-white/[0.03] transition-colors">
-                        <span className="text-white/40">🎯</span>
-                        <span className="text-white/60">{profile.hobby}</span>
+                      <div className="flex items-center gap-3 text-sm p-2 rounded-lg hover:bg-white/80 transition-colors">
+                        <span className="text-[#1A1025]/50">🎯</span>
+                        <span className="text-[#1A1025]/70">{profile.hobby}</span>
                       </div>
                     )}
                   </div>
@@ -1086,7 +1086,7 @@ export default function ProfilePage() {
 
       {/* Bottom gradient divider */}
       <div className="relative z-10">
-        <div className="absolute left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+        <div className="absolute left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
       </div>
 
       {/* Spacer before footer */}

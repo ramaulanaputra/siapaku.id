@@ -64,16 +64,16 @@ const SQUADS = [
   {
     name: "Visionary",
     emoji: "🎓",
-    color: "from-purple-500 to-indigo-600",
-    ring: "ring-purple-500/30",
-    glow: "hover:shadow-purple-500/20",
+    color: "from-[#6B1D5E] to-[#4A0E3E]",
+    ring: "ring-[#6B1D5E]/30",
+    glow: "hover:shadow-[#6B1D5E]/20",
     desc: "Pemikir strategis & visioner yang selalu haus pengetahuan.",
     types: ["INTJ", "INTP", "ENTJ", "ENTP"],
   },
   {
     name: "Harmonizer",
     emoji: "💚",
-    color: "from-emerald-500 to-teal-600",
+    color: "from-[#6B1D5E] to-[#8B3D7E]",
     ring: "ring-emerald-500/30",
     glow: "hover:shadow-emerald-500/20",
     desc: "Idealis penuh empati yang menginspirasi dan membantu sesama.",
@@ -82,7 +82,7 @@ const SQUADS = [
   {
     name: "Guardian",
     emoji: "🛡️",
-    color: "from-blue-500 to-cyan-600",
+    color: "from-[#5B3D8E] to-[#6B1D5E]",
     ring: "ring-blue-500/30",
     glow: "hover:shadow-blue-500/20",
     desc: "Pelindung setia yang menjaga stabilitas dan keharmonisan.",
@@ -91,7 +91,7 @@ const SQUADS = [
   {
     name: "Explorer",
     emoji: "🔥",
-    color: "from-orange-500 to-rose-600",
+    color: "from-[#8B3D7E] to-[#6B1D5E]",
     ring: "ring-orange-500/30",
     glow: "hover:shadow-orange-500/20",
     desc: "Jiwa bebas & spontan yang hidup di momen sekarang.",
@@ -160,9 +160,9 @@ const FEATURES = [
     icon: "🤝",
     title: "Social Dynamics",
     desc: "Kenali cara kamu berinteraksi dan membangun koneksi sosial",
-    accent: "from-emerald-500 to-teal-600",
-    bg: "bg-emerald-500/10",
-    border: "border-emerald-500/20",
+    accent: "from-[#6B1D5E] to-[#8B3D7E]",
+    bg: "bg-[#6B1D5E]/10",
+    border: "border-[#6B1D5E]/20",
   },
 ];
 
@@ -181,21 +181,21 @@ const TESTIMONIALS = [
     name: "Ayu Pratiwi",
     type: "INFJ",
     squad: "Harmonizer",
-    accent: "border-emerald-500/30",
+    accent: "border-[#6B1D5E]/25",
   },
   {
     text: "Love language analysis-nya akurat banget! Akhirnya ngerti kenapa gue selalu butuh quality time.",
     name: "Reza Mahendra",
     type: "ENFP",
     squad: "Harmonizer",
-    accent: "border-emerald-500/30",
+    accent: "border-[#6B1D5E]/25",
   },
   {
     text: "Career path recommendation-nya literally nge-describe passion gue yang selama ini gue raguin. Thank you SIAPA AKU!",
     name: "Sinta Dewi",
     type: "ENTJ",
     squad: "Visionary",
-    accent: "border-purple-500/30",
+    accent: "border-[#6B1D5E]/30",
   },
 ];
 
@@ -212,7 +212,7 @@ const PRICING = [
     cta: "Gabung Member Standar →",
     popular: false,
     accent: "from-white/5 to-white/10",
-    border: "border-white/10",
+    border: "border-[#6B1D5E]/15",
     emoji: "📚",
   },
   {
@@ -230,8 +230,8 @@ const PRICING = [
     ],
     cta: "Gabung Member Premium →",
     popular: true,
-    accent: "from-purple-500 to-pink-500",
-    border: "border-purple-500/40",
+    accent: "from-[#6B1D5E] to-[#8B3D7E]",
+    border: "border-[#6B1D5E]/40",
     emoji: "👑",
   },
   {
@@ -334,7 +334,7 @@ function ParticleField() {
               height: `${p.size}px`,
               background:
                 p.id % 3 === 0
-                  ? `rgba(168, 85, 247, ${p.opacity})`
+                  ? `rgba(107, 29, 94, ${p.opacity})`
                   : `rgba(255, 255, 255, ${p.opacity})`,
               animation: `particleFloat ${p.duration}s ease-in-out ${p.delay}s infinite`,
               // @ts-ignore
@@ -395,10 +395,10 @@ function StatCounter({
       viewport={{ once: true, margin: "-50px" }}
       className="flex flex-col items-center gap-2 px-6 py-4"
     >
-      <span className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+      <span className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
         {display ? display : `${count}${suffix}`}
       </span>
-      <span className="text-sm sm:text-base text-white/60 font-medium">
+      <span className="text-sm sm:text-base text-[#1A1025]/70 font-medium">
         {label}
       </span>
     </motion.div>
@@ -419,7 +419,7 @@ export default function HomePage() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <main className="relative bg-[#0a0a0f] text-white overflow-x-hidden">
+    <main className="relative bg-[#F3E8FF] text-[#1A1025] overflow-x-hidden">
       <Navbar />
 
       {/* ══════════════════ HERO ══════════════════ */}
@@ -448,7 +448,7 @@ export default function HomePage() {
               opacity: [0.15, 0.25, 0.15],
             }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-purple-600/30 to-transparent blur-[120px]"
+            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#6B1D5E]/15 to-transparent blur-[120px]"
           />
           <motion.div
             animate={{
@@ -461,7 +461,7 @@ export default function HomePage() {
               ease: "easeInOut",
               delay: 2,
             }}
-            className="absolute top-1/4 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-pink-600/20 to-transparent blur-[100px]"
+            className="absolute top-1/4 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-[#8B3D7E]/10 to-transparent blur-[100px]"
           />
           <motion.div
             animate={{
@@ -474,7 +474,7 @@ export default function HomePage() {
               ease: "easeInOut",
               delay: 4,
             }}
-            className="absolute bottom-0 left-1/3 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-indigo-600/20 to-transparent blur-[100px]"
+            className="absolute bottom-0 left-1/3 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-[#6B1D5E]/10 to-transparent blur-[100px]"
           />
         </div>
 
@@ -490,7 +490,7 @@ export default function HomePage() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="mb-8"
           >
-            <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-md text-xs sm:text-sm text-purple-300 shadow-[0_0_20px_rgba(168,85,247,0.15)] max-w-[90vw] text-center leading-snug">
+            <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full border border-[#6B1D5E]/30 bg-[#6B1D5E]/10 backdrop-blur-md text-xs sm:text-sm text-[#6B1D5E] shadow-[0_0_20px_rgba(107,29,94,0.15)] max-w-[90vw] text-center leading-snug">
               <motion.span
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -528,7 +528,7 @@ export default function HomePage() {
                 alt="SIAPA AKU"
                 width={80}
                 height={100}
-                className="drop-shadow-[0_0_30px_rgba(168,85,247,0.4)]"
+                className="drop-shadow-[0_0_30px_rgba(107,29,94,0.4)]"
                 priority
               />
             </motion.div>
@@ -545,9 +545,9 @@ export default function HomePage() {
             }}
             className="font-display text-5xl sm:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight mb-6"
           >
-            <span className="text-white">Satu Tes.</span>
+            <span className="text-[#1A1025]">Satu Tes.</span>
             <br />
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
               Ribuan Jawaban
               <br />
               Tentang Kamu.
@@ -563,7 +563,7 @@ export default function HomePage() {
               delay: 0.45,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="text-base sm:text-lg text-white/50 max-w-2xl leading-relaxed mb-4"
+            className="text-base sm:text-lg text-[#1A1025]/60 max-w-2xl leading-relaxed mb-4"
           >
             Temukan siapa kamu sebenarnya — melalui 16 tipe MBTI dan 8 dimensi
             psikologi yang mengupas cara kamu berpikir, merasakan, mencintai,
@@ -578,7 +578,7 @@ export default function HomePage() {
               delay: 0.5,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="text-sm sm:text-base text-white/40 max-w-2xl leading-relaxed mb-10"
+            className="text-sm sm:text-base text-[#1A1025]/50 max-w-2xl leading-relaxed mb-10"
           >
             Sebagai Member, kamu juga mendapat akses eksklusif ke Big Five (OCEAN) dan Enneagram — dua pendekatan psikologi berbasis sains untuk memahami dirimu lebih utuh.
           </motion.p>
@@ -602,16 +602,16 @@ export default function HomePage() {
                   signIn("google");
                 }
               }}
-              className="group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 font-semibold text-white shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_50px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+              className="group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] font-semibold text-white shadow-[0_0_30px_rgba(107,29,94,0.3)] hover:shadow-[0_0_50px_rgba(107,29,94,0.5)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
             >
-              <span className="relative z-10">
+              <span className="relative z-10 text-white">
                 Yuk, Ketemu Diri Kamu 🚀
               </span>
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </button>
             <Link
               href="/about"
-              className="px-8 py-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm font-semibold text-white/80 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-center"
+              className="px-8 py-4 rounded-2xl border border-[#6B1D5E]/15 bg-white/60 backdrop-blur-sm font-semibold text-[#1A1025]/90 hover:bg-white/90 hover:border-[#6B1D5E]/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-center"
             >
               Pelajari Lebih Lanjut
             </Link>
@@ -622,7 +622,7 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.75 }}
-            className="text-xs text-white/30"
+            className="text-xs text-[#1A1025]/40"
           >
             Gratis selamanya · Login dengan Google · Hasil lengkap &amp;
             personal
@@ -630,13 +630,13 @@ export default function HomePage() {
         </motion.div>
 
         {/* Bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0f] to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F3E8FF] to-transparent" />
       </section>
 
       {/* ══════════════════ STATS / TRUST BAR ══════════════════ */}
       <section className="relative py-16">
         {/* Top gradient line */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
 
         <motion.div
           variants={staggerContainer}
@@ -656,7 +656,7 @@ export default function HomePage() {
         </motion.div>
 
         {/* Bottom gradient line */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
       </section>
 
       {/* ══════════════════ 8 DIMENSI ══════════════════ */}
@@ -672,7 +672,7 @@ export default function HomePage() {
           >
             <motion.span
               variants={fadeInUp}
-              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#6B1D5E] mb-4"
             >
               8 Dimensi Analisis
             </motion.span>
@@ -680,13 +680,13 @@ export default function HomePage() {
               variants={fadeInUp}
               className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
             >
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                 Lebih dari Sekadar Tes Kepribadian
               </span>
             </motion.h2>
             <motion.p
               variants={fadeInUp}
-              className="text-white/50 max-w-xl mx-auto text-base sm:text-lg"
+              className="text-[#1A1025]/60 max-w-xl mx-auto text-base sm:text-lg"
             >
               SIAPA AKU adalah perjalanan penemuan diri yang bermakna.
             </motion.p>
@@ -705,7 +705,7 @@ export default function HomePage() {
                 key={f.title}
                 variants={fadeInUp}
                 whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                className={`group relative rounded-2xl border ${f.border} bg-white/[0.03] backdrop-blur-sm p-6 transition-shadow duration-300 hover:shadow-xl hover:shadow-purple-500/5`}
+                className={`group relative rounded-2xl border ${f.border} bg-white/80 backdrop-blur-sm p-6 transition-shadow duration-300 hover:shadow-xl hover:shadow-[#6B1D5E]/10`}
               >
                 {/* Accent line top */}
                 <div
@@ -717,7 +717,7 @@ export default function HomePage() {
                   {f.icon}
                 </div>
                 <h3 className="font-semibold text-white mb-2">{f.title}</h3>
-                <p className="text-sm text-white/45 leading-relaxed">
+                <p className="text-sm text-[#1A1025]/55 leading-relaxed">
                   {f.desc}
                 </p>
               </motion.div>
@@ -739,7 +739,7 @@ export default function HomePage() {
           >
             <motion.span
               variants={fadeInUp}
-              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#6B1D5E] mb-4"
             >
               4 Squad Unik
             </motion.span>
@@ -747,7 +747,7 @@ export default function HomePage() {
               variants={fadeInUp}
               className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
             >
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                 Kamu di Squad Mana?
               </span>
             </motion.h2>
@@ -769,20 +769,20 @@ export default function HomePage() {
                   scale: 1.03,
                   transition: { duration: 0.25 },
                 }}
-                className={`group relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 transition-all duration-300 ${squad.glow} hover:shadow-xl ring-1 ${squad.ring} ring-inset`}
+                className={`group relative rounded-2xl border border-[#6B1D5E]/15 bg-white/80 backdrop-blur-sm p-6 transition-all duration-300 ${squad.glow} hover:shadow-xl ring-1 ${squad.ring} ring-inset`}
               >
                 <div className="text-4xl mb-4">{squad.emoji}</div>
                 <h3 className="text-xl font-bold text-white mb-2">
                   {squad.name}
                 </h3>
-                <p className="text-sm text-white/45 leading-relaxed mb-4">
+                <p className="text-sm text-[#1A1025]/55 leading-relaxed mb-4">
                   {squad.desc}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {squad.types.map((t) => (
                     <span
                       key={t}
-                      className={`text-xs px-2.5 py-1 rounded-full bg-gradient-to-r ${squad.color} bg-opacity-10 text-white/80 font-medium border border-white/10`}
+                      className={`text-xs px-2.5 py-1 rounded-full bg-gradient-to-r ${squad.color} bg-opacity-10 text-[#1A1025]/90 font-medium border border-[#6B1D5E]/15`}
                     >
                       {t}
                     </span>
@@ -807,7 +807,7 @@ export default function HomePage() {
           >
             <motion.span
               variants={fadeInUp}
-              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#6B1D5E] mb-4"
             >
               Cara Kerja
             </motion.span>
@@ -815,7 +815,7 @@ export default function HomePage() {
               variants={fadeInUp}
               className="text-3xl sm:text-4xl lg:text-5xl font-bold"
             >
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                 3 Langkah Mudah
               </span>
             </motion.h2>
@@ -830,7 +830,7 @@ export default function HomePage() {
                 whileInView={{ scaleX: 1 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-                className="h-full bg-gradient-to-r from-purple-500/50 via-pink-500/50 to-purple-500/50 origin-left"
+                className="h-full bg-gradient-to-r from-[#6B1D5E]/50 via-[#6B1D5E]/50 to-[#6B1D5E]/50 origin-left"
               />
             </div>
 
@@ -849,17 +849,17 @@ export default function HomePage() {
                 >
                   {/* Step circle */}
                   <div className="relative mb-6">
-                    <div className="w-20 h-20 rounded-2xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-3xl backdrop-blur-sm">
+                    <div className="w-20 h-20 rounded-2xl bg-white/70 border border-[#6B1D5E]/15 flex items-center justify-center text-3xl backdrop-blur-sm">
                       {step.icon}
                     </div>
-                    <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-xs font-bold text-white">
+                    <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] flex items-center justify-center text-xs font-bold text-white">
                       {i + 1}
                     </div>
                   </div>
                   <h3 className="text-lg font-semibold text-white mb-2">
                     {step.title}
                   </h3>
-                  <p className="text-sm text-white/45 leading-relaxed max-w-xs">
+                  <p className="text-sm text-[#1A1025]/55 leading-relaxed max-w-xs">
                     {step.desc}
                   </p>
                 </motion.div>
@@ -882,7 +882,7 @@ export default function HomePage() {
           >
             <motion.span
               variants={fadeInUp}
-              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#6B1D5E] mb-4"
             >
               Testimoni
             </motion.span>
@@ -890,7 +890,7 @@ export default function HomePage() {
               variants={fadeInUp}
               className="text-3xl sm:text-4xl lg:text-5xl font-bold"
             >
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                 Apa Kata Mereka?
               </span>
             </motion.h2>
@@ -909,22 +909,22 @@ export default function HomePage() {
                 key={t.name}
                 variants={fadeInUp}
                 whileHover={{ y: -4, transition: { duration: 0.25 } }}
-                className={`relative rounded-2xl border ${t.accent} bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8`}
+                className={`relative rounded-2xl border ${t.accent} bg-white/80 backdrop-blur-sm p-6 sm:p-8`}
               >
                 {/* Quote icon */}
                 <div className="text-3xl text-purple-500/30 mb-4">"</div>
-                <p className="text-white/70 leading-relaxed mb-6 text-sm sm:text-base">
+                <p className="text-[#1A1025]/80 leading-relaxed mb-6 text-sm sm:text-base">
                   {t.text}
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500/30 to-pink-500/30 flex items-center justify-center text-sm font-bold text-white/60">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500/30 to-pink-500/30 flex items-center justify-center text-sm font-bold text-[#1A1025]/70">
                     {t.name.charAt(0)}
                   </div>
                   <div>
                     <p className="font-semibold text-white text-sm">
                       {t.name}
                     </p>
-                    <p className="text-xs text-white/40">
+                    <p className="text-xs text-[#1A1025]/50">
                       {t.type} · {t.squad}
                     </p>
                   </div>
@@ -948,7 +948,7 @@ export default function HomePage() {
           >
             <motion.span
               variants={fadeInUp}
-              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#6B1D5E] mb-4"
             >
               Gabung Member
             </motion.span>
@@ -956,13 +956,13 @@ export default function HomePage() {
               variants={fadeInUp}
               className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
             >
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                 Pilih Paketmu
               </span>
             </motion.h2>
             <motion.p
               variants={fadeInUp}
-              className="text-white/50 max-w-lg mx-auto"
+              className="text-[#1A1025]/60 max-w-lg mx-auto"
             >
               Tes MBTI gratis untuk semua. Upgrade ke Member untuk tes lanjutan, report eksklusif, guide personal, dan lebih banyak lagi.
             </motion.p>
@@ -974,12 +974,12 @@ export default function HomePage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="mb-8 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 backdrop-blur-sm p-5 flex items-center gap-4"
+            className="mb-8 rounded-2xl border border-[#6B1D5E]/20 bg-[#6B1D5E]/5 backdrop-blur-sm p-5 flex items-center gap-4"
           >
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-2xl shrink-0">🆓</div>
+            <div className="w-12 h-12 rounded-2xl bg-[#6B1D5E]/10 flex items-center justify-center text-2xl shrink-0">🆓</div>
             <div>
-              <p className="text-emerald-400 font-semibold text-sm">Tes MBTI & Report Digital Dasar — Gratis!</p>
-              <p className="text-white/40 text-xs">Semua orang bisa ikut tes dan lihat hasil dasar tanpa bayar. Paket Member memberikan benefit eksklusif tambahan.</p>
+              <p className="text-[#6B1D5E] font-semibold text-sm">Tes MBTI & Report Digital Dasar — Gratis!</p>
+              <p className="text-[#1A1025]/50 text-xs">Semua orang bisa ikut tes dan lihat hasil dasar tanpa bayar. Paket Member memberikan benefit eksklusif tambahan.</p>
             </div>
           </motion.div>
 
@@ -998,14 +998,14 @@ export default function HomePage() {
                 whileHover={{ y: -4, transition: { duration: 0.25 } }}
                 className={`relative rounded-2xl border ${pkg.border} ${
                   pkg.popular
-                    ? "bg-white/[0.06] ring-2 ring-purple-500/30"
-                    : "bg-white/[0.03]"
+                    ? "bg-white/80 ring-2 ring-[#6B1D5E]/30"
+                    : "bg-white/80"
                 } backdrop-blur-sm p-6 sm:p-8 flex flex-col`}
               >
                 {/* Popular badge */}
                 {pkg.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="inline-flex px-4 py-1 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-xs font-bold text-white shadow-lg shadow-purple-500/30">
+                    <span className="inline-flex px-4 py-1 rounded-full bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] text-xs font-bold text-white shadow-lg shadow-[#6B1D5E]/30">
                       Paling Populer
                     </span>
                   </div>
@@ -1021,7 +1021,7 @@ export default function HomePage() {
                         repeat: Infinity,
                         ease: "linear",
                       }}
-                      className="absolute -inset-[1px] bg-[conic-gradient(from_0deg,transparent,rgba(168,85,247,0.3),transparent,rgba(236,72,153,0.3),transparent)] rounded-2xl"
+                      className="absolute -inset-[1px] bg-[conic-gradient(from_0deg,transparent,rgba(107,29,94,0.3),transparent,rgba(107,29,94,0.3),transparent)] rounded-2xl"
                       style={{ padding: "1px" }}
                     />
                   </div>
@@ -1031,12 +1031,12 @@ export default function HomePage() {
                 <h3 className="text-lg font-semibold text-white mb-1">
                   Member {pkg.name}
                 </h3>
-                <p className="text-sm text-white/40 mb-4">{pkg.desc}</p>
+                <p className="text-sm text-[#1A1025]/50 mb-4">{pkg.desc}</p>
                 <div className="mb-6">
                   <span className="text-3xl sm:text-4xl font-bold text-white">
                     {pkg.price}
                   </span>
-                  <span className="text-sm text-white/40 ml-2">
+                  <span className="text-sm text-[#1A1025]/50 ml-2">
                     /{pkg.period}
                   </span>
                 </div>
@@ -1044,9 +1044,9 @@ export default function HomePage() {
                   {pkg.features.map((feature) => (
                     <li
                       key={feature}
-                      className="flex items-start gap-2 text-sm text-white/60"
+                      className="flex items-start gap-2 text-sm text-[#1A1025]/70"
                     >
-                      <span className="text-purple-400 mt-0.5 shrink-0">
+                      <span className="text-[#6B1D5E] mt-0.5 shrink-0">
                         ✓
                       </span>
                       {feature}
@@ -1056,8 +1056,8 @@ export default function HomePage() {
                 <button
                   className={`w-full py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
                     pkg.popular
-                      ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg hover:shadow-purple-500/20"
-                      : "bg-white/5 border border-white/10 text-white/80 hover:bg-white/10"
+                      ? "bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] text-white hover:shadow-lg hover:shadow-[#6B1D5E]/20"
+                      : "bg-white/60 border border-[#6B1D5E]/15 text-[#1A1025]/90 hover:bg-white/90"
                   }`}
                 >
                   {pkg.cta}
@@ -1076,7 +1076,7 @@ export default function HomePage() {
           >
             <Link
               href="/shop"
-              className="group relative inline-flex items-center gap-2 px-8 py-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm font-semibold text-white/80 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+              className="group relative inline-flex items-center gap-2 px-8 py-4 rounded-2xl border border-[#6B1D5E]/15 bg-white/60 backdrop-blur-sm font-semibold text-[#1A1025]/90 hover:bg-white/90 hover:border-[#6B1D5E]/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
             >
               Lebih Banyak Lagi
               <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
@@ -1093,7 +1093,7 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-10 sm:p-16 text-center overflow-hidden"
+            className="relative rounded-3xl border border-[#6B1D5E]/15 bg-white/80 backdrop-blur-sm p-10 sm:p-16 text-center overflow-hidden"
           >
             {/* Animated gradient border */}
             <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
@@ -1104,7 +1104,7 @@ export default function HomePage() {
                   repeat: Infinity,
                   ease: "linear",
                 }}
-                className="absolute -inset-[1px] bg-[conic-gradient(from_0deg,transparent,rgba(168,85,247,0.15),transparent,rgba(236,72,153,0.15),transparent)] rounded-3xl"
+                className="absolute -inset-[1px] bg-[conic-gradient(from_0deg,transparent,rgba(107,29,94,0.12),transparent,rgba(107,29,94,0.12),transparent)] rounded-3xl"
               />
             </div>
 
@@ -1128,11 +1128,11 @@ export default function HomePage() {
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
                 Mereka Mengenal Kamu.
                 <br />
-                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                   Sekarang Giliran Kamu.
                 </span>
               </h2>
-              <p className="text-white/45 max-w-lg mx-auto mb-8 text-sm sm:text-base">
+              <p className="text-[#1A1025]/55 max-w-lg mx-auto mb-8 text-sm sm:text-base">
                 Mulai perjalanan mengenal diri sendiri. Gratis, mendalam, dan
                 personal.
               </p>
@@ -1144,7 +1144,7 @@ export default function HomePage() {
                     signIn("google");
                   }
                 }}
-                className="group relative inline-flex px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 font-semibold text-white shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_50px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                className="group relative inline-flex px-8 py-4 rounded-2xl bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] font-semibold text-white shadow-[0_0_30px_rgba(107,29,94,0.3)] hover:shadow-[0_0_50px_rgba(107,29,94,0.5)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
               >
                 Mulai Sekarang — Gratis 🚀
               </button>

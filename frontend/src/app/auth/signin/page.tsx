@@ -72,7 +72,7 @@ function SignInContent() {
             <img
               src="/logo.svg"
               alt="SIAPA AKU"
-              className="w-11 h-11 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(168,85,247,0.4)]"
+              className="w-11 h-11 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(107,29,94,0.4)]"
             />
             <span className="font-display font-bold text-xl text-white">
               SIAPA <span className="gradient-text">AKU</span>
@@ -91,7 +91,7 @@ function SignInContent() {
           <h1 className="font-display text-3xl font-bold text-white mb-2">
             Yuk, Ketemu Diri Kamu
           </h1>
-          <p className="text-white/50 mb-8 leading-relaxed text-sm">
+          <p className="text-[#1A1025]/60 mb-8 leading-relaxed text-sm">
             Login untuk memulai perjalanan self-discovery kamu dan menyimpan hasil tes secara personal.
           </p>
 
@@ -129,14 +129,14 @@ function SignInContent() {
           </motion.button>
 
           <div className="mt-6 space-y-3">
-            <p className="text-white/20 text-xs">
+            <p className="text-[#1A1025]/30 text-xs">
               Dengan login, kamu setuju dengan{" "}
-              <Link href="/privacy" className="text-purple-400 hover:text-purple-300">
+              <Link href="/privacy" className="text-[#6B1D5E] hover:text-[#6B1D5E]">
                 Privacy Policy
               </Link>{" "}
               kami
             </p>
-            <p className="text-white/20 text-xs">
+            <p className="text-[#1A1025]/30 text-xs">
               Data kamu aman — tidak pernah dijual ke pihak ketiga
             </p>
           </div>
@@ -151,7 +151,7 @@ function SignInContent() {
           ].map((item) => (
             <div key={item.text} className="glass rounded-xl p-3 text-center">
               <div className="text-lg mb-1">{item.icon}</div>
-              <p className="text-white/40 text-xs">{item.text}</p>
+              <p className="text-[#1A1025]/50 text-xs">{item.text}</p>
             </div>
           ))}
         </div>
@@ -164,7 +164,7 @@ export default function SignInPage() {
   return (
     <Suspense fallback={
       <main className="min-h-screen bg-brand-dark flex items-center justify-center px-6">
-        <div className="text-white/50">Loading...</div>
+        <div className="text-[#1A1025]/60">Loading...</div>
       </main>
     }>
       <SignInContent />

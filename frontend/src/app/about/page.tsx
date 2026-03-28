@@ -109,7 +109,7 @@ function ParticleField() {
               height: `${p.size}px`,
               background:
                 p.id % 3 === 0
-                  ? `rgba(168, 85, 247, ${p.opacity})`
+                  ? `rgba(107, 29, 94, ${p.opacity})`
                   : `rgba(255, 255, 255, ${p.opacity})`,
               animation: `particleFloat ${p.duration}s ease-in-out ${p.delay}s infinite`,
               // @ts-ignore
@@ -174,14 +174,14 @@ const DIMENSIONS = [
   { icon: "💕", title: "Love Language", desc: "Ketahui bahasa cinta utamamu dan cara kamu mengekspresikan kasih sayang", accent: "from-rose-500 to-pink-600", bg: "bg-rose-500/10", border: "border-rose-500/20" },
   { icon: "🎯", title: "Career Path", desc: "Rekomendasi jalur karir yang selaras dengan kepribadian dan passion kamu", accent: "from-amber-500 to-orange-600", bg: "bg-amber-500/10", border: "border-amber-500/20" },
   { icon: "💑", title: "Romantic Style", desc: "Pahami pola romantismu dan chemistry dengan tipe kepribadian lain", accent: "from-red-500 to-rose-600", bg: "bg-red-500/10", border: "border-red-500/20" },
-  { icon: "🤝", title: "Social Dynamics", desc: "Kenali cara kamu berinteraksi dan membangun koneksi sosial", accent: "from-emerald-500 to-teal-600", bg: "bg-emerald-500/10", border: "border-emerald-500/20" },
+  { icon: "🤝", title: "Social Dynamics", desc: "Kenali cara kamu berinteraksi dan membangun koneksi sosial", accent: "from-[#6B1D5E] to-[#8B3D7E]", bg: "bg-[#6B1D5E]/10", border: "border-[#6B1D5E]/20" },
 ];
 
 const VALUES = [
-  { icon: "🔬", title: "Berbasis Sains", desc: "Setiap dimensi dibangun di atas riset psikologi yang tervalidasi", accent: "from-purple-500 to-violet-600", bg: "bg-purple-500/10", border: "border-purple-500/20" },
-  { icon: "🤝", title: "Tanpa Penghakiman", desc: "Tidak ada tipe yang lebih baik atau lebih buruk — hanya berbeda", accent: "from-emerald-500 to-teal-600", bg: "bg-emerald-500/10", border: "border-emerald-500/20" },
-  { icon: "🔒", title: "Privasi Absolut", desc: "Data kepribadianmu hanya milikmu, selamanya", accent: "from-blue-500 to-cyan-600", bg: "bg-blue-500/10", border: "border-blue-500/20" },
-  { icon: "🌱", title: "Bertumbuh Bersama", desc: "Dirancang untuk mendampingi perjalanan panjang self-discovery-mu", accent: "from-pink-500 to-rose-600", bg: "bg-pink-500/10", border: "border-pink-500/20" },
+  { icon: "🔬", title: "Berbasis Sains", desc: "Setiap dimensi dibangun di atas riset psikologi yang tervalidasi", accent: "from-purple-500 to-violet-600", bg: "bg-[#6B1D5E]/10", border: "border-[#6B1D5E]/20" },
+  { icon: "🤝", title: "Tanpa Penghakiman", desc: "Tidak ada tipe yang lebih baik atau lebih buruk — hanya berbeda", accent: "from-[#6B1D5E] to-[#8B3D7E]", bg: "bg-[#6B1D5E]/10", border: "border-[#6B1D5E]/20" },
+  { icon: "🔒", title: "Privasi Absolut", desc: "Data kepribadianmu hanya milikmu, selamanya", accent: "from-[#5B3D8E] to-[#6B1D5E]", bg: "bg-blue-500/10", border: "border-blue-500/20" },
+  { icon: "🌱", title: "Bertumbuh Bersama", desc: "Dirancang untuk mendampingi perjalanan panjang self-discovery-mu", accent: "from-pink-500 to-rose-600", bg: "bg-[#6B1D5E]/10", border: "border-[#6B1D5E]/20" },
 ];
 
 /* ── Component ─────────────────────────────────────── */
@@ -198,7 +198,7 @@ export default function AboutPage() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <main className="relative bg-[#0a0a0f] text-white overflow-x-hidden">
+    <main className="relative bg-[#F3E8FF] text-[#1A1025] overflow-x-hidden">
       <Navbar />
 
       {/* ══════════════════ HERO ══════════════════ */}
@@ -227,7 +227,7 @@ export default function AboutPage() {
               opacity: [0.15, 0.25, 0.15],
             }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-purple-600/30 to-transparent blur-[120px]"
+            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#6B1D5E]/15 to-transparent blur-[120px]"
           />
           <motion.div
             animate={{
@@ -240,7 +240,7 @@ export default function AboutPage() {
               ease: "easeInOut",
               delay: 2,
             }}
-            className="absolute top-1/4 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-pink-600/20 to-transparent blur-[100px]"
+            className="absolute top-1/4 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-[#8B3D7E]/10 to-transparent blur-[100px]"
           />
           <motion.div
             animate={{
@@ -253,7 +253,7 @@ export default function AboutPage() {
               ease: "easeInOut",
               delay: 4,
             }}
-            className="absolute bottom-0 left-1/3 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-indigo-600/20 to-transparent blur-[100px]"
+            className="absolute bottom-0 left-1/3 w-[350px] h-[350px] rounded-full bg-gradient-to-t from-[#6B1D5E]/10 to-transparent blur-[100px]"
           />
         </div>
 
@@ -269,7 +269,7 @@ export default function AboutPage() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="mb-8"
           >
-            <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-md text-xs sm:text-sm text-purple-300 shadow-[0_0_20px_rgba(168,85,247,0.15)]">
+            <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full border border-[#6B1D5E]/30 bg-[#6B1D5E]/10 backdrop-blur-md text-xs sm:text-sm text-[#6B1D5E] shadow-[0_0_20px_rgba(107,29,94,0.15)]">
               <motion.span
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -292,12 +292,12 @@ export default function AboutPage() {
             }}
             className="font-display text-5xl sm:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight mb-6"
           >
-            <span className="text-white">Perjalanan Mengenal</span>
+            <span className="text-[#1A1025]">Perjalanan Mengenal</span>
             <br />
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
               Diri Dimulai
             </span>{" "}
-            <span className="text-white">dari Sini</span>
+            <span className="text-[#1A1025]">dari Sini</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -309,7 +309,7 @@ export default function AboutPage() {
               delay: 0.45,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="text-base sm:text-lg text-white/50 max-w-2xl leading-relaxed mb-10"
+            className="text-base sm:text-lg text-[#1A1025]/60 max-w-2xl leading-relaxed mb-10"
           >
             Di dunia yang mengajarkan kita mengenal segalanya kecuali diri sendiri,
             SIAPA AKU hadir sebagai ruang aman untuk menemukan siapa kamu sebenarnya.
@@ -324,7 +324,7 @@ export default function AboutPage() {
             <motion.div
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="w-5 h-8 rounded-full border-2 border-white/20 flex justify-center pt-1.5"
+              className="w-5 h-8 rounded-full border-2 border-[#6B1D5E]/20 flex justify-center pt-1.5"
             >
               <div className="w-1 h-2 bg-white/40 rounded-full" />
             </motion.div>
@@ -332,13 +332,13 @@ export default function AboutPage() {
         </motion.div>
 
         {/* Bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0f] to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F3E8FF] to-transparent" />
       </section>
 
       {/* ══════════════════ BRAND STORY ══════════════════ */}
       <section className="relative py-24 sm:py-32">
         {/* Top gradient line */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -351,7 +351,7 @@ export default function AboutPage() {
             >
               <motion.span
                 variants={fadeInUp}
-                className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+                className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#6B1D5E] mb-4"
               >
                 Cerita Kami
               </motion.span>
@@ -362,21 +362,21 @@ export default function AboutPage() {
               >
                 &ldquo;Tak Kenal Maka
                 <br />
-                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                   Tak Sayang&rdquo;
                 </span>
               </motion.h2>
 
-              <motion.div variants={staggerContainer} className="space-y-5 text-white/50 leading-relaxed text-[15px] text-justify">
+              <motion.div variants={staggerContainer} className="space-y-5 text-[#1A1025]/60 leading-relaxed text-[15px] text-justify">
                 <motion.p variants={fadeInUp}>
                   Pepatah lama yang menyimpan kebenaran universal. Kita menghafal nama teman-teman kita,
                   mengetahui makanan favorit mereka, memahami cara mereka berpikir. Namun ketika seseorang bertanya —
-                  <span className="text-white/80 italic"> kamu itu sebenarnya orang yang seperti apa?</span> —
+                  <span className="text-[#1A1025]/90 italic"> kamu itu sebenarnya orang yang seperti apa?</span> —
                   banyak dari kita justru terdiam.
                 </motion.p>
                 <motion.p variants={fadeInUp}>
                   SIAPA AKU lahir dari satu keyakinan sederhana:{" "}
-                  <span className="text-white font-semibold">
+                  <span className="text-[#1A1025] font-semibold">
                     self-knowledge adalah fondasi self-love.
                   </span>{" "}
                   Kamu tidak bisa mencintai sesuatu yang tidak kamu kenal. Dan kamu tidak bisa mengenal
@@ -410,16 +410,16 @@ export default function AboutPage() {
                   key={item.label}
                   variants={fadeInRight}
                   whileHover={{ y: -4, transition: { duration: 0.25 } }}
-                  className="group relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 flex items-center gap-6 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/5"
+                  className="group relative rounded-2xl border border-[#6B1D5E]/15 bg-white/80 backdrop-blur-sm p-6 flex items-center gap-6 transition-all duration-300 hover:shadow-xl hover:shadow-[#6B1D5E]/10"
                 >
                   {/* Accent line top */}
-                  <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-40 group-hover:opacity-80 transition-opacity" />
-                  <div className="font-display text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent min-w-[80px]">
+                  <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] opacity-40 group-hover:opacity-80 transition-opacity" />
+                  <div className="font-display text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent min-w-[80px]">
                     {item.stat}
                   </div>
                   <div>
-                    <div className="text-white/80 font-medium">{item.label}</div>
-                    <div className="text-white/40 text-sm">{item.suffix}</div>
+                    <div className="text-[#1A1025]/90 font-medium">{item.label}</div>
+                    <div className="text-[#1A1025]/50 text-sm">{item.suffix}</div>
                   </div>
                 </motion.div>
               ))}
@@ -428,7 +428,7 @@ export default function AboutPage() {
         </div>
 
         {/* Bottom gradient line */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
       </section>
 
       {/* ══════════════════ OUR VALUES ══════════════════ */}
@@ -441,7 +441,7 @@ export default function AboutPage() {
               opacity: [0.08, 0.15, 0.08],
             }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-purple-600/20 to-transparent blur-[120px]"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[#6B1D5E]/10 to-transparent blur-[120px]"
           />
         </div>
 
@@ -456,7 +456,7 @@ export default function AboutPage() {
           >
             <motion.span
               variants={fadeInUp}
-              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#6B1D5E] mb-4"
             >
               Prinsip Kami
             </motion.span>
@@ -464,14 +464,14 @@ export default function AboutPage() {
               variants={fadeInUp}
               className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
             >
-              <span className="text-white">Dibangun dengan </span>
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="text-[#1A1025]">Dibangun dengan </span>
+              <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                 Intensi
               </span>
             </motion.h2>
             <motion.p
               variants={fadeInUp}
-              className="text-white/50 max-w-xl mx-auto text-base sm:text-lg"
+              className="text-[#1A1025]/60 max-w-xl mx-auto text-base sm:text-lg"
             >
               Setiap fitur, setiap kata, setiap dimensi — dirancang dengan satu tujuan:
               membantumu memahami diri lebih dalam.
@@ -491,7 +491,7 @@ export default function AboutPage() {
                 key={val.title}
                 variants={scaleIn}
                 whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                className={`group relative rounded-2xl border ${val.border} bg-white/[0.03] backdrop-blur-sm p-7 text-center transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/5`}
+                className={`group relative rounded-2xl border ${val.border} bg-white/80 backdrop-blur-sm p-7 text-center transition-all duration-300 hover:shadow-xl hover:shadow-[#6B1D5E]/10`}
               >
                 {/* Accent line top */}
                 <div
@@ -501,14 +501,14 @@ export default function AboutPage() {
                   {val.icon}
                 </div>
                 <h3 className="font-semibold text-white text-sm mb-2">{val.title}</h3>
-                <p className="text-white/45 text-xs leading-relaxed">{val.desc}</p>
+                <p className="text-[#1A1025]/55 text-xs leading-relaxed">{val.desc}</p>
               </motion.div>
             ))}
           </motion.div>
         </div>
 
         {/* Bottom gradient line */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
       </section>
 
       {/* ══════════════════ 8 DIMENSIONS ══════════════════ */}
@@ -521,7 +521,7 @@ export default function AboutPage() {
               opacity: [0.1, 0.2, 0.1],
             }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-purple-600/25 to-transparent blur-[120px]"
+            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#6B1D5E]/12 to-transparent blur-[120px]"
           />
           <motion.div
             animate={{
@@ -534,7 +534,7 @@ export default function AboutPage() {
               ease: "easeInOut",
               delay: 3,
             }}
-            className="absolute -bottom-20 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-pink-600/20 to-transparent blur-[100px]"
+            className="absolute -bottom-20 -right-20 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-[#8B3D7E]/10 to-transparent blur-[100px]"
           />
         </div>
 
@@ -549,7 +549,7 @@ export default function AboutPage() {
           >
             <motion.span
               variants={fadeInUp}
-              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#6B1D5E] mb-4"
             >
               Kedalaman Analisis
             </motion.span>
@@ -557,14 +557,14 @@ export default function AboutPage() {
               variants={fadeInUp}
               className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-5"
             >
-              <span className="text-white">Bukan Sekadar </span>
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="text-[#1A1025]">Bukan Sekadar </span>
+              <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                 4 Huruf
               </span>
             </motion.h2>
             <motion.p
               variants={fadeInUp}
-              className="text-white/50 max-w-2xl mx-auto text-base sm:text-lg"
+              className="text-[#1A1025]/60 max-w-2xl mx-auto text-base sm:text-lg"
             >
               MBTI tradisional memberimu label. SIAPA AKU memberimu pemahaman.
               Melalui 8 dimensi psikologi yang saling terhubung, ditambah Big Five dan Enneagram, kami memetakan
@@ -585,20 +585,20 @@ export default function AboutPage() {
                 key={dim.title}
                 variants={fadeInUp}
                 whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                className={`group relative rounded-2xl border ${dim.border} bg-white/[0.03] backdrop-blur-sm p-6 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/5`}
+                className={`group relative rounded-2xl border ${dim.border} bg-white/80 backdrop-blur-sm p-6 transition-all duration-300 hover:shadow-xl hover:shadow-[#6B1D5E]/10`}
               >
                 {/* Accent line top */}
                 <div
                   className={`absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r ${dim.accent} opacity-40 group-hover:opacity-80 transition-opacity`}
                 />
                 {/* Glow on hover */}
-                <div className="absolute -top-6 -right-6 w-24 h-24 bg-purple-500/0 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-all duration-700" />
+                <div className="absolute -top-6 -right-6 w-24 h-24 bg-purple-500/0 rounded-full blur-2xl group-hover:bg-[#6B1D5E]/10 transition-all duration-700" />
                 <div className="relative z-10">
                   <div className={`w-12 h-12 rounded-xl ${dim.bg} flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform duration-500`}>
                     {dim.icon}
                   </div>
                   <h3 className="font-semibold text-white text-sm mb-2">{dim.title}</h3>
-                  <p className="text-white/45 text-xs leading-relaxed">{dim.desc}</p>
+                  <p className="text-[#1A1025]/55 text-xs leading-relaxed">{dim.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -606,7 +606,7 @@ export default function AboutPage() {
         </div>
 
         {/* Bottom gradient line */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
       </section>
 
       {/* ══════════════════ VISION ══════════════════ */}
@@ -617,7 +617,7 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-10 sm:p-16 text-center overflow-hidden"
+            className="relative rounded-3xl border border-[#6B1D5E]/15 bg-white/80 backdrop-blur-sm p-10 sm:p-16 text-center overflow-hidden"
           >
             {/* Animated gradient border */}
             <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
@@ -628,7 +628,7 @@ export default function AboutPage() {
                   repeat: Infinity,
                   ease: "linear",
                 }}
-                className="absolute -inset-[1px] bg-[conic-gradient(from_0deg,transparent,rgba(168,85,247,0.15),transparent,rgba(236,72,153,0.15),transparent)] rounded-3xl"
+                className="absolute -inset-[1px] bg-[conic-gradient(from_0deg,transparent,rgba(107,29,94,0.12),transparent,rgba(107,29,94,0.12),transparent)] rounded-3xl"
               />
             </div>
 
@@ -640,7 +640,7 @@ export default function AboutPage() {
                   opacity: [0.1, 0.2, 0.1],
                 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-20 -right-20 w-[300px] h-[300px] rounded-full bg-gradient-to-br from-purple-600/20 to-transparent blur-[100px]"
+                className="absolute -top-20 -right-20 w-[300px] h-[300px] rounded-full bg-gradient-to-br from-[#6B1D5E]/10 to-transparent blur-[100px]"
               />
               <motion.div
                 animate={{
@@ -653,7 +653,7 @@ export default function AboutPage() {
                   ease: "easeInOut",
                   delay: 2,
                 }}
-                className="absolute -bottom-16 -left-16 w-[250px] h-[250px] rounded-full bg-gradient-to-tr from-pink-600/15 to-transparent blur-[100px]"
+                className="absolute -bottom-16 -left-16 w-[250px] h-[250px] rounded-full bg-gradient-to-tr from-[#8B3D7E]/8 to-transparent blur-[100px]"
               />
             </div>
 
@@ -665,7 +665,7 @@ export default function AboutPage() {
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/[0.04] mb-8 text-4xl"
+                className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/80 mb-8 text-4xl"
               >
                 🌟
               </motion.div>
@@ -678,7 +678,7 @@ export default function AboutPage() {
               >
                 <motion.span
                   variants={fadeInUp}
-                  className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+                  className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#6B1D5E] mb-4"
                 >
                   Visi
                 </motion.span>
@@ -687,14 +687,14 @@ export default function AboutPage() {
                   variants={fadeInUp}
                   className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-6"
                 >
-                  <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                     Visi Kami
                   </span>
                 </motion.h2>
 
                 <motion.p
                   variants={fadeInUp}
-                  className="text-white/50 leading-relaxed text-lg md:text-xl max-w-2xl mx-auto mb-8"
+                  className="text-[#1A1025]/60 leading-relaxed text-lg md:text-xl max-w-2xl mx-auto mb-8"
                 >
                   Membantu jutaan orang Indonesia untuk berkenalan dengan diri sendiri
                   dan mulai mencintai diri dengan tulus.
@@ -702,7 +702,7 @@ export default function AboutPage() {
 
                 <motion.p
                   variants={fadeInUp}
-                  className="text-white/40 leading-relaxed max-w-xl mx-auto text-[15px]"
+                  className="text-[#1A1025]/50 leading-relaxed max-w-xl mx-auto text-[15px]"
                 >
                   Karena ketika kamu benar-benar mengenal dirimu, kamu bisa hadir lebih utuh —
                   untuk dirimu sendiri, dan untuk orang-orang yang kamu cintai.
@@ -713,7 +713,7 @@ export default function AboutPage() {
         </div>
 
         {/* Bottom gradient line */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
       </section>
 
       {/* ══════════════════ FAQ ══════════════════ */}
@@ -726,7 +726,7 @@ export default function AboutPage() {
               opacity: [0.05, 0.12, 0.05],
             }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-purple-600/15 to-transparent blur-[120px]"
+            className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#6B1D5E]/8 to-transparent blur-[120px]"
           />
         </div>
 
@@ -741,7 +741,7 @@ export default function AboutPage() {
           >
             <motion.span
               variants={fadeInUp}
-              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#6B1D5E] mb-4"
             >
               FAQ
             </motion.span>
@@ -749,14 +749,14 @@ export default function AboutPage() {
               variants={fadeInUp}
               className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3"
             >
-              <span className="text-white">Pertanyaan </span>
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="text-[#1A1025]">Pertanyaan </span>
+              <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                 Umum
               </span>
             </motion.h2>
             <motion.p
               variants={fadeInUp}
-              className="text-white/45 max-w-lg mx-auto"
+              className="text-[#1A1025]/55 max-w-lg mx-auto"
             >
               Hal-hal yang sering ditanyakan tentang SIAPA AKU
             </motion.p>
@@ -774,17 +774,17 @@ export default function AboutPage() {
               <motion.div
                 key={i}
                 variants={fadeInUp}
-                className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm overflow-hidden group"
+                className="rounded-2xl border border-[#6B1D5E]/15 bg-white/80 backdrop-blur-sm overflow-hidden group"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-white/[0.02] transition-colors duration-300"
+                  className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-white/60 transition-colors duration-300"
                 >
-                  <span className="font-medium text-white/85 text-sm">{faq.q}</span>
+                  <span className="font-medium text-[#1A1025]/90 text-sm">{faq.q}</span>
                   <motion.span
                     animate={{ rotate: openFaq === i ? 45 : 0 }}
                     transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-purple-400 shrink-0 text-lg"
+                    className="text-[#6B1D5E] shrink-0 text-lg"
                   >
                     +
                   </motion.span>
@@ -798,7 +798,7 @@ export default function AboutPage() {
                       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <p className="px-6 pb-5 text-white/45 text-sm leading-relaxed border-t border-white/5 pt-4">
+                      <p className="px-6 pb-5 text-[#1A1025]/55 text-sm leading-relaxed border-t border-[#6B1D5E]/10 pt-4">
                         {faq.a}
                       </p>
                     </motion.div>
@@ -810,7 +810,7 @@ export default function AboutPage() {
         </div>
 
         {/* Bottom gradient line */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#6B1D5E]/40 to-transparent" />
       </section>
 
       {/* ══════════════════ CONTACT ══════════════════ */}
@@ -823,7 +823,7 @@ export default function AboutPage() {
               opacity: [0.06, 0.12, 0.06],
             }}
             transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-purple-600/15 to-transparent blur-[120px]"
+            className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-[#6B1D5E]/8 to-transparent blur-[120px]"
           />
         </div>
 
@@ -838,7 +838,7 @@ export default function AboutPage() {
           >
             <motion.span
               variants={fadeInUp}
-              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-purple-400 mb-4"
+              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#6B1D5E] mb-4"
             >
               Kontak
             </motion.span>
@@ -846,14 +846,14 @@ export default function AboutPage() {
               variants={fadeInUp}
               className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3"
             >
-              <span className="text-white">Mari </span>
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="text-[#1A1025]">Mari </span>
+              <span className="bg-gradient-to-r from-[#8B3D7E] via-[#6B1D5E] to-[#8B3D7E] bg-clip-text text-transparent">
                 Terhubung
               </span>
             </motion.h2>
             <motion.p
               variants={fadeInUp}
-              className="text-white/45 max-w-lg mx-auto"
+              className="text-[#1A1025]/55 max-w-lg mx-auto"
             >
               Ada pertanyaan atau saran? Kami selalu senang mendengar dari kamu.
             </motion.p>
@@ -874,10 +874,10 @@ export default function AboutPage() {
               href="mailto:idsiapaku@gmail.com"
               target="_blank"
               rel="noreferrer"
-              className="group relative rounded-2xl border border-purple-500/20 bg-white/[0.03] backdrop-blur-sm p-8 text-center transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/5"
+              className="group relative rounded-2xl border border-[#6B1D5E]/20 bg-white/80 backdrop-blur-sm p-8 text-center transition-all duration-300 hover:shadow-xl hover:shadow-[#6B1D5E]/10"
             >
               <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-purple-500 to-violet-600 opacity-40 group-hover:opacity-80 transition-opacity" />
-              <div className="w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-500">
+              <div className="w-14 h-14 rounded-xl bg-[#6B1D5E]/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-500">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-8 h-8">
                   <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z" fill="#EA4335"/>
                   <path d="M22 6l-10 7L2 6" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
@@ -885,8 +885,8 @@ export default function AboutPage() {
                   <path d="M22 6l-7.5 5.25" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1"/>
                 </svg>
               </div>
-              <p className="text-white/40 text-xs mb-1.5 tracking-[0.15em] uppercase font-semibold">Email</p>
-              <p className="text-white/75 text-sm font-medium group-hover:text-purple-400 transition-colors duration-300">
+              <p className="text-[#1A1025]/50 text-xs mb-1.5 tracking-[0.15em] uppercase font-semibold">Email</p>
+              <p className="text-white/75 text-sm font-medium group-hover:text-[#6B1D5E] transition-colors duration-300">
                 idsiapaku@gmail.com
               </p>
             </motion.a>
@@ -898,10 +898,10 @@ export default function AboutPage() {
               href="https://www.instagram.com/siapaku.id/"
               target="_blank"
               rel="noreferrer"
-              className="group relative rounded-2xl border border-pink-500/20 bg-white/[0.03] backdrop-blur-sm p-8 text-center transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/5"
+              className="group relative rounded-2xl border border-[#6B1D5E]/20 bg-white/80 backdrop-blur-sm p-8 text-center transition-all duration-300 hover:shadow-xl hover:shadow-[#6B1D5E]/10"
             >
               <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-pink-500 to-rose-600 opacity-40 group-hover:opacity-80 transition-opacity" />
-              <div className="w-14 h-14 rounded-xl bg-pink-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-500">
+              <div className="w-14 h-14 rounded-xl bg-[#6B1D5E]/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-500">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-8 h-8">
                   <defs>
                     <linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%">
@@ -917,8 +917,8 @@ export default function AboutPage() {
                   <circle cx="17.5" cy="6.5" r="1.2" fill="#fff"/>
                 </svg>
               </div>
-              <p className="text-white/40 text-xs mb-1.5 tracking-[0.15em] uppercase font-semibold">Instagram</p>
-              <p className="text-white/75 text-sm font-medium group-hover:text-purple-400 transition-colors duration-300">
+              <p className="text-[#1A1025]/50 text-xs mb-1.5 tracking-[0.15em] uppercase font-semibold">Instagram</p>
+              <p className="text-white/75 text-sm font-medium group-hover:text-[#6B1D5E] transition-colors duration-300">
                 @siapaku.id
               </p>
             </motion.a>

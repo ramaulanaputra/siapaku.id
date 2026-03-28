@@ -5,10 +5,10 @@
 @tailwind utilities;
 
 :root {
-  --brand-purple: #6B21A8;
-  --brand-purple-light: #A855F7;
+  --brand-purple: #6B1D5E;
+  --brand-purple-light: #8B3D7E;
   --brand-rose: #BE185D;
-  --brand-dark: #0F0A1E;
+  --brand-dark: #F3E8FF;
   --squad-explorer: #3B82F6;
   --squad-guardian: #F59E0B;
   --squad-visionary: #7C3AED;
@@ -26,8 +26,8 @@ html {
 }
 
 body {
-  background-color: #0F0A1E;
-  color: #F8F4FF;
+  background-color: #F3E8FF;
+  color: #1A1025;
   font-family: 'Plus Jakarta Sans', sans-serif;
   overflow-x: hidden;
 }
@@ -36,33 +36,34 @@ body {
    Scrollbar
    ───────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #1a0f2e; }
-::-webkit-scrollbar-thumb { background: #6B21A8; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #A855F7; }
+::-webkit-scrollbar-track { background: #E4D4F0; }
+::-webkit-scrollbar-thumb { background: #6B1D5E; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #8B3D7E; }
 
-::selection { background: rgba(168, 85, 247, 0.3); color: #F8F4FF; }
+::selection { background: rgba(107, 29, 94, 0.3); color: #1A1025; }
 
 /* ─────────────────────────────────────────
    Glass morphism
    ───────────────────────────────────────── */
 .glass {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(107, 29, 94, 0.1);
 }
-.glass-dark {
-  background: rgba(0, 0, 0, 0.3);
+.glass-light {
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(107, 29, 94, 0.08);
+  box-shadow: 0 4px 30px rgba(107, 29, 94, 0.05);
 }
 
 /* ─────────────────────────────────────────
    Gradient text
    ───────────────────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, #A855F7, #EC4899);
+  background: linear-gradient(135deg, #8B3D7E, #6B1D5E);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -77,8 +78,8 @@ body {
 /* ─────────────────────────────────────────
    Glow effects
    ───────────────────────────────────────── */
-.glow-purple { box-shadow: 0 0 40px rgba(168, 85, 247, 0.25); }
-.glow-rose { box-shadow: 0 0 40px rgba(236, 72, 153, 0.25); }
+.glow-purple { box-shadow: 0 0 40px rgba(107, 29, 94, 0.25); }
+.glow-rose { box-shadow: 0 0 40px rgba(107, 29, 94, 0.25); }
 .glow-blue { box-shadow: 0 0 40px rgba(59, 130, 246, 0.25); }
 
 /* ─────────────────────────────────────────
@@ -112,7 +113,7 @@ body {
 }
 .card-hover:hover {
   transform: translateY(-6px);
-  box-shadow: 0 24px 64px rgba(168, 85, 247, 0.18);
+  box-shadow: 0 24px 64px rgba(107, 29, 94, 0.18);
 }
 
 /* ─────────────────────────────────────────
@@ -174,22 +175,22 @@ body {
    Button styles
    ───────────────────────────────────────── */
 .btn-primary {
-  @apply bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold px-8 py-3 rounded-full 
-         hover:from-purple-500 hover:to-pink-500 transition-all duration-300 
-         shadow-lg hover:shadow-purple-500/30 active:scale-95;
+  @apply bg-gradient-to-r from-[#6B1D5E] to-[#8B3D7E] text-white font-semibold px-8 py-3 rounded-full 
+         hover:from-[#7B2D6E] hover:to-[#9B4D8E] transition-all duration-300 
+         shadow-lg hover:shadow-[#6B1D5E]/30 active:scale-95;
 }
 .btn-secondary {
   @apply glass text-white font-semibold px-8 py-3 rounded-full 
-         hover:bg-white/10 transition-all duration-300 active:scale-95
-         border border-white/10;
+         hover:bg-white/90 transition-all duration-300 active:scale-95
+         border border-[#6B1D5E]/15;
 }
 
 /* ─────────────────────────────────────────
    Input styles
    ───────────────────────────────────────── */
 .input-dark {
-  @apply w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 
-         text-white placeholder-white/30 focus:outline-none focus:border-purple-500 
+  @apply w-full bg-white/60 border border-[#6B1D5E]/15 rounded-xl px-4 py-3 
+         text-[#1A1025] placeholder-[#1A1025]/30 focus:outline-none focus:border-[#6B1D5E] 
          transition-colors duration-200;
 }
 
@@ -238,8 +239,8 @@ body {
 .animate-pulse-slow { animation: pulse-slow 6s ease-in-out infinite; }
 
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.15); }
-  50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.3); }
+  0%, 100% { box-shadow: 0 0 20px rgba(107, 29, 94, 0.15); }
+  50% { box-shadow: 0 0 40px rgba(107, 29, 94, 0.3); }
 }
 .animate-glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
 
@@ -266,7 +267,7 @@ body {
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: linear-gradient(270deg, #A855F7, #EC4899, #3B82F6, #A855F7);
+  background: linear-gradient(270deg, #6B1D5E, #8B3D7E, #6B1D5E, #8B3D7E);
   background-size: 300% 300%;
   animation: gradient-border 4s ease infinite;
   z-index: -1;

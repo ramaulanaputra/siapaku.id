@@ -10,7 +10,7 @@ export function FooterTestMenu() {
     <li>
       <button
         onClick={() => setOpen(!open)}
-        className="text-white/40 hover:text-white/70 text-sm transition-colors duration-200 flex items-center gap-1.5"
+        className="text-[#1A1025]/50 hover:text-[#1A1025]/80 text-sm transition-colors duration-200 flex items-center gap-1.5"
       >
         <span>Tes SIAPA AKU</span>
         <svg
@@ -28,17 +28,17 @@ export function FooterTestMenu() {
           open ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"
         }`}
       >
-        <ul className="space-y-2 pl-3 border-l border-white/10">
+        <ul className="space-y-2 pl-3 border-l border-[#6B1D5E]/15">
           <li>
             <Link
               href="/test"
-              className="text-white/40 hover:text-white/70 text-xs transition-colors duration-200"
+              className="text-[#1A1025]/50 hover:text-[#1A1025]/80 text-xs transition-colors duration-200"
             >
               Tes MBTI
             </Link>
           </li>
           <li>
-            <span className="text-white/25 text-xs flex items-center gap-1.5 cursor-not-allowed">
+            <span className="text-[#1A1025]/35 text-xs flex items-center gap-1.5 cursor-not-allowed">
               Tes Big Five
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <rect x="5" y="11" width="14" height="10" rx="2" />
@@ -47,7 +47,7 @@ export function FooterTestMenu() {
             </span>
           </li>
           <li>
-            <span className="text-white/25 text-xs flex items-center gap-1.5 cursor-not-allowed">
+            <span className="text-[#1A1025]/35 text-xs flex items-center gap-1.5 cursor-not-allowed">
               Tes Enneagram
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <rect x="5" y="11" width="14" height="10" rx="2" />

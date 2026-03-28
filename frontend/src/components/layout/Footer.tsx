@@ -25,7 +25,7 @@ function EmailIcon({ className }: { className?: string }) {
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/5 relative">
+    <footer className="border-t border-[#6B1D5E]/10 relative">
       {/* Subtle gradient glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
 
@@ -39,13 +39,13 @@ export function Footer() {
                 alt="SIAPA AKU"
                 width={36}
                 height={42}
-                className="drop-shadow-[0_0_8px_rgba(168,85,247,0.3)]"
+                className="drop-shadow-[0_0_8px_rgba(107,29,94,0.3)]"
               />
               <span className="font-display font-bold text-lg text-white">
                 SIAPA <span className="gradient-text">AKU</span>
               </span>
             </div>
-            <p className="text-white/40 text-sm leading-relaxed max-w-xs mb-6">
+            <p className="text-[#1A1025]/50 text-sm leading-relaxed max-w-xs mb-6">
               Tempat kamu menemukan dan merangkul versi dirimu yang paling asli, 
               dan mulai menyayangi diri sendiri dengan tulus.
             </p>
@@ -56,14 +56,14 @@ export function Footer() {
                 href="https://www.instagram.com/siapaku.id/"
                 target="_blank"
                 rel="noreferrer"
-                className="w-10 h-10 glass rounded-xl flex items-center justify-center hover:bg-white/10 transition-all duration-300 text-white/50 hover:text-pink-400 hover:border-pink-400/30 group"
+                className="w-10 h-10 glass rounded-xl flex items-center justify-center hover:bg-white/90 transition-all duration-300 text-[#1A1025]/60 hover:text-[#6B1D5E] hover:border-pink-400/30 group"
                 title="@siapaku.id"
               >
                 <InstagramIcon className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
               </a>
               <a
                 href="mailto:idsiapaku@gmail.com"
-                className="w-10 h-10 glass rounded-xl flex items-center justify-center hover:bg-white/10 transition-all duration-300 text-white/50 hover:text-purple-400 hover:border-purple-400/30 group"
+                className="w-10 h-10 glass rounded-xl flex items-center justify-center hover:bg-white/90 transition-all duration-300 text-[#1A1025]/60 hover:text-[#6B1D5E] hover:border-purple-400/30 group"
                 title="idsiapaku@gmail.com"
               >
                 <EmailIcon className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
@@ -73,26 +73,26 @@ export function Footer() {
 
           {/* Navigation Links */}
           <div>
-            <h4 className="text-white/80 font-semibold text-sm mb-4">Navigasi</h4>
+            <h4 className="text-[#1A1025]/90 font-semibold text-sm mb-4">Navigasi</h4>
             <ul className="space-y-3">
               <li>
-                <Link href="/" className="text-white/40 hover:text-white/70 text-sm transition-colors duration-200">
+                <Link href="/" className="text-[#1A1025]/50 hover:text-[#1A1025]/80 text-sm transition-colors duration-200">
                   Home
                 </Link>
               </li>
               <FooterTestMenu />
               <li>
-                <Link href="/profile" className="text-white/40 hover:text-white/70 text-sm transition-colors duration-200">
+                <Link href="/profile" className="text-[#1A1025]/50 hover:text-[#1A1025]/80 text-sm transition-colors duration-200">
                   My Profile
                 </Link>
               </li>
               <li>
-                <Link href="/shop" className="text-white/40 hover:text-white/70 text-sm transition-colors duration-200">
+                <Link href="/shop" className="text-[#1A1025]/50 hover:text-[#1A1025]/80 text-sm transition-colors duration-200">
                   Shop
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-white/40 hover:text-white/70 text-sm transition-colors duration-200">
+                <Link href="/about" className="text-[#1A1025]/50 hover:text-[#1A1025]/80 text-sm transition-colors duration-200">
                   About Us
                 </Link>
               </li>
@@ -101,14 +101,14 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-white/80 font-semibold text-sm mb-4">Kontak</h4>
+            <h4 className="text-[#1A1025]/90 font-semibold text-sm mb-4">Kontak</h4>
             <ul className="space-y-4">
               <li>
                 <a
                   href="https://www.instagram.com/siapaku.id/"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-3 text-white/40 hover:text-pink-400 text-sm transition-colors duration-200 group"
+                  className="flex items-center gap-3 text-[#1A1025]/50 hover:text-[#6B1D5E] text-sm transition-colors duration-200 group"
                 >
                   <InstagramIcon className="w-4 h-4 shrink-0 group-hover:scale-110 transition-transform" />
                   <span>@siapaku.id</span>
@@ -117,7 +117,7 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:idsiapaku@gmail.com"
-                  className="flex items-center gap-3 text-white/40 hover:text-purple-400 text-sm transition-colors duration-200 group"
+                  className="flex items-center gap-3 text-[#1A1025]/50 hover:text-[#6B1D5E] text-sm transition-colors duration-200 group"
                 >
                   <EmailIcon className="w-4 h-4 shrink-0 group-hover:scale-110 transition-transform" />
                   <span>idsiapaku@gmail.com</span>
@@ -128,11 +128,11 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/5 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-white/30 text-xs">
+        <div className="border-t border-[#6B1D5E]/10 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-[#1A1025]/40 text-xs">
             © 2024 SIAPA AKU. All rights reserved.
           </p>
-          <p className="text-white/20 text-xs italic font-display">
+          <p className="text-[#1A1025]/30 text-xs italic font-display">
             &ldquo;Kenal Diri, Baru Bisa Sayang Diri&rdquo;
           </p>
         </div>

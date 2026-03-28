@@ -32,8 +32,8 @@ const particleStyles = `
   50% { transform: scale(1.01); }
 }
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.6), 0 0 60px rgba(139, 92, 246, 0.2); }
+  0%, 100% { box-shadow: 0 0 20px rgba(107, 29, 94, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(107, 29, 94, 0.6), 0 0 60px rgba(107, 29, 94, 0.2); }
 }
 @keyframes dot-pulse {
   0%, 100% { opacity: 0.4; transform: scale(1); }
@@ -267,7 +267,7 @@ export default function TestPage() {
   if (isSubmitting) {
     const dims: MBTIDimension[] = ["EI", "SN", "TF", "JP", "AT"];
     return (
-      <main className="min-h-screen bg-[#101020] flex items-center justify-center p-4 relative overflow-hidden">
+      <main className="min-h-screen bg-[#F3E8FF] flex items-center justify-center p-4 relative overflow-hidden">
         <style dangerouslySetInnerHTML={{ __html: particleStyles }} />
         <FloatingParticles count={20} />
 
@@ -289,7 +289,7 @@ export default function TestPage() {
           className="relative z-10 text-center"
         >
           <div
-            className="rounded-3xl border border-white/10 p-10 md:p-14 max-w-md mx-auto"
+            className="rounded-3xl border border-[#6B1D5E]/15 p-10 md:p-14 max-w-md mx-auto"
             style={{
               background: "rgba(255,255,255,0.04)",
               backdropFilter: "blur(40px)",
@@ -309,7 +309,7 @@ export default function TestPage() {
                 {[0, 1, 2].map((i) => (
                   <motion.span
                     key={i}
-                    className="text-white/60"
+                    className="text-[#1A1025]/70"
                     animate={{ opacity: [0, 1, 0] }}
                     transition={{
                       duration: 1.2,
@@ -323,7 +323,7 @@ export default function TestPage() {
               </span>
             </h2>
 
-            <p className="text-white/30 text-sm mb-8">
+            <p className="text-[#1A1025]/40 text-sm mb-8">
               Menghitung 5 dimensi dari {questions.length} jawaban
             </p>
 
@@ -358,7 +358,7 @@ export default function TestPage() {
                         ✓
                       </motion.span>
                     </motion.div>
-                    <span className="text-sm text-white/60">
+                    <span className="text-sm text-[#1A1025]/70">
                       <span style={{ color: info.color }} className="font-semibold">
                         {info.poleALabel}
                       </span>
@@ -390,7 +390,7 @@ export default function TestPage() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(135deg, #0a0a14 0%, #120a28 25%, #0a0a14 50%, #0a1a20 75%, #0a0a14 100%)",
+              "linear-gradient(135deg, #EDE0F7 0%, #EDE0F7 25%, #EDE0F7 50%, #EDE0F7 75%, #EDE0F7 100%)",
             backgroundSize: "400% 400%",
             animation: "gradient-mesh 15s ease infinite",
           }}
@@ -445,7 +445,7 @@ export default function TestPage() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className="text-white/40 mb-8 text-base md:text-lg"
+            className="text-[#1A1025]/50 mb-8 text-base md:text-lg"
           >
             100 pertanyaan · 5 dimensi · 10-15 menit
           </motion.p>
@@ -471,7 +471,7 @@ export default function TestPage() {
                     stiffness: 300,
                     damping: 20,
                   }}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-2xl border border-white/[0.06]"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-2xl border border-[#6B1D5E]/10"
                   style={{
                     background: `linear-gradient(135deg, ${info.color}10, ${info.color}05)`,
                   }}
@@ -502,7 +502,7 @@ export default function TestPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.85, duration: 0.5 }}
-            className="text-white/25 text-sm mb-10 space-y-1.5 max-w-sm mx-auto leading-relaxed"
+            className="text-[#1A1025]/35 text-sm mb-10 space-y-1.5 max-w-sm mx-auto leading-relaxed"
           >
             <p>
               Jawab setiap pernyataan dengan jujur sesuai dirimu yang sebenarnya,
@@ -534,7 +534,7 @@ export default function TestPage() {
                   animation: "gradient-mesh 4s ease infinite",
                 }}
               />
-              <span className="relative z-10">Mulai Tes 🚀</span>
+              <span className="relative z-10 text-white">Mulai Tes 🚀</span>
             </motion.button>
           </motion.div>
 
@@ -543,7 +543,7 @@ export default function TestPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.3, duration: 0.6 }}
-            className="text-white/15 text-xs mt-5"
+            className="text-[#1A1025]/20 text-xs mt-5"
           >
             Tekan angka 1-7 untuk jawab cepat
           </motion.p>
@@ -555,11 +555,11 @@ export default function TestPage() {
   /* ════════════ LOADING STATE ════════════ */
   if (questions.length === 0) {
     return (
-      <main className="min-h-screen bg-[#101020] flex items-center justify-center">
+      <main className="min-h-screen bg-[#F3E8FF] flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-white/40"
+          className="text-[#1A1025]/50"
         >
           Mempersiapkan pertanyaan...
         </motion.div>
@@ -589,7 +589,7 @@ export default function TestPage() {
   const currentQuote = inspoQuotes[currentIndex % inspoQuotes.length];
 
   return (
-    <main className="min-h-screen bg-[#101020] relative overflow-hidden flex flex-col">
+    <main className="min-h-screen bg-[#F3E8FF] relative overflow-hidden flex flex-col">
       <Navbar />
       <style dangerouslySetInnerHTML={{ __html: particleStyles }} />
 
@@ -675,9 +675,9 @@ export default function TestPage() {
 
       {/* ── Top bar (glassmorphism) ── */}
       <div
-        className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.06]"
+        className="fixed top-0 left-0 right-0 z-50 border-b border-[#6B1D5E]/10"
         style={{
-          background: "rgba(10, 10, 20, 0.75)",
+          background: "rgba(243, 232, 255, 0.85)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
         }}
@@ -686,22 +686,22 @@ export default function TestPage() {
           <div className="flex items-center justify-between mb-2.5">
             <button
               onClick={() => router.push("/")}
-              className="text-white/30 hover:text-white/60 text-sm transition-colors duration-200 flex items-center gap-1"
+              className="text-[#1A1025]/40 hover:text-[#1A1025]/70 text-sm transition-colors duration-200 flex items-center gap-1"
             >
               <span>←</span> Keluar
             </button>
-            <span className="text-white/50 text-sm font-mono tabular-nums tracking-wider">
+            <span className="text-[#1A1025]/60 text-sm font-mono tabular-nums tracking-wider">
               {currentIndex + 1}{" "}
-              <span className="text-white/20">/</span> {questions.length}
+              <span className="text-[#1A1025]/30">/</span> {questions.length}
             </span>
-            <span className="text-white/30 text-sm tabular-nums">
-              <span className="text-white/50 font-semibold">{answeredCount}</span>{" "}
+            <span className="text-[#1A1025]/40 text-sm tabular-nums">
+              <span className="text-[#1A1025]/60 font-semibold">{answeredCount}</span>{" "}
               dijawab
             </span>
           </div>
 
           {/* Main progress bar */}
-          <div className="h-2 bg-white/[0.04] rounded-full overflow-hidden relative">
+          <div className="h-2 bg-white/80 rounded-full overflow-hidden relative">
             <motion.div
               className="h-full rounded-full relative"
               style={{
@@ -873,13 +873,13 @@ export default function TestPage() {
 
               {/* Scale labels */}
               <div className="flex justify-between px-1 md:px-4 mb-0">
-                <span className="text-white/20 text-[11px] md:text-xs">
+                <span className="text-[#1A1025]/30 text-[11px] md:text-xs">
                   Sangat Tidak Setuju
                 </span>
-                <span className="text-white/15 text-[11px] md:text-xs">
+                <span className="text-[#1A1025]/20 text-[11px] md:text-xs">
                   Netral
                 </span>
-                <span className="text-white/20 text-[11px] md:text-xs">
+                <span className="text-[#1A1025]/30 text-[11px] md:text-xs">
                   Sangat Setuju
                 </span>
               </div>
@@ -893,7 +893,7 @@ export default function TestPage() {
               disabled={currentIndex === 0}
               whileHover={currentIndex > 0 ? { x: -3 } : {}}
               whileTap={currentIndex > 0 ? { scale: 0.95 } : {}}
-              className="text-white/30 hover:text-white/60 disabled:opacity-10 disabled:cursor-not-allowed transition-all duration-200 px-4 py-2.5 rounded-xl hover:bg-white/[0.04] text-sm"
+              className="text-[#1A1025]/40 hover:text-[#1A1025]/70 disabled:opacity-10 disabled:cursor-not-allowed transition-all duration-200 px-4 py-2.5 rounded-xl hover:bg-white/80 text-sm"
             >
               ← Sebelumnya
             </motion.button>
@@ -928,7 +928,7 @@ export default function TestPage() {
                 whileTap={
                   currentIndex < questions.length - 1 ? { scale: 0.95 } : {}
                 }
-                className="text-white/30 hover:text-white/60 disabled:opacity-10 disabled:cursor-not-allowed transition-all duration-200 px-4 py-2.5 rounded-xl hover:bg-white/[0.04] text-sm"
+                className="text-[#1A1025]/40 hover:text-[#1A1025]/70 disabled:opacity-10 disabled:cursor-not-allowed transition-all duration-200 px-4 py-2.5 rounded-xl hover:bg-white/80 text-sm"
               >
                 Selanjutnya →
               </motion.button>
@@ -942,10 +942,10 @@ export default function TestPage() {
               animate={{ opacity: 1 }}
               className="text-center mt-6"
             >
-              <p className="text-white/15 text-xs">
+              <p className="text-[#1A1025]/20 text-xs">
                 {questions.length - answeredCount} pertanyaan belum dijawab
                 {currentIndex >= questions.length - 1 && (
-                  <span className="text-amber-400/50 ml-1">
+                  <span className="text-amber-600/70 ml-1">
                     — jawab semua untuk melihat hasil
                   </span>
                 )}
@@ -1014,7 +1014,7 @@ export default function TestPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.5 }}
-              className="text-white/20 text-sm italic font-light tracking-wide"
+              className="text-[#1A1025]/30 text-sm italic font-light tracking-wide"
             >
               &ldquo;{currentQuote}&rdquo;
             </motion.p>
@@ -1065,7 +1065,7 @@ export default function TestPage() {
                         }}
                       />
                     </svg>
-                    <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-white/60">
+                    <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-[#1A1025]/70">
                       {dim}
                     </span>
                   </div>

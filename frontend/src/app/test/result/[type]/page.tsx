@@ -105,15 +105,15 @@ function DimensionBar({ dim, index }: { dim: DimensionScore; index: number }) {
     >
       {/* Labels */}
       <div className="flex justify-between items-center mb-2">
-        <span className="text-sm font-medium text-white/80">{info.poleALabel}</span>
-        <span className="text-xs text-white/40 uppercase tracking-wider">
+        <span className="text-sm font-medium text-[#1A1025]/90">{info.poleALabel}</span>
+        <span className="text-xs text-[#1A1025]/50 uppercase tracking-wider">
           {isIdentity ? "Identity" : dim.dimension}
         </span>
-        <span className="text-sm font-medium text-white/80">{info.poleBLabel}</span>
+        <span className="text-sm font-medium text-[#1A1025]/90">{info.poleBLabel}</span>
       </div>
 
       {/* Bar */}
-      <div className="relative h-10 rounded-full overflow-hidden bg-white/5 border border-white/10">
+      <div className="relative h-10 rounded-full overflow-hidden bg-white/60 border border-[#6B1D5E]/15">
         {/* Pole A fill */}
         <motion.div
           className="absolute left-0 top-0 h-full rounded-l-full flex items-center justify-end pr-3"
@@ -204,7 +204,7 @@ function DimensionCard({
             <motion.span
               animate={{ rotate: expanded ? 180 : 0 }}
               transition={{ duration: 0.3 }}
-              className="text-white/30 text-xs"
+              className="text-[#1A1025]/40 text-xs"
             >
               ▼
             </motion.span>
@@ -233,7 +233,7 @@ function DimensionCard({
               </motion.div>
             ) : (
               <motion.p
-                className="text-white/60 leading-relaxed text-sm"
+                className="text-[#1A1025]/70 leading-relaxed text-sm"
                 initial={false}
                 animate={{ height: "auto" }}
               >
@@ -284,7 +284,7 @@ function ResultContent() {
       <main className="min-h-screen bg-brand-dark flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-6">🤔</div>
-          <p className="text-white/50 mb-6 text-lg">Tipe kepribadian tidak ditemukan</p>
+          <p className="text-[#1A1025]/60 mb-6 text-lg">Tipe kepribadian tidak ditemukan</p>
           <Link href="/test" className="btn-primary">
             Mulai Tes
           </Link>
@@ -392,15 +392,15 @@ function ResultContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <p className="text-white/40 text-lg mb-2">Kamu adalah</p>
+            <p className="text-[#1A1025]/50 text-lg mb-2">Kamu adalah</p>
             <h2
               className="font-display text-2xl md:text-4xl font-bold mb-2"
               style={{ color: squadColor }}
             >
               {profile.nickname}
             </h2>
-            <p className="text-white/50 text-sm mb-1 italic">{profile.nicknameEn}</p>
-            <p className="text-white/40 italic text-lg mt-4 max-w-lg mx-auto">
+            <p className="text-[#1A1025]/60 text-sm mb-1 italic">{profile.nicknameEn}</p>
+            <p className="text-[#1A1025]/50 italic text-lg mt-4 max-w-lg mx-auto">
               &ldquo;{profile.tagline}&rdquo;
             </p>
           </motion.div>
@@ -423,7 +423,7 @@ function ResultContent() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="text-white/40 text-center text-sm mb-10"
+              className="text-[#1A1025]/50 text-center text-sm mb-10"
             >
               Berdasarkan jawaban kamu dari 100 pertanyaan
             </motion.p>
@@ -453,7 +453,7 @@ function ResultContent() {
             <h3 className="font-display text-2xl font-bold text-white mb-4">
               Tentang {mbtiType}
             </h3>
-            <p className="text-white/70 leading-relaxed text-lg">{profile.description}</p>
+            <p className="text-[#1A1025]/80 leading-relaxed text-lg">{profile.description}</p>
           </div>
         </motion.div>
       </section>
@@ -491,7 +491,7 @@ function ResultContent() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.08 }}
-                    className="flex items-center gap-3 text-white/70"
+                    className="flex items-center gap-3 text-[#1A1025]/80"
                   >
                     <span className="w-2 h-2 bg-green-400 rounded-full shrink-0" />
                     {s}
@@ -520,7 +520,7 @@ function ResultContent() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.08 }}
-                    className="flex items-center gap-3 text-white/70"
+                    className="flex items-center gap-3 text-[#1A1025]/80"
                   >
                     <span className="w-2 h-2 bg-rose-400 rounded-full shrink-0" />
                     {w}
@@ -549,7 +549,7 @@ function ResultContent() {
             <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-3">
               8 Dimensi Kepribadian
             </h2>
-            <p className="text-white/40 max-w-lg mx-auto">
+            <p className="text-[#1A1025]/50 max-w-lg mx-auto">
               Analisis mendalam tentang siapa kamu sebenarnya — dari emosi, love language, shadow, hingga purpose hidup kamu
             </p>
           </motion.div>
@@ -596,7 +596,7 @@ function ResultContent() {
               <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-6">
                 Life Purpose
               </h3>
-              <p className="text-white/80 text-lg md:text-xl leading-relaxed italic">
+              <p className="text-[#1A1025]/90 text-lg md:text-xl leading-relaxed italic">
                 &ldquo;{profile.purpose}&rdquo;
               </p>
             </div>
@@ -619,7 +619,7 @@ function ResultContent() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-white/40 text-sm mb-8"
+            className="text-[#1A1025]/50 text-sm mb-8"
           >
             Kamu satu tipe dengan orang-orang luar biasa ini
           </motion.p>
@@ -643,7 +643,7 @@ function ResultContent() {
                 >
                   {person.charAt(0)}
                 </div>
-                <span className="text-white/80 text-sm font-medium">{person}</span>
+                <span className="text-[#1A1025]/90 text-sm font-medium">{person}</span>
               </motion.div>
             ))}
           </motion.div>
@@ -682,7 +682,7 @@ function ResultContent() {
                   <h3 className="font-display text-2xl font-bold text-white">
                     Identity: {identity === "A" ? "Assertive" : "Turbulent"}
                   </h3>
-                  <p className="text-white/40 text-sm">
+                  <p className="text-[#1A1025]/50 text-sm">
                     {identity === "A"
                       ? "Percaya diri, stabil secara emosional, dan stress-resistant"
                       : "Perfeksionis, self-aware, dan growth-driven"}
@@ -690,7 +690,7 @@ function ResultContent() {
                 </div>
               </div>
 
-              <p className="text-white/70 leading-relaxed">
+              <p className="text-[#1A1025]/80 leading-relaxed">
                 {identity === "A"
                   ? getAssertiveDescription(mbtiType)
                   : getTurbulentDescription(mbtiType)}
@@ -706,10 +706,10 @@ function ResultContent() {
                   }}
                 >
                   <div className="text-2xl mb-2">🛡️</div>
-                  <div className={`text-sm font-semibold mb-1 ${identity === "A" ? "text-emerald-400" : "text-white/40"}`}>
+                  <div className={`text-sm font-semibold mb-1 ${identity === "A" ? "text-[#6B1D5E]" : "text-[#1A1025]/50"}`}>
                     Assertive (-A)
                   </div>
-                  <div className="text-xs text-white/40">
+                  <div className="text-xs text-[#1A1025]/50">
                     Tenang · Stabil · Self-assured
                   </div>
                 </div>
@@ -721,10 +721,10 @@ function ResultContent() {
                   }}
                 >
                   <div className="text-2xl mb-2">🔥</div>
-                  <div className={`text-sm font-semibold mb-1 ${identity === "T" ? "text-violet-400" : "text-white/40"}`}>
+                  <div className={`text-sm font-semibold mb-1 ${identity === "T" ? "text-violet-400" : "text-[#1A1025]/50"}`}>
                     Turbulent (-T)
                   </div>
-                  <div className="text-xs text-white/40">
+                  <div className="text-xs text-[#1A1025]/50">
                     Perfeksionis · Aware · Growth
                   </div>
                 </div>
@@ -754,7 +754,7 @@ function ResultContent() {
               <h3 className="font-display text-3xl font-bold text-white mb-3">
                 Itulah Kamu, <span style={{ color: squadColor }}>{fullType}</span>!
               </h3>
-              <p className="text-white/50 mb-8 max-w-md mx-auto">
+              <p className="text-[#1A1025]/60 mb-8 max-w-md mx-auto">
                 Setiap kepribadian itu unik dan berharga. Kenali dirimu, terima dirimu, dan tumbuh jadi versi terbaik kamu.
               </p>
 
@@ -778,7 +778,7 @@ function ResultContent() {
 
               <Link
                 href="/"
-                className="inline-block mt-6 text-white/30 hover:text-white/60 transition-colors text-sm"
+                className="inline-block mt-6 text-[#1A1025]/40 hover:text-[#1A1025]/70 transition-colors text-sm"
               >
                 ← Kembali ke Beranda
               </Link>
@@ -799,8 +799,8 @@ export default function ResultPage() {
       fallback={
         <main className="min-h-screen bg-brand-dark flex items-center justify-center">
           <div className="text-center">
-            <div className="w-16 h-16 border-4 border-white/10 border-t-purple-500 rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-white/40">Memuat hasil kamu...</p>
+            <div className="w-16 h-16 border-4 border-[#6B1D5E]/15 border-t-purple-500 rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-[#1A1025]/50">Memuat hasil kamu...</p>
           </div>
         </main>
       }
